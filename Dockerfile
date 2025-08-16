@@ -2,7 +2,8 @@
 FROM openjdk:17
 
 # Build 된 Jar 파일 경로 설정 (= Gradle 기준)
-ARG JAR_FILE_PATH=build/libs/*.jar
+# ARG JAR_FILE_PATH=build/libs/*.jar
+ARG JAR_FILE_PATH=build/libs/kdy-0.0.1-SNAPSHOT.jar
 
 # Jar 파일을 Container 내부로 복사
 COPY ${JAR_FILE_PATH} toyProject.jar
