@@ -36,3 +36,10 @@ jobs:
     # Step05 : Gradle Build 실행 (Test 포함)
     - name: Build with Gradle
       run: ./gradlew build
+
+    # Step06 : Upload Jar (GitHub Action Artifact)
+    - name: Upload JAR
+      uses: actions/upload-artifact@v3
+      with:
+        name: kdy-build
+        path: build/libs/kdy-0.0.1-SNAPSHOT.jar
