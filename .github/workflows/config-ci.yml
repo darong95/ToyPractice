@@ -9,7 +9,8 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest # GitHub 가상 환경 : Ubuntu 최신 환경
+    # runs-on: ubuntu-latest # GitHub 가상 환경 : Ubuntu 최신 환경
+    runs-on: window-latest # GitHub 가상 환경 : Window Setting
 
     permissions: # # Job 실행 시 필요한 권한
       contents: read # Repository Contents를 읽을 수 있는 권한
