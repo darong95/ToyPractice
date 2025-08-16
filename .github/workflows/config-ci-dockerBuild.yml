@@ -1,4 +1,4 @@
-name: GitHub Actions CI And Docker Build
+name: GitHub Actions CI And Docker Build Image
 
 on:
   push:
