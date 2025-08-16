@@ -18,17 +18,21 @@ jobs:
     # Step01 : GitHub Repository 코드 Check Out
     - uses: actions/checkout@v4
 
-    # Step02 : Java 17 Install
+    # Step02 : 실행 권한 부여 = 안 줄 경우 권한 오류 발생 (= Process completed with exit code 126)
+    - name: Set execute permission for gradlew
+      run: chmod + x./gradlew
+
+    # Step03 : Java 17 Install
     - name: Set up JDK 17
       uses: actions/setup-java@v4
       with:
         java-version: '17'
         distribution: 'temurin' # 사용할 JDK 배포판
 
-    # Step03 : Gradle 캐싱 설정
+    # Step04 : Gradle 캐싱 설정
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v4
 
-    # Step04 : Gradle Build 실행 (Test 포함)
+    # Step05 : Gradle Build 실행 (Test 포함)
     - name: Build with Gradle
       run: ./gradlew build
