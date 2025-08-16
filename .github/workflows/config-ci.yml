@@ -39,7 +39,7 @@ jobs:
 
     # Step06 : Upload Jar (GitHub Action Artifact)
     - name: Upload JAR
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: kdy-build
         path: build/libs/kdy-0.0.1-SNAPSHOT.jar
