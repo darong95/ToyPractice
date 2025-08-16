@@ -2,7 +2,7 @@ name: Docker Build Process
 
 on:
   workflow_run:
-    workflows: [GitHub Actions CI Pipeline]
+    workflows: [GitHub Actions CI Pipelines]
     types: [completed] # 상단의 Workflow가 실행 완료 됐을 경우에만 실행
 
 jobs:
