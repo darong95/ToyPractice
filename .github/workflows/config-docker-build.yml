@@ -17,7 +17,7 @@ jobs:
     - name: Download built JAR
       uses: actions/download-artifact@v4
       with:
-        name: kdy-build
+        name: kdy-build-test
         path: build/libs  
 
     # Step03 : Setting Docker Buildx ( 멀티 플랫폼 빌드나 고급 빌드를 위해 사용)
