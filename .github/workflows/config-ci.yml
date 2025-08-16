@@ -27,7 +27,7 @@ jobs:
 
     # Step03 : Gradle 캐싱 설정
     - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@4
+      uses: gradle/actions/setup-gradle@v4
 
     # Step04 : Gradle Build 실행 (Test 포함)
     - name: Build with Gradle
