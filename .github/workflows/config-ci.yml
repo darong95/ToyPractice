@@ -36,4 +36,5 @@ jobs:
 
     # Step05 : Gradle Build 실행 (Test 포함)
     - name: Build with Gradle
-      run: ./gradlew build
+      # run: ./gradlew build
+      run: gradlew.bat build
