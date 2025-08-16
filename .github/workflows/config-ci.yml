@@ -9,8 +9,7 @@ on:
 
 jobs:
   build:
-    # runs-on: ubuntu-latest # GitHub 가상 환경 : Ubuntu 최신 환경
-    runs-on: window-latest # GitHub 가상 환경 : Window Setting
+    runs-on: ubuntu-latest # GitHub 가상 환경 : Ubuntu 최신 환경
 
     permissions: # # Job 실행 시 필요한 권한
       contents: read # Repository Contents를 읽을 수 있는 권한
@@ -21,7 +20,7 @@ jobs:
 
     # Step02 : 실행 권한 부여 = 안 줄 경우 권한 오류 발생 (= Process completed with exit code 126)
     - name: Set execute permission for gradlew
-      run: chmod + x./gradlew
+      run: chmod +x ./gradlew
 
     # Step03 : Java 17 Install
     - name: Set up JDK 17
@@ -36,5 +35,4 @@ jobs:
 
     # Step05 : Gradle Build 실행 (Test 포함)
     - name: Build with Gradle
-      # run: ./gradlew build
-      run: gradlew.bat build
+      run: ./gradlew build
