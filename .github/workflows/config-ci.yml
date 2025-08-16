@@ -1,4 +1,4 @@
-name: DaYoung's NCP and Docker Project
+name: GitHub Actions CI Pipeline
 
 on:
   push:
