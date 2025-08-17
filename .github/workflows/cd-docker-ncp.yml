@@ -1,5 +1,4 @@
-name: GitHub Actions CD With Naver Cloud
-
+name: GitHub Actions CD With Naver
 on:
   workflow_run:
     workflows: [GitHub Actions CI With Docker Build]
