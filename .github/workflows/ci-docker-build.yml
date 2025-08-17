@@ -77,4 +77,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: darong95/toypractice:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}:latest
