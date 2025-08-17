@@ -8,13 +8,14 @@ on:
 jobs:
   deploy:
     # 빌드 성공 시 실행 (GitHub 정해진 문법)
+    # on.workflow_run.workflows.types는 실패도 포함, 성공일 경우에만 실행
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
 
     steps:
-      # Step01 : SSH 키 세팅 (NCP 서버 접속용)
+      # Step01 : SSH 개인 Key 세팅 (NCP 서버 접속용)
       - name: Setup SSH agent
-        uses: webfactory/ssh-agent@v0.8.1
+        uses: webfactory/ssh-agent@v0.8.0
         with:
           ssh-private-key: ${{ secrets.NCP_SSH_PRIVATE_KEY }}
 
