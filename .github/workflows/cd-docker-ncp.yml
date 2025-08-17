@@ -23,16 +23,16 @@ jobs:
       - name: Deploy latest Docker image on NCP server
         run:
           |
-          ssh -o StrictHostKeyChecking=no user@ncp-server-ip << 'EOF'
-            echo "Pull latest image from Docker Hub"
-            docker pull darong95/toypractice:latest
-
-            echo "Stop existing container if running"
-            docker stop toypractice || true
-            docker rm toypractice || true
-
-            echo "Run new container from latest image"
-            docker run -d --name toypractice -p 80:8080 darong95/toypractice:latest
-
-            echo "Deployment completed successfully"
+          ssh -o StrictHostKeyChecking=no ${{ secrets.NCP_SSH_USER }}@${{ secrets.NCP_SERVER_IP }} << 'EOF'
+          echo "Pull latest image from Docker Hub"
+          docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}:latest
+        
+          echo "Stop existing container if running"
+          docker stop ${{ secrets.DOCKER_REPOSITORY }} || true
+          docker rm ${{ secrets.DOCKER_REPOSITORY }} || true
+        
+          echo "Run new container from latest image"
+          docker run -d --name ${{ secrets.DOCKER_REPOSITORY }} -p 80:8080 ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}:latest
+        
+          echo "Deployment completed successfully"
           EOF
