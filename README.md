@@ -1,12 +1,23 @@
-# Da Young's Toy Project :) 🔥
+# Da Young's Project :) 🔥
 
-## [ Setting ]
-### ● Intellij Community ✅️
-### ● Spring Boot 3.4.9 Version ✅️
-### ● JPA (Hibernate) with H2, MariaDB, PostgreSQL
-### ● Java 17 with Gradle ✅️
+## 💻 Development
 
-### ● GitHub Actions + Intellij (CI) ✅️
-### ● GitHub Actions + Docker Build ✅
-### ● NCP (Naver Cloud Platform) Create ✅
-### ● Docker Actions + NCP + Docker (CD)
+- Java 17 + Gradle
+- ItelliJ IDEA (2025.01.03)
+- Spring Boot 3.4.9
+
+## 🗄 Database
+- JPA (Hibernate)
+- H2 (In-Memory-DB)
+- MariaDB (Docker Image)
+
+## 📤 CI (Continuous Integration)
+- GitHub Actions  
+  ➡️ IntelliJ : Push and Pull️️  
+  ➡️ Docker : Image Build
+
+
+## 📥CD (Continuous Deployment)
+- GitHub Actions  
+  ➡️ NCP (Naver Cloud Platform) : Pull  
+  ➡️ NCP (Naver Cloud Platform) : Image Run
