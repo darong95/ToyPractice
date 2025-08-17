@@ -1,5 +1,4 @@
-# 🔥 Da Young's Project 🔥  
-## ➡️ In Progress 😀
+# Status : In Progress 😀
 
 ## 💻 Development
 
