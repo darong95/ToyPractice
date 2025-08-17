@@ -1,9 +1,10 @@
-# 🔥 Da Young's Project :) 🔥
+# 🔥 Da Young's Project 🔥  
+## ➡️ In Progress 😀
 
 ## 💻 Development
 
 - Java 17 + Gradle
-- ItelliJ IDEA (2025.01.03)
+- IntelliJ IDEA (2025.01.03)
 - Spring Boot 3.4.9
 
 ## 🗄 Database
