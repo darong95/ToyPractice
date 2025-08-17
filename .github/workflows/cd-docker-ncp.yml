@@ -1,4 +1,4 @@
-name: Docker Build Process
+name: GitHub Actions CD With NCP
 
 on:
   workflow_run:
