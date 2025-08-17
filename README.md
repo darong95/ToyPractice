@@ -1,4 +1,4 @@
-# Da Young's Project :) 🔥
+# 🔥 Da Young's Project :) 🔥
 
 ## 💻 Development
 
@@ -17,7 +17,7 @@
   ➡️ Docker : Image Build
 
 
-## 📥CD (Continuous Deployment)
+## 📥 CD (Continuous Deployment)
 - GitHub Actions  
   ➡️ NCP (Naver Cloud Platform) : Pull  
   ➡️ NCP (Naver Cloud Platform) : Image Run
