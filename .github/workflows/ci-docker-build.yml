@@ -35,7 +35,11 @@ jobs:
 
     # Step05 : JUnit과 Gradle Build 실행 (Test 포함) 시 환경 변수 주입
     - name: Debug env vars
-      run: printenv | grep SPRING_DATASOURCE
+      run: |
+        echo "### SPRING_DATASOURCE env vars ###"
+        printenv | grep SPRING_DATASOURCE || echo "No SPRING_DATASOURCE env vars found"
+        echo "### ALL env vars ###"
+        printenv
       env:
         SPRING_DATASOURCE_H2_URL: ${{ secrets.SPRING_DATASOURCE_H2_URL }}
         SPRING_DATASOURCE_H2_USERNAME: ${{ secrets.SPRING_DATASOURCE_H2_USERNAME }}
