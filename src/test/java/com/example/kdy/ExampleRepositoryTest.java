@@ -34,9 +34,9 @@ public class ExampleRepositoryTest {
     static void dynamicEnvProperty(DynamicPropertyRegistry dynamicPropertyRegistry) {
         Properties properties = EnvValueLoad.envPropertiesLoad("src/main/resources/local.env");
 
-        String dataSource_URL = EnvValueLoad.envProperty_GitHub(properties, "DATASOURCE_URL_MARIADB");
-        String dataSource_UserName = EnvValueLoad.envProperty_GitHub(properties, "DATASOURCE_USERNAME_MARIADB");
-        String dataSource_Password = EnvValueLoad.envProperty_GitHub(properties, "DATASOURCE_PASSWORD_MARIADB");
+        String dataSource_URL = EnvValueLoad.envProperty_GitHub(properties, "SPRING_DATASOURCE_MARIADB_URL");
+        String dataSource_UserName = EnvValueLoad.envProperty_GitHub(properties, "SPRING_DATASOURCE_MARIADB_USERNAME");
+        String dataSource_Password = EnvValueLoad.envProperty_GitHub(properties, "SPRING_DATASOURCE_MARIADB_PASSWORD");
         String dataSource_DriverClassName = "org.mariadb.jdbc.Driver"; // 직접 입력, 추후 Property 값으로 변경
 
         System.out.println("[TEST] JUNIT URL :: " + dataSource_URL);
