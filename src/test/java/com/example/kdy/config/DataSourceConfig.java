@@ -1,7 +1,5 @@
 package com.example.kdy.config;
 
-import com.example.kdy.EnvValueSettingTest;
-import org.junit.jupiter.api.BeforeAll;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.boot.test.context.TestConfiguration;

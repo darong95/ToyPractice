@@ -1,7 +1,7 @@
 package com.example.kdy;
 
-import com.example.kdy.config.env.EnvValueLoad;
 import com.example.kdy.config.env.EnvValueSetting;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 

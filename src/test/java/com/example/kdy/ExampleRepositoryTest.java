@@ -11,14 +11,13 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
-
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
+
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Properties;

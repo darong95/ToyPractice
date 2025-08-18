@@ -1,7 +1,7 @@
 package com.example.kdy.config;
 
 import jakarta.persistence.EntityManagerFactory;
-import org.junit.jupiter.api.BeforeAll;
+
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
