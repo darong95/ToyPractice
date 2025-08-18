@@ -47,7 +47,7 @@ public class ExampleRepositoryTest {
         System.out.println("[TEST] JUNIT URL :: " + dataSource_URL);
         System.out.println("[TEST] JUNIT USERNAME :: " + dataSource_UserName);
         System.out.println("[TEST] JUNIT PASSWORD :: " + dataSource_Password);
-        System.out.println("[TEST] JUNIT DRIVER_CLASS_NAME :: " + dataSource_DriverClassName);
+        // System.out.println("[TEST] JUNIT DRIVER_CLASS_NAME :: " + dataSource_DriverClassName);
 
         dynamicPropertyRegistry.add("spring.datasource.mariadb.jdbc-url", () -> dataSource_URL);
         dynamicPropertyRegistry.add("spring.datasource.mariadb.username", () -> dataSource_UserName);
