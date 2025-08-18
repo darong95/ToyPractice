@@ -34,21 +34,6 @@ jobs:
       uses: gradle/actions/setup-gradle@v4
 
     # Step05 : JUnit과 Gradle Build 실행 (Test 포함) 시 환경 변수 주입
-    - name: Debug env vars
-      run: |
-        echo "### SPRING_DATASOURCE env vars ###"
-        printenv | grep SPRING_DATASOURCE || echo "No SPRING_DATASOURCE env vars found"
-        echo "### ALL env vars ###"
-        printenv
-      env:
-        SPRING_DATASOURCE_H2_URL: ${{ secrets.SPRING_DATASOURCE_H2_URL }}
-        SPRING_DATASOURCE_H2_USERNAME: ${{ secrets.SPRING_DATASOURCE_H2_USERNAME }}
-        SPRING_DATASOURCE_H2_PASSWORD: ${{ secrets.SPRING_DATASOURCE_H2_PASSWORD }}
-
-        SPRING_DATASOURCE_MARIADB_URL: ${{ secrets.SPRING_DATASOURCE_MARIADB_URL }}
-        SPRING_DATASOURCE_MARIADB_USERNAME: ${{ secrets.SPRING_DATASOURCE_MARIADB_USERNAME }}
-        SPRING_DATASOURCE_MARIADB_PASSWORD: ${{ secrets.SPRING_DATASOURCE_MARIADB_PASSWORD }}
-
     - name: Build with Gradle
       run: ./gradlew clean build
       env:
