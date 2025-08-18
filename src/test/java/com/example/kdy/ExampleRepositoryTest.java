@@ -42,7 +42,7 @@ public class ExampleRepositoryTest {
         String dataSource_URL = properties.getProperty("DATASOURCE_URL_MARIADB");
         String dataSource_UserName = properties.getProperty("DATASOURCE_USERNAME_MARIADB");
         String dataSource_Password = properties.getProperty("DATASOURCE_PASSWORD_MARIADB");
-        String dataSource_DriverClassName = "org.mariadb.jdbc.Driver";
+        String dataSource_DriverClassName = "org.mariadb.jdbc.Driver"; // 직접 입력, 추후 Property 값으로 변경
 
         System.out.println("[TEST] JUNIT URL :: " + dataSource_URL);
         System.out.println("[TEST] JUNIT USERNAME :: " + dataSource_UserName);
