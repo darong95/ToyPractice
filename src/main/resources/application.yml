@@ -4,17 +4,17 @@ spring:
 
   # Database Setting
   dataSource:
-    first: # 첫 번째 DB
-      url: jdbc:h2:tcp://localhost/~/exampleKDY
-      username: kdy
-      password:
+    H2:
+      url: ${{ secrets.DATASOURCE_URL_H2 }}
+      username: ${{ secrets.DATASOURCE_USERNAME_H2 }}
+      password: ${{ secrets.DATASOURCE_PASSWORD_H2 }}
       driver-class-name: org.h2.Driver
 
-    second: # 두 번째 DB
-      url: jdbc:h2:tcp://localhost/~/testDaYoung
-      username: sa
-      password:
-      driver-class-name: org.h2.Driver
+    MariaDB:
+      url: ${{ secrets.DATASOURCE_URL_MARIADB }}
+      username: ${{ secrets.DATASOURCE_USERNAME_MARIADB }}
+      password: ${{ secrets.DATASOURCE_PASSWORD_MARIADB }}
+      driver-class-name: org.mariadb.jdbc.Driver
 
   jpa:
     hibernate:
