@@ -39,8 +39,3 @@ jobs:
           
           echo "Deployment completed successfully"
           EOF
-
-        env:
-          SPRING_DATASOURCE_MARIADB_URL: ${{ secrets.SPRING_DATASOURCE_MARIADB_URL }}
-          SPRING_DATASOURCE_MARIADB_USERNAME: ${{ secrets.SPRING_DATASOURCE_MARIADB_USERNAME }}
-          SPRING_DATASOURCE_MARIADB_PASSWORD: ${{ secrets.SPRING_DATASOURCE_MARIADB_PASSWORD }}
