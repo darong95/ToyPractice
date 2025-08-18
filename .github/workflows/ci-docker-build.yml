@@ -33,11 +33,24 @@ jobs:
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v4
 
-    # Step05 : Gradle Build 실행 (Test 포함)
+    # Step05 : JUnit과 Gradle Build 실행 시 환경 변수 주입
+    - name: Build with Gradle
+      run: ./gradlew build
+      env:
+        # GitHub SecretKey : DB
+        DATASOURCE_URL_H2: ${{ secrets.DATASOURCE_URL_H2 }}
+        DATASOURCE_USERNAME_H2: ${{ secrets.DATASOURCE_USERNAME_H2 }}
+        DATASOURCE_PASSWORD_H2: ${{ secrets.DATASOURCE_PASSWORD_H2 }}
+
+        DATASOURCE_URL_MARIADB: ${{ secrets.DATASOURCE_URL_MARIADB }}
+        DATASOURCE_USERNAME_MARIADB: ${{ secrets.DATASOURCE_USERNAME_MARIADB }}
+        DATASOURCE_PASSWORD_MARIADB: ${{ secrets.DATASOURCE_PASSWORD_MARIADB }}
+
+    # Step06 : Gradle Build 실행 (Test 포함)
     - name: Build with Gradle
       run: ./gradlew build
 
-    # Step06 : Upload Jar (GitHub Action Artifact)
+    # Step07 : Upload Jar (GitHub Action Artifact)
     - name: Upload JAR
       uses: actions/upload-artifact@v4
       with:
