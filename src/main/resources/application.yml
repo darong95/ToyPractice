@@ -3,17 +3,17 @@ spring:
     name: kdy
 
   # Database Setting
-  dataSource:
-    H2:
-      url: ${{ secrets.DATASOURCE_URL_H2 }}
-      username: ${{ secrets.DATASOURCE_USERNAME_H2 }}
-      password: ${{ secrets.DATASOURCE_PASSWORD_H2 }}
+  datasource:
+    h2:
+      url: ${DATASOURCE_URL_H2}
+      username: ${DATASOURCE_USERNAME_H2}
+      password: ${DATASOURCE_PASSWORD_H2}
       driver-class-name: org.h2.Driver
 
-    MariaDB:
-      url: ${{ secrets.DATASOURCE_URL_MARIADB }}
-      username: ${{ secrets.DATASOURCE_USERNAME_MARIADB }}
-      password: ${{ secrets.DATASOURCE_PASSWORD_MARIADB }}
+    mariadb:
+      jdbc-url: ${DATASOURCE_URL_MARIADB}
+      username: ${DATASOURCE_USERNAME_MARIADB}
+      password: ${DATASOURCE_PASSWORD_MARIADB}
       driver-class-name: org.mariadb.jdbc.Driver
 
   jpa:
