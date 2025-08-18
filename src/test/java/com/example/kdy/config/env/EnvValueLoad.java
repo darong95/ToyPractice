@@ -32,9 +32,20 @@ public class EnvValueLoad {
 
         } catch (IOException e) {
             System.out.println("[ERROR] 오류가 발생하여 실행을 종료합니다.");
-            System.out.println("[ERROR] EnvValueLoad :: " + e.getMessage());
+            System.out.println("[ERROR] EnvValueLoad :: " + e.getMessage() + "\n");
         }
 
         return properties;
+    }
+
+    public static String envProperty_GitHub(Properties properties, String secretKey) {
+        System.out.println("[CHECK] SECRET KEY :: " + secretKey);
+
+        String envProperty = properties.getProperty(secretKey);
+        String secretValue = System.getenv(secretKey); // GitHub SecretKey 값 가져오기
+        System.out.println("[CHECK] ENV VALUE :: " + envProperty);
+        System.out.println("[CHECK] SECRET VALUE :: " + secretValue);
+
+        return envProperty == null ? secretValue : envProperty;
     }
 }

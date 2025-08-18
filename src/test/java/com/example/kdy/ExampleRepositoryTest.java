@@ -30,24 +30,21 @@ public class ExampleRepositoryTest {
     @Autowired
     private ExampleRepository exampleRepository;
 
-    /*
-    @Value("${spring.datasource.mariadb.driver-class-name}")
-    private static String datSource_driverClassName;
-    */
-
     @DynamicPropertySource
     static void dynamicEnvProperty(DynamicPropertyRegistry dynamicPropertyRegistry) {
         Properties properties = EnvValueLoad.envPropertiesLoad("src/main/resources/local.env");
 
-        String dataSource_URL = properties.getProperty("DATASOURCE_URL_MARIADB");
-        String dataSource_UserName = properties.getProperty("DATASOURCE_USERNAME_MARIADB");
-        String dataSource_Password = properties.getProperty("DATASOURCE_PASSWORD_MARIADB");
+        String dataSource_URL = EnvValueLoad.envProperty_GitHub(properties, "DATASOURCE_URL_MARIADB");
+        String dataSource_UserName = EnvValueLoad.envProperty_GitHub(properties, "DATASOURCE_USERNAME_MARIADB");
+        String dataSource_Password = EnvValueLoad.envProperty_GitHub(properties, "DATASOURCE_PASSWORD_MARIADB");
         String dataSource_DriverClassName = "org.mariadb.jdbc.Driver"; // 직접 입력, 추후 Property 값으로 변경
 
+        /*
         System.out.println("[TEST] JUNIT URL :: " + dataSource_URL);
         System.out.println("[TEST] JUNIT USERNAME :: " + dataSource_UserName);
         System.out.println("[TEST] JUNIT PASSWORD :: " + dataSource_Password);
-        // System.out.println("[TEST] JUNIT DRIVER_CLASS_NAME :: " + dataSource_DriverClassName);
+        System.out.println("[TEST] JUNIT DRIVER_CLASS_NAME :: " + dataSource_DriverClassName);
+        */
 
         dynamicPropertyRegistry.add("spring.datasource.mariadb.jdbc-url", () -> dataSource_URL);
         dynamicPropertyRegistry.add("spring.datasource.mariadb.username", () -> dataSource_UserName);
