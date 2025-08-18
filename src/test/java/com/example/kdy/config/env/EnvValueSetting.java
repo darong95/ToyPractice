@@ -15,14 +15,14 @@ public class EnvValueSetting {
         EnvValueLoad.envPropertiesLoad("src/main/resources/local.env");
 
         // JUnit Test를 위한 Property Setting
-        dataSourceURL_H2 = System.getProperty("DATASOURCE_URL_H2");
-        dataSourceURL_MariaDB = System.getProperty("DATASOURCE_URL_MARIADB");
+        dataSourceURL_H2 = System.getProperty("SPRING_DATASOURCE_H2_URL");
+        dataSourceURL_MariaDB = System.getProperty("SPRING_DATASOURCE_MARIADB_URL");
 
-        dataSourceUserName_H2 = System.getProperty("DATASOURCE_USERNAME_H2");
-        dataSourceUserName_MariaDB = System.getProperty("DATASOURCE_USERNAME_MARIADB");
+        dataSourceUserName_H2 = System.getProperty("SPRING_DATASOURCE_H2_USERNAME");
+        dataSourceUserName_MariaDB = System.getProperty("SPRING_DATASOURCE_MARIADB_USERNAME");
 
-        dataSourcePassword_H2 = System.getProperty("DATASOURCE_PASSWORD_H2");
-        dataSourcePassword_MariaDB = System.getProperty("DATASOURCE_PASSWORD_MARIADB");
+        dataSourcePassword_H2 = System.getProperty("SPRING_DATASOURCE_H2_PASSWORD");
+        dataSourcePassword_MariaDB = System.getProperty("SPRING_DATASOURCE_MARIADB_PASSWORD");
     }
 
     public static void loadEnvProperty_H2() {

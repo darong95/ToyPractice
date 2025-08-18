@@ -25,6 +25,7 @@ spring:
       hibernate:
         show-sql: true # Hibernate SQL을 Console에 출력
         format-sql: true # Hibernate가 생성하는 SQL을 가독성 좋게 표현
+        dialect: org.hibernate.dialect.MariaDBDialect # SQL을 MariaDB 문법에 맞춤
 
 # 데이터 베이스 실행 시, SQL 확인을 위한 설정 (Hibernate)
 logging:

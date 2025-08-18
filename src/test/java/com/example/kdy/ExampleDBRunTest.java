@@ -21,7 +21,7 @@ import java.util.Properties;
 @SpringBootTest
 @Transactional
 @Rollback(value = false)
-public class ExampleRepositoryTest {
+public class ExampleDBRunTest {
     @Autowired
     private ExampleRepository exampleRepository;
 
