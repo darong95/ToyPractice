@@ -39,17 +39,15 @@ public class ExampleRepositoryTest {
         String dataSource_Password = EnvValueLoad.envProperty_GitHub(properties, "DATASOURCE_PASSWORD_MARIADB");
         String dataSource_DriverClassName = "org.mariadb.jdbc.Driver"; // 직접 입력, 추후 Property 값으로 변경
 
-        /*
         System.out.println("[TEST] JUNIT URL :: " + dataSource_URL);
         System.out.println("[TEST] JUNIT USERNAME :: " + dataSource_UserName);
         System.out.println("[TEST] JUNIT PASSWORD :: " + dataSource_Password);
         System.out.println("[TEST] JUNIT DRIVER_CLASS_NAME :: " + dataSource_DriverClassName);
-        */
 
         dynamicPropertyRegistry.add("spring.datasource.mariadb.jdbc-url", () -> dataSource_URL);
         dynamicPropertyRegistry.add("spring.datasource.mariadb.username", () -> dataSource_UserName);
         dynamicPropertyRegistry.add("spring.datasource.mariadb.password", () -> dataSource_Password);
-        dynamicPropertyRegistry.add("spring.dataSource.mariadb.driver-class-name", () -> dataSource_DriverClassName);
+        dynamicPropertyRegistry.add("spring.datasource.mariadb.driver-class-name", () -> dataSource_DriverClassName);
     }
 
     @Test
