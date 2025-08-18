@@ -35,7 +35,7 @@ jobs:
 
     # Step05 : JUnit과 Gradle Build 실행 (Test 포함) 시 환경 변수 주입
     - name: Build with Gradle
-      run: ./gradlew build
+      run: ./gradlew clean build
       env:
         # GitHub SecretKey : DB
         SPRING_DATASOURCE_H2_URL: ${{ secrets.SPRING_DATASOURCE_H2_URL }}
