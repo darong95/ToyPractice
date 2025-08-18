@@ -20,11 +20,6 @@ jobs:
 
       # Step02 : NCP 서버에서 Docker 이미지 Pull 및 Container 재시작
       - name: Deploy latest Docker image on NCP server
-        env:
-          SPRING_DATASOURCE_MARIADB_URL: ${{ secrets.SPRING_DATASOURCE_MARIADB_URL }}
-          SPRING_DATASOURCE_MARIADB_USERNAME: ${{ secrets.SPRING_DATASOURCE_MARIADB_USERNAME }}
-          SPRING_DATASOURCE_MARIADB_PASSWORD: ${{ secrets.SPRING_DATASOURCE_MARIADB_PASSWORD }}
-
         run:
           |
           ssh -o StrictHostKeyChecking=no ${{ secrets.NCP_SSH_USER }}@${{ secrets.NCP_SERVER_IP }} << EOF
@@ -36,10 +31,10 @@ jobs:
           docker rm ${{ secrets.DOCKER_REPOSITORY }} || true
       
           echo "Run new container with environment variables"
-          docker run -d --name ${{ secrets.DOCKER_REPOSITORY }} -p 80:8080 \
-          -e SPRING_DATASOURCE_MARIADB_URL=$SPRING_DATASOURCE_MARIADB_URL \
-          -e SPRING_DATASOURCE_MARIADB_USERNAME=$SPRING_DATASOURCE_MARIADB_USERNAME \
-          -e SPRING_DATASOURCE_MARIADB_PASSWORD=$SPRING_DATASOURCE_MARIADB_PASSWORD \
+          docker run -d --name ${{ secrets.DOCKER_REPOSITORY }} -p 80:8080 \\
+          -e SPRING_DATASOURCE_MARIADB_URL="${{ secrets.SPRING_DATASOURCE_MARIADB_URL }}" \\
+            -e SPRING_DATASOURCE_MARIADB_USERNAME="${{ secrets.SPRING_DATASOURCE_MARIADB_USERNAME }}" \\
+            -e SPRING_DATASOURCE_MARIADB_PASSWORD="${{ secrets.SPRING_DATASOURCE_MARIADB_PASSWORD }}" \\
           ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}:latest
       
           echo "Deployment completed successfully"
