@@ -22,7 +22,7 @@ jobs:
       - name: Deploy latest Docker image on NCP server
         run:
           |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.NCP_SSH_USER }}@${{ secrets.NCP_SERVER_IP }} << 'EOF'
+          ssh -o StrictHostKeyChecking=no ${{ secrets.NCP_SSH_USER }}@${{ secrets.NCP_SERVER_IP }} << EOF
           echo "Pull latest image from Docker Hub"
           docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}:latest
           
