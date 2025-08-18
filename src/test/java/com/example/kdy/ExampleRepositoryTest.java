@@ -1,8 +1,5 @@
 package com.example.kdy;
 
-import com.example.kdy.config.DataSourceConfig;
-import com.example.kdy.config.JpaMariaDBConfig;
-
 import com.example.kdy.config.env.EnvValueLoad;
 import com.example.kdy.entity.ExampleEntity;
 import com.example.kdy.repository.ExampleRepository;
@@ -14,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 
@@ -25,7 +21,6 @@ import java.util.Properties;
 @SpringBootTest
 @Transactional
 @Rollback(value = false)
-@ContextConfiguration(classes = {DataSourceConfig.class, JpaMariaDBConfig.class})
 public class ExampleRepositoryTest {
     @Autowired
     private ExampleRepository exampleRepository;
