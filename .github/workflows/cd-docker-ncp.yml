@@ -33,8 +33,8 @@ jobs:
           echo "Run new container with environment variables"
           docker run -d --name ${{ secrets.DOCKER_REPOSITORY }} -p 80:8080 \\
           -e SPRING_DATASOURCE_MARIADB_URL="${{ secrets.SPRING_DATASOURCE_MARIADB_URL }}" \\
-            -e SPRING_DATASOURCE_MARIADB_USERNAME="${{ secrets.SPRING_DATASOURCE_MARIADB_USERNAME }}" \\
-            -e SPRING_DATASOURCE_MARIADB_PASSWORD="${{ secrets.SPRING_DATASOURCE_MARIADB_PASSWORD }}" \\
+          -e SPRING_DATASOURCE_MARIADB_USERNAME="${{ secrets.SPRING_DATASOURCE_MARIADB_USERNAME }}" \\
+          -e SPRING_DATASOURCE_MARIADB_PASSWORD="${{ secrets.SPRING_DATASOURCE_MARIADB_PASSWORD }}" \\
           ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}:latest
       
           echo "Deployment completed successfully"
