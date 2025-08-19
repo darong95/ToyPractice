@@ -9,40 +9,7 @@
             <!-- 페이지 본문 시작 -->
             <div id="content-wrapper" class="d-flex flex-column">
                 <div id="content">
-                    <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-                        <ul class="navbar-nav ml-auto">
-                            <li class="nav-item dropdown no-arrow">
-                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                    <img class="img-profile rounded-circle" th:src="@{img/undraw_profile.svg}">
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        Profile
-                                    </a>
-
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        Settings
-                                    </a>
-
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        Activity Log
-                                    </a>
-
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        Logout
-                                    </a>
-                                </div>
-                            </li>
-                        </ul>
-                    </nav>
+                    <nav th:replace="~{common/common-navbar :: common-navbar}"></nav>
 
                     <div class="container-fluid">
                         <div class="text-center">
@@ -50,44 +17,72 @@
                             <p class="mb-4">This project is progressing! It will be continuously updated 🔥</p>
                         </div>
 
-                        <div class="card shadow mb-4">
-                            <a href="#collapseCardExample_1" class="d-block card-header py-3" data-toggle="collapse"
-                               role="button" aria-expanded="true" aria-controls="collapseCardExample">
-                                <h6 class="m-0 font-weight-bold text-primary"> Development and Database</h6>
-                            </a>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="card shadow mb-4">
+                                    <a href="#collapseCardExample_1" class="d-block card-header py-3" data-toggle="collapse"
+                                       role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                                        <h6 class="m-0 font-weight-bold text-primary"> 💻 Development</h6>
+                                    </a>
 
-                            <div class="collapse show" id="collapseCardExample_1">
-                                <div class="card-body">
-                                    <strong>💻 Development</strong><br>
-                                    ● Java 17 and Gradle <br>
-                                    ● IntelliJ IDEA (Build Version 25.01.03) <br>
-                                    ● Spring Boot 3.4.9 (Deploy Type is Jar) <br><br>
-
-                                    <strong>🗄 Database</strong><br>
-                                    ● H2 (In-Memory-DB) <br>
-                                    ● MariaDB (Docker Image : latest) <br>
-                                    ● JPA (Hibernate)
+                                    <div class="collapse show" id="collapseCardExample_1">
+                                        <div class="card-body">
+                                            ● Java 17 and Gradle <br>
+                                            ● IntelliJ IDEA (Build Version 25.01.03) <br>
+                                            ● Spring Boot 3.4.9 (Deploy Type is Jar)
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="card shadow mb-4">
-                            <a href="#collapseCardExample_2" class="d-block card-header py-3" data-toggle="collapse"
-                               role="button" aria-expanded="true" aria-controls="collapseCardExample">
-                                <h6 class="m-0 font-weight-bold text-primary">CI / CD</h6>
-                            </a>
+                            <div class="col-lg-6">
+                                <div class="card shadow mb-4">
+                                    <a href="#collapseCardExample_2" class="d-block card-header py-3" data-toggle="collapse"
+                                       role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                                        <h6 class="m-0 font-weight-bold text-primary">🗄 Database</h6>
+                                    </a>
 
-                            <div class="collapse show" id="collapseCardExample_2">
-                                <div class="card-body">
-                                    <strong>● GitHub Actions</strong><br><br>
+                                    <div class="collapse show" id="collapseCardExample_2">
+                                        <div class="card-body">
+                                            ● H2 (In-Memory-DB) <br>
+                                            ● MariaDB (Docker Image : latest) <br>
+                                            ● JPA (Hibernate)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                                    <strong>📤 CI (Continuous Integration)</strong><br>
-                                    - IntelliJ ➡️ Response to push and pull operation <br>
-                                    - Docker ➡️ Build and make image 🐳 <br><br>
+                            <div class="col-lg-6">
+                                <div class="card shadow mb-4">
+                                    <a href="#collapseCardExample_3" class="d-block card-header py-3" data-toggle="collapse"
+                                       role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                                        <h6 class="m-0 font-weight-bold text-primary">📤 CI (Continuous Integration)</h6>
+                                    </a>
 
-                                    <strong>📥 CD (Continuous Deployment)</strong><br>
-                                    - NCP ➡️ Pull from DockerHub the latest image <br>
-                                    - NCP ➡️ Run and deploy the latest data to the server ☁️
+                                    <div class="collapse show" id="collapseCardExample_3">
+                                        <div class="card-body">
+                                            <strong>● GitHub Actions</strong><br><br>
+                                            - IntelliJ ➡️ Response to push and pull operation <br>
+                                            - Docker ➡️ Build and make image 🐳
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="card shadow mb-4">
+                                    <a href="#collapseCardExample_4" class="d-block card-header py-3" data-toggle="collapse"
+                                       role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                                        <h6 class="m-0 font-weight-bold text-primary">📥 CD (Continuous Deployment)</h6>
+                                    </a>
+
+                                    <div class="collapse show" id="collapseCardExample_4">
+                                        <div class="card-body">
+                                            <strong>● GitHub Actions</strong><br><br>
+                                            - NCP ➡️ Pull from DockerHub the latest image <br>
+                                            - NCP ➡️ Run and deploy the latest data to the server ☁️
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
