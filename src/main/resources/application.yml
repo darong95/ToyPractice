@@ -18,8 +18,8 @@ spring:
 
   jpa:
     hibernate:
-      # ddl-auto: none # Application이 재실행 돼도 테이블 유지
-      ddl-auto: create # Application이 재실행 될 때마다 테이블 Drop + Create
+      ddl-auto: none # Application이 재실행 돼도 테이블 유지
+      # ddl-auto: create # Application이 재실행 될 때마다 테이블 Drop + Create
 
     properties:
       hibernate:
@@ -30,4 +30,5 @@ spring:
 # 데이터 베이스 실행 시, SQL 확인을 위한 설정 (Hibernate)
 logging:
   level:
-    org.hibernate.SQL: info
+    org.hibernate.SQL: DEBUG # 로그 레벨을 DEBUG로
+    org.hibernate.type.descriptor.sql: TRACE # 파라미터까지 출력 (매우 유용)
