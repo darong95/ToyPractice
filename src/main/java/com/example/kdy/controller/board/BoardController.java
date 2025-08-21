@@ -24,7 +24,7 @@ public class BoardController {
 
     @GetMapping("/boardList")
     public String boardList(Model model) { // 게시판 리스트
-        log.info("[START] Call board List");
+        log.info("[START] Call board List :)");
 
         // 게시판 전체 리스트 가져오기
         List<BoardDTO> boardList = boardList = boardService.boardList();
