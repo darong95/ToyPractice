@@ -27,13 +27,12 @@ public class BoardController {
         log.info("[START] Call board List");
 
         // 게시판 전체 리스트 가져오기
-        List<BoardDTO> boardList = new ArrayList<>();
-        boardList = boardService.boardList();
+        List<BoardDTO> boardList = boardList = boardService.boardList();
 
         // View로 데이터 전달
         model.addAttribute("boardList", boardList);
 
-        return "/board/board-list";
+        return "board/board-list";
     }
 
     @GetMapping("/boardSearchList")
@@ -45,6 +44,6 @@ public class BoardController {
         // View로 데이터 전달
         model.addAttribute("boardList", boardSearchList);
 
-        return "/board/boardList";
+        return "board/boardList";
     }
 }
