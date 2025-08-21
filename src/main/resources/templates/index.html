@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="~{common/common-header}"></head>
+    <head th:replace="~{/common/common-header}"></head>
 
     <body id="page-top">
         <div id="wrapper">
-            <ul th:replace="~{common/common-menu :: common-menu}"></ul>
+            <ul th:replace="~{/common/common-menu :: common-menu}"></ul>
 
             <!-- 페이지 본문 시작 -->
             <div id="content-wrapper" class="d-flex flex-column">
                 <div id="content">
-                    <nav th:replace="~{common/common-navbar :: common-navbar}"></nav>
+                    <nav th:replace="~{/common/common-navbar :: common-navbar}"></nav>
 
                     <div class="container-fluid">
                         <div class="text-center">
@@ -91,6 +91,6 @@
             </div>
         </div>
 
-        <th:block th:replace="~{common/common-bottom :: common-bottom}"></th:block>
+        <th:block th:replace="~{/common/common-bottom :: common-bottom}"></th:block>
     </body>
 </html>

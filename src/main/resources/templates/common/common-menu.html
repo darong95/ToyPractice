@@ -27,7 +27,7 @@
             <!-- else -->
             <th:block th:if="${showMenuList.mCategory == false}">
                 <li class="nav-item">
-                    <a class="nav-link" href="">
+                    <a class="nav-link" th:href="${showMenuList.mLinkUrl}">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span th:text="${showMenuList.mName}"></span>
                     </a>
