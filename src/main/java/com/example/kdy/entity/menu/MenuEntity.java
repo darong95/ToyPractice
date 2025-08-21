@@ -14,7 +14,7 @@ public class MenuEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "M_SEQ", nullable = false)
-    private long mSeq; // 메뉴 아이디
+    private long mSeq; // 메뉴 아이디 (PK)
 
     @Column(name = "M_PARENT_SEQ", nullable = false)
     private long mParentSeq; // 상위 메뉴 시퀀스 값
@@ -28,10 +28,7 @@ public class MenuEntity {
     @Column(name = "M_NAME", nullable = false, length = 50)
     private String mName = ""; // 메뉴명
 
-    @Column(name = "M_COMMENT", nullable = true)
     private String mComment; // 메뉴 설명
-
-    @Column(name = "M_LINK_URL", nullable = true)
     private String mLinkUrl = ""; // 메뉴 URL
 
     @Column(name = "M_CATEGORY", nullable = true, length = 50)

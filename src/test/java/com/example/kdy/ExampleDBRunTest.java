@@ -50,14 +50,14 @@ public class ExampleDBRunTest {
     public void dbConnection_MariaDB() {
         ExampleEntity exampleEntity = new ExampleEntity();
 
-        exampleEntity.setUserName("Da Young");
-        exampleEntity.setUserAge("Thirty One");
+        exampleEntity.setUserName("DaYoung");
+        exampleEntity.setUserAge("ThirtyOne");
 
         exampleRepository.save(exampleEntity);
 
         ExampleEntity exampleEntity_Find = exampleRepository.findById(exampleEntity.getUserNum()).orElse(null);
 
         Assertions.assertThat(exampleEntity_Find).isNotNull();
-        Assertions.assertThat(exampleEntity_Find.getUserName()).isEqualTo("Da Young");
+        Assertions.assertThat(exampleEntity_Find.getUserName()).isEqualTo("DaYoung");
     }
 }
