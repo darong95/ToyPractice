@@ -30,7 +30,7 @@ public class BoardService {
         return boardMapper.convertToListDTO(boardList);
     }
 
-    public List<BoardDTO> boardSearchList(BoardSearchDTO boardSearchDTO) { // 게시판 상세 검색
+    public List<BoardDTO> boardSearchList(BoardSearchDTO boardSearchDTO) { // 게시판 상세 검색 (조건 검색)
         // 상세 검색 조건 설정
         Specification<BoardEntity> boardSpecification = Specification.where(null);
 
