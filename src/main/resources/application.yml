@@ -38,3 +38,4 @@ logging:
   level:
     org.hibernate.SQL: DEBUG # 로그 레벨을 DEBUG로
     org.hibernate.type.descriptor.sql: TRACE # 파라미터까지 출력 (매우 유용)
+    org.thymeleaf: DEBUG
