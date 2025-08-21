@@ -36,6 +36,11 @@ spring:
 # 데이터 베이스 실행 시, SQL 확인을 위한 설정 (Hibernate)
 logging:
   level:
-    org.hibernate.SQL: DEBUG # 로그 레벨을 DEBUG로
-    org.hibernate.type.descriptor.sql: TRACE # 파라미터까지 출력 (매우 유용)
-    org.thymeleaf: DEBUG
+    org:
+      hibernate:
+        SQL: DEBUG      # 로그 레벨을 DEBUG로
+        type:
+          descriptor:
+            sql: TRACE  # 파라미터까지 출력 (매우 유용)
+
+      thymeleaf: DEBUG
