@@ -36,10 +36,9 @@ public class BoardController {
     }
 
     @GetMapping("/boardSearchList")
-    public String boardList(Model model, BoardSearchDTO boardSearchDTO) { // 게시판 리스트 (상세 검색)
+    public String boardSearchList(Model model, BoardSearchDTO boardSearchDTO) { // 게시판 리스트 (상세 검색)
         // 게시판 전체 리스트 가져오기
-        List<BoardDTO> boardSearchList = new ArrayList<>();
-        boardSearchList = boardService.boardSearchList(boardSearchDTO);
+        List<BoardDTO> boardSearchList = boardService.boardSearchList(boardSearchDTO);
 
         // View로 데이터 전달
         model.addAttribute("boardList", boardSearchList);
