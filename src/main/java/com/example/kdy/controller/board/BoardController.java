@@ -33,7 +33,7 @@ public class BoardController {
         // View로 데이터 전달
         model.addAttribute("boardList", boardList);
 
-        return "/board/boardList";
+        return "/board/board-list";
     }
 
     @GetMapping("/boardSearchList")
