@@ -13,17 +13,16 @@
 
                     <div class="container-fluid">
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-2 text-gray-800">Notice</h1>
-                            <a th:href="@{/board/boardWriteForm}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Go To Write</a>
+                            <h1 class="h3 mb-2 text-gray-800">User</h1>
                         </div>
 
-                        <p class="mb-4">This category is where announcements are displayed 😀</p>
+                        <p class="mb-4">This category is where you can see your registered members 😀</p>
 
                         <!-- List Table Start -->
                         <div class="card shadow mb-4">
                             <!-- Table Title -->
                             <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">Here is a list of announcements in administrator mode</h6>
+                                <h6 class="m-0 font-weight-bold text-primary">You can modify member permissions.</h6>
                             </div>
 
                             <!-- Table Content -->
@@ -33,17 +32,17 @@
                                         <thead style="text-align: center;">
                                             <tr>
                                                 <th>No</th>
-                                                <th>Title</th>
+                                                <th>ID</th>
+                                                <th>Email</th>
                                                 <th>Name</th>
-                                                <th>Title</th>
                                                 <th>Date</th>
                                             </tr>
                                         </thead>
 
-                                        <tbody th:with="boardListSize=${boardList.size()}">
-                                            <th:block th:if="${boardListSize} == 0">
+                                        <tbody th:with="userListSize=${userList.size()}">
+                                            <th:block th:if="${userListSize} == 0">
                                                 <tr>
-                                                    <td colspan="5" style="text-align: center;">등록된 게시글이 없습니다.</td>
+                                                    <td colspan="5" style="text-align: center;">가입한 사용자가 없습니다.</td>
                                                 </tr>
                                             </th:block>
                                         </tbody>

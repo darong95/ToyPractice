@@ -43,4 +43,4 @@ logging:
           descriptor:
             sql: TRACE  # 파라미터까지 출력 (매우 유용)
 
-      thymeleaf: DEBUG
+      # thymeleaf: DEBUG

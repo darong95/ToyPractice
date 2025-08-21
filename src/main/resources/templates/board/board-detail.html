@@ -14,7 +14,7 @@
                     <div class="container-fluid">
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
                             <h1 class="h3 mb-2 text-gray-800">Notice</h1>
-                            <a th:href="@{/board/boardWriteForm}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Go To Write</a>
+                            <a th:href="@{/board/boardList}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Back TO list</a>
                         </div>
 
                         <p class="mb-4">This category is where announcements are displayed 😀</p>
@@ -30,23 +30,6 @@
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-bordered" id="dataTable" style="border-spacing: 0; width: 100%;">
-                                        <thead style="text-align: center;">
-                                            <tr>
-                                                <th>No</th>
-                                                <th>Title</th>
-                                                <th>Name</th>
-                                                <th>Title</th>
-                                                <th>Date</th>
-                                            </tr>
-                                        </thead>
-
-                                        <tbody th:with="boardListSize=${boardList.size()}">
-                                            <th:block th:if="${boardListSize} == 0">
-                                                <tr>
-                                                    <td colspan="5" style="text-align: center;">등록된 게시글이 없습니다.</td>
-                                                </tr>
-                                            </th:block>
-                                        </tbody>
                                     </table>
                                 </div>
                             </div>

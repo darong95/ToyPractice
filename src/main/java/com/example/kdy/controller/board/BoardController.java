@@ -2,6 +2,7 @@ package com.example.kdy.controller.board;
 
 import com.example.kdy.dto.board.BoardDTO;
 import com.example.kdy.dto.board.BoardSearchDTO;
+
 import com.example.kdy.service.board.BoardService;
 
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -44,5 +46,15 @@ public class BoardController {
         model.addAttribute("boardList", boardSearchList);
 
         return "board/boardList";
+    }
+
+    @GetMapping("/boardDetail")
+    public String boardDetail() { // 게시판 상세 내용
+        return "board/board-detail";
+    }
+
+    @GetMapping("/boardWriteForm")
+    public String boardWrite() { // 게시판 신규 작성 화면 이동
+        return "board/board-writeForm";
     }
 }
