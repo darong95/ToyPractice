@@ -16,7 +16,7 @@ import java.util.*;
 public class HomeController {
     @RequestMapping("/home")
     public String home(Model model) { // 첫 화면
-        log.info("[START] The Application is start :)");
+        log.info("[START] The Application is start :)♡");
         return "index";
     }
 }
