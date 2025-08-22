@@ -5,16 +5,21 @@ import com.example.kdy.dto.board.BoardSearchDTO;
 
 import com.example.kdy.service.board.BoardService;
 
+import jakarta.validation.Valid;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
+import org.springframework.validation.BindingResult;
+
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -54,7 +59,18 @@ public class BoardController {
     }
 
     @GetMapping("/boardWriteForm")
-    public String boardWrite() { // 게시판 신규 작성 화면 이동
+    public String boardWriteForm(Model model) { // 게시판 신규 작성 화면
+        model.addAttribute("boardPost", new BoardDTO());
         return "board/board-writeForm";
+    }
+
+    @PostMapping("/boardWrite")
+    public String boardWrite(@Valid @ModelAttribute("boardPost") BoardDTO boardDTO, BindingResult bindingResult) { // 게시판 신규 작성 (저장)
+        // 에러가 있을 경우 작성 폼으로 이동 ➡️ 내용을 보여주기 위함
+        if (bindingResult.hasErrors()) {
+            return "board/board-writeForm";
+        }
+
+        return "redirect:/board/board-list";
     }
 }
