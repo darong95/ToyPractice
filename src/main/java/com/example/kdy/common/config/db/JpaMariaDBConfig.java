@@ -1,0 +1,43 @@
+package com.example.kdy.common.config.db;
+
+import jakarta.persistence.EntityManagerFactory;
+
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+
+import org.springframework.transaction.PlatformTransactionManager;
+import javax.sql.DataSource;
+
+@Configuration
+@EnableJpaRepositories(
+        basePackages = "com.example.kdy",
+        entityManagerFactoryRef = "entityManagerFactory_MariaDB",
+        transactionManagerRef = "transactionManager_MariaDB"
+)
+public class JpaMariaDBConfig {  // JUnit Configuration
+    @Bean
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory_MariaDB(
+            EntityManagerFactoryBuilder entityManagerFactoryBuilder,
+            @Qualifier("configMariaDB")DataSource dataSource) {
+
+        return entityManagerFactoryBuilder
+                .dataSource(dataSource)
+                .packages("com.example.kdy")
+                .persistenceUnit("mariaDB")
+                .build();
+    }
+
+    @Bean
+    public PlatformTransactionManager transactionManager_MariaDB(
+            @Qualifier("entityManagerFactory_MariaDB")EntityManagerFactory entityManagerFactory) {
+        return new JpaTransactionManager(entityManagerFactory);
+    }
+}
