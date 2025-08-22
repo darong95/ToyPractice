@@ -16,7 +16,7 @@ public class BoardEntity extends DateEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="B_SEQ", nullable = false)
-    private long bSeq; // 게시판 아이디 (PK)
+    private Long bSeq; // 게시판 아이디 (PK)
 
     @ManyToOne // 다대 일 관계 ➡️ U_SEQ는 B_SEQ를 여러개 가질 수 있음
     @JoinColumn(name="U_SEQ", nullable = false)

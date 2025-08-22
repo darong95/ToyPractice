@@ -11,7 +11,7 @@ public class EnvValueSetting {
     private static String dataSourceUserName_MariaDB;
     private static String dataSourcePassword_MariaDB;
 
-    private static void checkEnvValue() {
+    private static void checkEnvValue() { // 프로퍼티 값을 가져오는 JUnit 테스트
         EnvValueLoad.envPropertiesLoad("src/main/resources/local.env");
 
         // JUnit Test를 위한 Property Setting

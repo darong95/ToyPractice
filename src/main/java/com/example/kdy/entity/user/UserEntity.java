@@ -14,7 +14,7 @@ public class UserEntity extends DateEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "U_SEQ", nullable = false)
-    private long uSeq;
+    private Long USeq;
 
     @Column(name = "U_ID", nullable = false, length = 50)
     private String uId;
@@ -30,5 +30,4 @@ public class UserEntity extends DateEntity {
 
     @Column(name = "U_PHONENUMBER", nullable = false)
     private String uPhoneNumber;
-
 }

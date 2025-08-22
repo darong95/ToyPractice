@@ -10,8 +10,10 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface BoardMapper {
-    @Mapping(source = "regDate", target = "regDate")
-    @Mapping(source = "updateDate", target = "updateDate")
+    @Mapping(source = "userEntity.USeq", target = "USeq")
     BoardDTO convertToDTO(BoardEntity boardEntity);
     List<BoardDTO> convertToListDTO(List<BoardEntity> boardList);
+
+    @Mapping(source = "USeq", target = "userEntity.USeq")
+    BoardEntity convertToEntity(BoardDTO boardDTO);
 }

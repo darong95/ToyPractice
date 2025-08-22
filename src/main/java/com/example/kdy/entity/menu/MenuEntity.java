@@ -14,10 +14,10 @@ public class MenuEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "M_SEQ", nullable = false)
-    private long mSeq; // 메뉴 아이디 (PK)
+    private Long mSeq; // 메뉴 아이디 (PK)
 
     @Column(name = "M_PARENT_SEQ", nullable = false)
-    private long mParentSeq; // 상위 메뉴 시퀀스 값
+    private Long mParentSeq; // 상위 메뉴 시퀀스 값
 
     @Column(name = "M_DEPTH", nullable = false)
     private int mDepth; // 메뉴의 Depth, 최상단은 0 (Default)
