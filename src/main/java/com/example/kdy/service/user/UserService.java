@@ -21,7 +21,7 @@ public class UserService {
     private final UserRepository userRepository;
 
     public List<UserDTO> userList() {
-        Sort sort = Sort.by(Sort.Order.desc("uSeq"));
+        Sort sort = Sort.by(Sort.Order.desc("USeq"));
         List<UserEntity> userList = userRepository.findAll(sort);
 
         return userMapper.convertToListDTO(userList);

@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserDTO {
-    private long uSeq;
+    private long USeq;
 
     private String uId;
     private String uName;
