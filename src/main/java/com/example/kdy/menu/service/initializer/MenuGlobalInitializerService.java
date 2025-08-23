@@ -14,7 +14,7 @@ import java.util.Map;
 @Slf4j
 @ControllerAdvice // 모든 컨트롤러에 적용
 @AllArgsConstructor
-public class MenuGlobalInitializerSerivce {
+public class MenuGlobalInitializerService {
     private final MenuSettingService menuSettingService;
 
     @ModelAttribute("menuList")
