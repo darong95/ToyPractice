@@ -4,6 +4,7 @@ import com.example.kdy.board.dto.BoardDTO;
 import com.example.kdy.board.dto.BoardListDTO;
 import com.example.kdy.board.dto.BoardSearchDTO;
 
+import com.example.kdy.board.dto.BoardUpdateDTO;
 import com.example.kdy.board.entity.BoardEntity;
 import com.example.kdy.board.mapper.BoardMapper;
 import com.example.kdy.board.repository.BoardRepository;
@@ -87,11 +88,18 @@ public class BoardService {
     }
 
     public BoardDTO boaradWrite(BoardDTO boardDTO) {
-        log.info("[TEST] U_SEQ : " + boardDTO.getUSeq());
-
         BoardEntity boardEntity = boardMapper.convertToEntity(boardDTO);
         BoardEntity saveBoardEntity = boardRepository.save(boardEntity); // 게시글 저장
 
         return boardMapper.convertToDTO(saveBoardEntity);
+    }
+
+    public BoardDTO boaradUpdate(BoardUpdateDTO boardUpdateDTO) {
+        BoardEntity boardEntity = boardMapper.convertToUpdateEntity(boardUpdateDTO);
+        boardEntity.setUpdateDate(dateUtilComponent.getCurrentDate_MICRO()); // 업데이트 시간 설정
+
+        BoardEntity updateBoardEntity = boardRepository.save(boardEntity); // 게시글 수정
+
+        return boardMapper.convertToDTO(updateBoardEntity);
     }
 }

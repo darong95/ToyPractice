@@ -19,13 +19,13 @@ public class BoardEntity extends DateEntity {
     private Long bSeq; // 게시판 아이디 (PK)
 
     @ManyToOne(fetch = FetchType.LAZY) // 다대 일 관계 ➡️ U_SEQ는 B_SEQ를 여러개 가질 수 있음
-    @JoinColumn(name="U_SEQ", nullable = false)
+    @JoinColumn(name="U_SEQ", nullable = false, updatable = false)
     private UserEntity userEntity; // 외래키 (FK)
 
     @Column(name = "B_TITLE", nullable = false)
     private String bTitle; // 게시글 제목
 
-    @Column(name = "B_REG_ID", nullable = false)
+    @Column(name = "B_REG_ID", nullable = false, updatable = false)
     private String bRegId; // 게시글 등록 아이디
 
     private String bFilePath; // 첨부 파일 경로

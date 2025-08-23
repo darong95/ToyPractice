@@ -29,6 +29,10 @@ public class DateUtilComponent {
                 .toFormatter());
     }
 
+    public LocalDateTime getCurrentDate_MICRO() {
+        return LocalDateTime.now();
+    }
+
     public String format_String(String targetDate, String formatType) { // String
         String tempDateFormat = "";
 

@@ -21,6 +21,9 @@
 
                         <!-- Write Form Start -->
                         <form th:action="@{/board/boardUpdate}" th:object="${boardPost}" method="post">
+                            <!-- Update Parameter -->
+                            <input type="hidden" th:field="*{bSeq}"/>
+
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="card mb-4">
