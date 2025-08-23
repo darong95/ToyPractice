@@ -18,7 +18,7 @@ public class BoardEntity extends DateEntity {
     @Column(name="B_SEQ", nullable = false)
     private Long bSeq; // 게시판 아이디 (PK)
 
-    @ManyToOne // 다대 일 관계 ➡️ U_SEQ는 B_SEQ를 여러개 가질 수 있음
+    @ManyToOne(fetch = FetchType.LAZY) // 다대 일 관계 ➡️ U_SEQ는 B_SEQ를 여러개 가질 수 있음
     @JoinColumn(name="U_SEQ", nullable = false)
     private UserEntity userEntity; // 외래키 (FK)
 

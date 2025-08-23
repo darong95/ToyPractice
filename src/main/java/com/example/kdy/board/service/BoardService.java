@@ -22,6 +22,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.BiConsumer;
 
 @Slf4j
@@ -73,7 +74,19 @@ public class BoardService {
         return boardMapper.convertToLReadListDTO(boardSearchList);
     }
 
-    public BoardDTO writeBoard(BoardDTO boardDTO) {
+    public BoardDTO boardRead(Long bSeq) {
+        Optional<BoardEntity> boardOptional = boardRepository.findById(bSeq);
+
+        if (boardOptional.isPresent()) { // 조회 값이 있어야 True
+            BoardEntity boardEntity = boardOptional.get();
+            return boardMapper.convertToDTO(boardEntity);
+
+        } else {
+            throw new RuntimeException("게시글을 찾을 수 없습니다.");
+        }
+    }
+
+    public BoardDTO boaradWrite(BoardDTO boardDTO) {
         log.info("[TEST] U_SEQ : " + boardDTO.getUSeq());
 
         BoardEntity boardEntity = boardMapper.convertToEntity(boardDTO);

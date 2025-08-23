@@ -16,10 +16,7 @@ import org.springframework.ui.Model;
 
 import org.springframework.validation.BindingResult;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -46,8 +43,11 @@ public class BoardController {
         return "board/boardList";
     }
 
-    @GetMapping("/boardDetail")
-    public String boardDetail() { // 게시판 상세 내용
+    @GetMapping("/boardDetail/{bSeq}")
+    public String boardDetail(@PathVariable Long bSeq, Model model) { // 게시판 상세 내용
+        BoardDTO boardDTO = boardService.boardRead(bSeq);
+        model.addAttribute("boardPost", boardDTO);
+
         return "board/board-detail";
     }
 
@@ -69,7 +69,7 @@ public class BoardController {
         boardDTO.setBRegId("admin");
         boardDTO.setUSeq(1L);
 
-        boardService.writeBoard(boardDTO);
+        boardService.boaradWrite(boardDTO);
 
         return "redirect:/board/boardList";
     }

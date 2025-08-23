@@ -50,9 +50,15 @@
                                             <!-- 게시글이 있을 경우 -->
                                             <th:block th:if="${boardListSize} != 0">
                                                 <th:block th:each="boardList, boardIndex : ${boardList}">
-                                                    <tr>
+                                                    <tr style="text-align: center;">
                                                         <td th:text="${boardIndex.size - boardIndex.index}"></td>
-                                                        <td th:text="${boardList.boardDTO.bTitle}"></td>
+
+                                                        <td>
+                                                            <a th:href="@{/board/boardDetail/{bSeq}(bSeq=${boardList.boardDTO.bSeq})}"
+                                                               th:text="${boardList.boardDTO.bTitle}">
+                                                            </a>
+                                                        </td>
+
                                                         <td th:text="${boardList.boardDTO.bRegId}"></td>
                                                         <td th:text="${boardList.boardDTO.regDate}"></td>
                                                     </tr>
