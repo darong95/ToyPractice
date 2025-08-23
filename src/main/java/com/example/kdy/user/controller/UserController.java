@@ -1,6 +1,6 @@
 package com.example.kdy.user.controller;
 
-import com.example.kdy.user.dto.UserDTO;
+import com.example.kdy.user.dto.UserListDTO;
 import com.example.kdy.user.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -23,12 +23,7 @@ public class UserController {
 
     @GetMapping("/userList")
     public String userList(Model model) {
-        log.info("[START] Call user List :)");
-
-        // 사용자 전체 리스트 가져오기
-        List<UserDTO> userList = userService.userList();
-
-        // View로 데이터 전달
+        List<UserListDTO> userList = userService.userList();
         model.addAttribute("userList", userList);
 
         return "user/user-list";

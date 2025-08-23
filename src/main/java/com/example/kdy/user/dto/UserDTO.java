@@ -13,4 +13,8 @@ public class UserDTO {
     private String uPassword;
     private String uEmail;
     private String uPhoneNumber;
+
+    // DateEntity
+    private String regDate; // 게시글 등록 날짜
+    private String updateDate; // 게시글 업데이트 날짜
 }
