@@ -76,8 +76,6 @@ public class BoardController {
 
     @PostMapping("/boardUpdate")
     public String boardUpdate(@Valid @ModelAttribute("boardPost") BoardUpdateDTO boardUpdateDTO, BindingResult bindingResult) {
-        System.out.println("check :: controller :: " + boardUpdateDTO.getBSeq() + ", " + boardUpdateDTO.getBRegId());
-
         // 게시판 수정 : 에러가 있을 경우 작성 폼으로 이동 ➡️ 내용을 보여주기 위함
         if (bindingResult.hasErrors()) {
             return "board/board-detail";
@@ -86,6 +84,12 @@ public class BoardController {
         // 게시글 수정
         boardService.boaradUpdate(boardUpdateDTO);
 
+        return "redirect:/board/boardList";
+    }
+
+    @GetMapping("/boardDeleteOne/{bSeq}")
+    public String boardUpdate(@PathVariable Long bSeq) { // 게시글 삭제 (단일)
+        boardService.boardDeleteOne(bSeq);
         return "redirect:/board/boardList";
     }
 }

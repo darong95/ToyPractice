@@ -64,6 +64,11 @@
                                 <span class="icon text-white-50"><i class="fas fa-check"></i></span>
                                 <span class="text">Submit</span>
                             </button>
+
+                            <a th:href="@{/board/boardDeleteOne/{bSeq}(bSeq=${bSeq})}" class="btn btn-danger btn-icon-split">
+                                <span class="icon text-white-50"><i class="fas fa-trash"></i></span>
+                                <span class="text">Delete</span>
+                            </a>
                         </form>
                     </div>
                 </div>

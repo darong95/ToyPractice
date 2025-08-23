@@ -102,4 +102,16 @@ public class BoardService {
 
         return boardMapper.convertToDTO(updateBoardEntity);
     }
+
+    public void boardDeleteOne(Long bSeq) {
+        Optional<BoardEntity> boardOptional = boardRepository.findById(bSeq);
+
+        if (boardOptional.isPresent()) {
+            BoardEntity boardEntity = boardOptional.get();
+            boardRepository.delete(boardEntity);
+
+        } else {
+            throw new RuntimeException("게시글을 찾을 수 없습니다.");
+        }
+    }
 }
