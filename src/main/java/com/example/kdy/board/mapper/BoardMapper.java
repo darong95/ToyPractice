@@ -1,6 +1,7 @@
 package com.example.kdy.board.mapper;
 
 import com.example.kdy.board.dto.BoardDTO;
+import com.example.kdy.board.dto.BoardListDTO;
 import com.example.kdy.board.entity.BoardEntity;
 
 import org.mapstruct.Mapper;
@@ -12,7 +13,12 @@ import java.util.List;
 public interface BoardMapper {
     @Mapping(source = "userEntity.USeq", target = "USeq")
     BoardDTO convertToDTO(BoardEntity boardEntity);
-    List<BoardDTO> convertToListDTO(List<BoardEntity> boardList);
+
+    @Mapping(target = "boardDTO", expression = "java(convertToDTO(boardEntity))")
+    BoardListDTO convertToListDTO(BoardEntity boardEntity);
+
+    List<BoardDTO> convertToReadDTO(List<BoardEntity> boardList);
+    List<BoardListDTO> convertToLReadListDTO(List<BoardEntity> boardList);
 
     @Mapping(source = "USeq", target = "userEntity.USeq")
     BoardEntity convertToEntity(BoardDTO boardDTO);

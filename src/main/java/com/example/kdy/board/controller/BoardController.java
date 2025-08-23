@@ -1,6 +1,7 @@
 package com.example.kdy.board.controller;
 
 import com.example.kdy.board.dto.BoardDTO;
+import com.example.kdy.board.dto.BoardListDTO;
 import com.example.kdy.board.dto.BoardSearchDTO;
 
 import com.example.kdy.board.service.BoardService;
@@ -31,12 +32,7 @@ public class BoardController {
 
     @GetMapping("/boardList")
     public String boardList(Model model) { // 게시판 리스트
-        log.info("[START] Call board List :)");
-
-        // 게시판 전체 리스트 가져오기
-        List<BoardDTO> boardList = boardList = boardService.boardList();
-
-        // View로 데이터 전달
+        List<BoardListDTO> boardList = boardList = boardService.boardList();
         model.addAttribute("boardList", boardList);
 
         return "board/board-list";
@@ -44,10 +40,7 @@ public class BoardController {
 
     @GetMapping("/boardSearchList")
     public String boardSearchList(Model model, BoardSearchDTO boardSearchDTO) { // 게시판 리스트 (상세 검색)
-        // 게시판 전체 리스트 가져오기
-        List<BoardDTO> boardSearchList = boardService.boardSearchList(boardSearchDTO);
-
-        // View로 데이터 전달
+        List<BoardListDTO> boardSearchList = boardService.boardSearchList(boardSearchDTO);
         model.addAttribute("boardList", boardSearchList);
 
         return "board/boardList";

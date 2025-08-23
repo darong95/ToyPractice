@@ -1,6 +1,7 @@
 package com.example.kdy.board.service;
 
 import com.example.kdy.board.dto.BoardDTO;
+import com.example.kdy.board.dto.BoardListDTO;
 import com.example.kdy.board.dto.BoardSearchDTO;
 
 import com.example.kdy.board.entity.BoardEntity;
@@ -9,6 +10,9 @@ import com.example.kdy.board.repository.BoardRepository;
 
 import com.example.kdy.board.spec.BoardSpecification;
 
+import com.example.kdy.common.component.DateUtilComponent;
+import com.example.kdy.common.component.ListDateFormatComponent;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -16,7 +20,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 
 import org.springframework.stereotype.Service;
+
 import java.util.List;
+import java.util.function.BiConsumer;
 
 @Slf4j
 @Service
@@ -25,14 +31,30 @@ public class BoardService {
     private final BoardMapper boardMapper;
     private final BoardRepository boardRepository;
 
-    public List<BoardDTO> boardList() {
-        Sort sort = Sort.by(Sort.Order.asc("bSeq"));
-        List<BoardEntity> boardList = boardRepository.findAll(sort);
+    private final DateUtilComponent dateUtilComponent;
+    private final ListDateFormatComponent listDateFormatComponent;
 
-        return boardMapper.convertToListDTO(boardList);
+    public List<BoardListDTO> boardList() {
+        Sort sort = Sort.by(Sort.Order.desc("bSeq"));
+
+        List<BoardEntity> boardList = boardRepository.findAll(sort); // Read List
+        List<BoardListDTO> boardListDTO = boardMapper.convertToLReadListDTO(boardList); // Entity ➡️ ListDTO
+
+        // 날짜 Format
+        if (!boardListDTO.isEmpty()) {
+            listDateFormatComponent.forListDate(boardListDTO, new BiConsumer<BoardListDTO, DateUtilComponent>() {
+                @Override
+                public void accept(BoardListDTO boardListDTO, DateUtilComponent dateUtilComponent) { // BiConsumer Override
+                    String tempDate = dateUtilComponent.format_String(boardListDTO.getBoardDTO().getRegDate(), "yyyyMMdd");
+                    boardListDTO.getBoardDTO().setRegDate(tempDate); // 포맷한 데이터 다시 넣기
+                }
+            }, dateUtilComponent);
+        }
+
+        return boardListDTO;
     }
 
-    public List<BoardDTO> boardSearchList(BoardSearchDTO boardSearchDTO) { // 게시판 상세 검색 (조건 검색)
+    public List<BoardListDTO> boardSearchList(BoardSearchDTO boardSearchDTO) { // 게시판 상세 검색 (조건 검색)
         // 상세 검색 조건 설정
         Specification<BoardEntity> boardSpecification = Specification.where(null);
 
@@ -48,7 +70,7 @@ public class BoardService {
         // 리스트 가져오기
         List<BoardEntity> boardSearchList = boardRepository.findAll(boardSpecification, sort);
 
-        return boardMapper.convertToListDTO(boardSearchList);
+        return boardMapper.convertToLReadListDTO(boardSearchList);
     }
 
     public BoardDTO writeBoard(BoardDTO boardDTO) {

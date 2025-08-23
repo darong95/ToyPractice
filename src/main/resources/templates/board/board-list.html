@@ -52,9 +52,9 @@
                                                 <th:block th:each="boardList, boardIndex : ${boardList}">
                                                     <tr>
                                                         <td th:text="${boardIndex.size - boardIndex.index}"></td>
-                                                        <td th:text="${boardList.bTitle}"></td>
-                                                        <td th:text="${boardList.bRegId}"></td>
-                                                        <td th:text="${boardList.regDate}"></td>
+                                                        <td th:text="${boardList.boardDTO.bTitle}"></td>
+                                                        <td th:text="${boardList.boardDTO.bRegId}"></td>
+                                                        <td th:text="${boardList.boardDTO.regDate}"></td>
                                                     </tr>
                                                 </th:block>
                                             </th:block>
