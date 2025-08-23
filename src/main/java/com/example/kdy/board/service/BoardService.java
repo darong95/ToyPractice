@@ -87,20 +87,35 @@ public class BoardService {
         }
     }
 
-    public BoardDTO boaradWrite(BoardDTO boardDTO) {
-        BoardEntity boardEntity = boardMapper.convertToEntity(boardDTO);
-        BoardEntity saveBoardEntity = boardRepository.save(boardEntity); // 게시글 저장
+    public boolean boardWrite(BoardDTO boardDTO) {
+        try {
+            BoardEntity boardEntity = boardMapper.convertToEntity(boardDTO);
+            BoardEntity saveBoardEntity = boardRepository.save(boardEntity); // 게시글 저장
 
-        return boardMapper.convertToDTO(saveBoardEntity);
+            return true;
+
+        } catch (Exception e) {
+            return false;
+        }
     }
 
-    public BoardDTO boaradUpdate(BoardUpdateDTO boardUpdateDTO) {
-        BoardEntity boardEntity = boardMapper.convertToUpdateEntity(boardUpdateDTO);
-        boardEntity.setUpdateDate(dateUtilComponent.getCurrentDate_MICRO()); // 업데이트 시간 설정
+    public void boardUpdate(BoardUpdateDTO boardUpdateDTO) {
+        Optional<BoardEntity> boardOptional = boardRepository.findById(boardUpdateDTO.getBSeq());
 
-        BoardEntity updateBoardEntity = boardRepository.save(boardEntity); // 게시글 수정
+        if (boardOptional.isPresent()) {
+            BoardEntity boardEntity = boardOptional.get();
 
-        return boardMapper.convertToDTO(updateBoardEntity);
+            // 필요한 필드만 가져와 수정
+            boardEntity.setBTitle(boardUpdateDTO.getBTitle());
+            boardEntity.setBContent(boardUpdateDTO.getBContent());
+            boardEntity.setUpdateDate(dateUtilComponent.getCurrentDate_MICRO());
+
+            // 게시글 수정
+            BoardEntity updateEntity = boardRepository.save(boardEntity);
+
+        } else {
+            throw new RuntimeException("수정할 게시글이 존재하지 않습니다.");
+        }
     }
 
     public void boardDeleteOne(Long bSeq) {
@@ -108,7 +123,7 @@ public class BoardService {
 
         if (boardOptional.isPresent()) {
             BoardEntity boardEntity = boardOptional.get();
-            boardRepository.delete(boardEntity);
+            boardRepository.delete(boardEntity); // 게시글 삭제
 
         } else {
             throw new RuntimeException("게시글을 찾을 수 없습니다.");

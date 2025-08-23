@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -59,7 +60,7 @@ public class BoardController {
     }
 
     @PostMapping("/boardWrite")
-    public String boardWrite(@Valid @ModelAttribute("boardPost") BoardDTO boardDTO, BindingResult bindingResult) { // 게시판 신규 작성 (저장)
+    public String boardWrite(@Valid @ModelAttribute("boardPost") BoardDTO boardDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) { // 게시판 신규 작성 (저장)
         // 에러가 있을 경우 작성 폼으로 이동 ➡️ 내용을 보여주기 위함
         if (bindingResult.hasErrors()) {
             return "board/board-writeForm";
@@ -69,27 +70,29 @@ public class BoardController {
         boardDTO.setBRegId("admin");
         boardDTO.setUSeq(1L);
 
-        boardService.boaradWrite(boardDTO);
+        if (boardService.boardWrite(boardDTO)) {
+            redirectAttributes.addFlashAttribute("resultMessage", "게시글 등록이 완료되었습니다.");
+
+        } else {
+            redirectAttributes.addFlashAttribute("resultMessage", "게시글 등록이 실패하였습니다.");
+        }
 
         return "redirect:/board/boardList";
     }
 
     @PostMapping("/boardUpdate")
-    public String boardUpdate(@Valid @ModelAttribute("boardPost") BoardUpdateDTO boardUpdateDTO, BindingResult bindingResult) {
-        // 게시판 수정 : 에러가 있을 경우 작성 폼으로 이동 ➡️ 내용을 보여주기 위함
-        if (bindingResult.hasErrors()) {
-            return "board/board-detail";
-        }
-
-        // 게시글 수정
-        boardService.boaradUpdate(boardUpdateDTO);
+    public String boardUpdate(@Valid @ModelAttribute("boardPost") BoardUpdateDTO boardUpdateDTO, RedirectAttributes redirectAttributes) {
+        boardService.boardUpdate(boardUpdateDTO);
+        redirectAttributes.addFlashAttribute("resultMessage", "게시글 수정이 완료되었습니다.");
 
         return "redirect:/board/boardList";
     }
 
     @GetMapping("/boardDeleteOne/{bSeq}")
-    public String boardUpdate(@PathVariable Long bSeq) { // 게시글 삭제 (단일)
+    public String boardUpdate(@PathVariable Long bSeq, RedirectAttributes redirectAttributes) { // 게시글 삭제 (단일)
         boardService.boardDeleteOne(bSeq);
+        redirectAttributes.addFlashAttribute("resultMessage", "게시글 삭제가 완료되었습니다.");
+        
         return "redirect:/board/boardList";
     }
 }
