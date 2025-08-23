@@ -14,10 +14,10 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 public abstract class DateEntity {
     @Column(name = "REG_DATE", nullable = false, updatable = false)
-    private LocalDateTime regDate; // 게시글 등록 시간
+    private LocalDateTime regDate; // 등록 시간
 
     @Column(name = "UPDATE_DATE", nullable = false, updatable = false)
-    private LocalDateTime updateDate; // 게시글 등록 시간
+    private LocalDateTime updateDate; // 업데이트 시간
 
     @PrePersist
     protected void settingRegDate() {

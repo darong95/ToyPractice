@@ -34,17 +34,29 @@
                                             <tr>
                                                 <th>No</th>
                                                 <th>Title</th>
-                                                <th>Name</th>
-                                                <th>Title</th>
+                                                <th>RegId</th>
                                                 <th>Date</th>
                                             </tr>
                                         </thead>
 
                                         <tbody th:with="boardListSize=${boardList.size()}">
+                                            <!-- 게시글이 없을 경우 -->
                                             <th:block th:if="${boardListSize} == 0">
                                                 <tr>
                                                     <td colspan="5" style="text-align: center;">등록된 게시글이 없습니다.</td>
                                                 </tr>
+                                            </th:block>
+
+                                            <!-- 게시글이 있을 경우 -->
+                                            <th:block th:if="${boardListSize} != 0">
+                                                <th:block th:each="boardList, boardIndex : ${boardList}">
+                                                    <tr>
+                                                        <td th:text="${boardIndex.size - boardIndex.index}"></td>
+                                                        <td th:text="${boardList.bTitle}"></td>
+                                                        <td th:text="${boardList.bRegId}"></td>
+                                                        <td th:text="${boardList.regDate}"></td>
+                                                    </tr>
+                                                </th:block>
                                             </th:block>
                                         </tbody>
                                     </table>
