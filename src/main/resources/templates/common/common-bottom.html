@@ -40,4 +40,11 @@
     <!-- Page level custom scripts -->
     <script th:src="@{/js/demo/chart-area-demo.js}"></script>
     <script th:src="@{/js/demo/chart-pie-demo.js}"></script>
+
+    <!-- 공통 Alert -->
+    <div id="alert-util">
+        <script th:inline="javascript" th:if="${resultMessage != null}">
+            alert([[${resultMessage}]]);
+        </script>
+    </div>
 </th:block>
