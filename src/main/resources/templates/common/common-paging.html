@@ -1,0 +1,30 @@
+<div class="dataTables_wrapper dt-bootstrap4" id="dataTable_wrapper" th:fragment="common-paging(baseURL)">
+    <div class="row" >
+        <div class="col-sm-12 col-md-7">
+            <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
+                <ul class="pagination">
+                    <li class="paginate_button page-item previous" id="dataTable_previous" th:if="${paging.hasPrevious()}">
+                        <a aria-controls="dataTable" data-dt-idx="4"
+                           tabindex="0" class="page-link"
+                           th:href="@{${baseURL}(currentPage=0, pagingSize=${paging.size})}">Previous</a>
+                    </li>
+
+                    <!-- 사이즈에 따라 유동적으로 출력 -->
+                    <th:block th:each="i : ${#numbers.sequence(0, paging.totalPages - 1)}">
+                        <li class="paginate_button page-item" th:classappend="${i} == ${paging.number} ? 'active'">
+                            <a class="page-link" aria-controls="dataTable"
+                               data-dt-idx="4" tabindex="0"
+                               th:href="@{${baseURL}(currentPage=${i}, pagingSize=${paging.size})}" th:text="${i + 1}"></a>
+                        </li>
+                    </th:block>
+
+                    <li class="paginate_button page-item next" th:if="${paging.hasNext()}">
+                        <a aria-controls="dataTable" data-dt-idx="4"
+                           tabindex="0" class="page-link"
+                           th:href="@{${baseURL}(currentPage=${paging.totalPages - 1}, pagingSize=${paging.size})}">Next</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

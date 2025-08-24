@@ -5,6 +5,8 @@ import com.example.kdy.board.dto.BoardListDTO;
 import com.example.kdy.board.dto.BoardSearchDTO;
 
 import com.example.kdy.board.dto.BoardUpdateDTO;
+import com.example.kdy.board.entity.BoardEntity;
+import com.example.kdy.board.service.BoardListMapperService;
 import com.example.kdy.board.service.BoardService;
 
 import jakarta.validation.Valid;
@@ -12,6 +14,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
@@ -20,6 +23,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.swing.text.html.parser.Entity;
 import java.util.List;
 
 @Slf4j
@@ -28,10 +32,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BoardController {
     private final BoardService boardService; // Board Domain Service
+    private final BoardListMapperService boardListMapperService; // Board List Mapper Service
 
     @GetMapping("/boardList")
-    public String boardList(Model model) { // 게시판 리스트
-        List<BoardListDTO> boardList = boardList = boardService.boardList();
+    public String boardList(BoardListDTO boardListDTO, Model model) { // 게시판 리스트
+        Page<BoardEntity> boardListPage = boardService.boardList(boardListDTO);
+        List<BoardListDTO> boardList = boardListMapperService.boardList(boardListPage.getContent());
+
+        model.addAttribute("paging", boardListPage);
         model.addAttribute("boardList", boardList);
 
         return "board/board-list";

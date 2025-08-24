@@ -3,20 +3,21 @@ package com.example.kdy.board.service;
 import com.example.kdy.board.dto.BoardDTO;
 import com.example.kdy.board.dto.BoardListDTO;
 import com.example.kdy.board.dto.BoardSearchDTO;
-
 import com.example.kdy.board.dto.BoardUpdateDTO;
+
 import com.example.kdy.board.entity.BoardEntity;
 import com.example.kdy.board.mapper.BoardMapper;
 import com.example.kdy.board.repository.BoardRepository;
 
 import com.example.kdy.board.spec.BoardSpecification;
-
 import com.example.kdy.common.component.DateUtilComponent;
-import com.example.kdy.common.component.ListDateFormatComponent;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -24,36 +25,25 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.function.BiConsumer;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class BoardService {
-    private final BoardMapper boardMapper;
     private final BoardRepository boardRepository;
 
+    private final BoardMapper boardMapper;
     private final DateUtilComponent dateUtilComponent;
-    private final ListDateFormatComponent listDateFormatComponent;
 
-    public List<BoardListDTO> boardList() {
-        Sort sort = Sort.by(Sort.Order.desc("bSeq"));
 
-        List<BoardEntity> boardList = boardRepository.findAll(sort); // Read List
-        List<BoardListDTO> boardListDTO = boardMapper.convertToLReadListDTO(boardList); // Entity ➡️ ListDTO
+    public Page<BoardEntity> boardList(BoardListDTO boardListDTO) {
+        int currentPage = boardListDTO.getCurrentPage();
+        int pagingSize = boardListDTO.getPagingSize();
+        log.info("[CURRENT PAGE] :: " + currentPage + ", [PAGING SIZE] :: " + pagingSize);
 
-        // 날짜 Format
-        if (!boardListDTO.isEmpty()) {
-            listDateFormatComponent.forListDate(boardListDTO, new BiConsumer<BoardListDTO, DateUtilComponent>() {
-                @Override
-                public void accept(BoardListDTO boardListDTO, DateUtilComponent dateUtilComponent) { // BiConsumer Override
-                    String tempDate = dateUtilComponent.format_String(boardListDTO.getBoardDTO().getRegDate(), "yyyyMMdd");
-                    boardListDTO.getBoardDTO().setRegDate(tempDate); // 포맷한 데이터 다시 넣기
-                }
-            }, dateUtilComponent);
-        }
+        Pageable pageable = PageRequest.of(currentPage, pagingSize, Sort.by("bSeq").descending()); // DESC
 
-        return boardListDTO;
+        return boardRepository.findAll(pageable);
     }
 
     public List<BoardListDTO> boardSearchList(BoardSearchDTO boardSearchDTO) { // 게시판 상세 검색 (조건 검색)

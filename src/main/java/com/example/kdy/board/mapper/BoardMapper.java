@@ -3,6 +3,7 @@ package com.example.kdy.board.mapper;
 import com.example.kdy.board.dto.BoardDTO;
 import com.example.kdy.board.dto.BoardListDTO;
 import com.example.kdy.board.dto.BoardUpdateDTO;
+
 import com.example.kdy.board.entity.BoardEntity;
 
 import org.mapstruct.Mapper;
@@ -16,6 +17,8 @@ public interface BoardMapper {
     @Mapping(source = "userEntity.USeq", target = "USeq")
     BoardDTO convertToDTO(BoardEntity boardEntity);
 
+    @Mapping(target = "currentPage", ignore = true)
+    @Mapping(target = "pagingSize", ignore = true)
     @Mapping(target = "boardDTO", expression = "java(convertToDTO(boardEntity))")
     BoardListDTO convertToListDTO(BoardEntity boardEntity);
 

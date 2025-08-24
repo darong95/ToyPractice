@@ -51,7 +51,7 @@
                                             <th:block th:if="${boardListSize} != 0">
                                                 <th:block th:each="boardList, boardIndex : ${boardList}">
                                                     <tr style="text-align: center;">
-                                                        <td th:text="${boardIndex.size - boardIndex.index}"></td>
+                                                        <td th:text="${paging.totalElements - (paging.number * paging.size + boardIndex.index)}"></td>
 
                                                         <td>
                                                             <a th:href="@{/board/boardDetail/{bSeq}(bSeq=${boardList.boardDTO.bSeq})}"
@@ -66,6 +66,9 @@
                                             </th:block>
                                         </tbody>
                                     </table>
+
+                                    <!-- Paging -->
+                                    <div th:replace="~{common/common-paging :: common-paging('/board/boardList')}"></div>
                                 </div>
                             </div>
                         </div>
