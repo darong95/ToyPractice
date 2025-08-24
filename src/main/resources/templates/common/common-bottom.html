@@ -43,10 +43,6 @@
 
     <!-- 공통 Alert -->
     <div id="alert-util">
-        <script th:inline="javascript">
-            alert("HELLO");
-        </script>
-
         <script th:inline="javascript" th:if="${resultMessage != null}">
             alert([[${resultMessage}]]);
         </script>
