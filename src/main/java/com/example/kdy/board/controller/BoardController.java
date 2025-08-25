@@ -83,7 +83,7 @@ public class BoardController {
         Long boardSeq = boardService.boardWrite(boardWriteDTO);
         boardFileService.boardFileWrite(boardSeq, boardWriteDTO.getBoardFileList());
 
-        redirectAttributes.addFlashAttribute("resultMessage", "게시글 등록이 완료되었습니다.");
+        redirectAttributes.addFlashAttribute("resultMessage", "게시글 등록이 완료되었습니다!");
 
         return "redirect:/board/boardList";
     }
