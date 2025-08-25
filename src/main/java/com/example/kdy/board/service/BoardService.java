@@ -19,6 +19,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,16 +34,17 @@ public class BoardService {
     private final DateUtilComponent dateUtilComponent;
 
 
+    @Transactional(readOnly = true)
     public Page<BoardEntity> boardList(BoardListDTO boardListDTO) {
         int currentPage = boardListDTO.getCurrentPage();
         int pagingSize = boardListDTO.getPagingSize();
-        log.info("[CURRENT PAGE] :: " + currentPage + ", [PAGING SIZE] :: " + pagingSize);
 
         Pageable pageable = PageRequest.of(currentPage, pagingSize, Sort.by("boardSeq").descending()); // DESC
 
         return boardRepository.findAll(pageable);
     }
 
+    @Transactional(readOnly = true)
     public List<BoardListDTO> boardSearchList(BoardSearchDTO boardSearchDTO) { // 게시판 상세 검색 (조건 검색)
         // 상세 검색 조건 설정
         Specification<BoardEntity> boardSpecification = Specification.where(null);
@@ -62,6 +64,7 @@ public class BoardService {
         return boardMapper.convertToLReadListDTO(boardSearchList);
     }
 
+    @Transactional(readOnly = true)
     public BoardDTO boardRead(Long boardSeq) {
         Optional<BoardEntity> boardOptional = boardRepository.findById(boardSeq);
 
@@ -74,6 +77,7 @@ public class BoardService {
         }
     }
 
+    @Transactional
     public Long boardWrite(BoardWriteDTO boardWriteDTO) {
         BoardEntity boardEntity = boardMapper.convertToWriteEntity(boardWriteDTO);
         BoardEntity saveBoardEntity = boardRepository.save(boardEntity); // 게시글 저장
@@ -81,34 +85,22 @@ public class BoardService {
         return saveBoardEntity.getBoardSeq();
     }
 
+    @Transactional
     public void boardUpdate(BoardUpdateDTO boardUpdateDTO) {
-        Optional<BoardEntity> boardOptional = boardRepository.findById(boardUpdateDTO.getBoardSeq());
+        BoardEntity boardEntity = boardRepository.findById(boardUpdateDTO.getBoardSeq())
+                .orElseThrow(() -> new RuntimeException("수정할 게시글이 없습니다."));
 
-        if (boardOptional.isPresent()) {
-            BoardEntity boardEntity = boardOptional.get();
-
-            // 필요한 필드만 가져와 수정
-            boardEntity.setBTitle(boardUpdateDTO.getBTitle());
-            boardEntity.setBContent(boardUpdateDTO.getBContent());
-            boardEntity.setUpdateDate(dateUtilComponent.getCurrentDate_MICRO());
-
-            // 게시글 수정
-            BoardEntity updateEntity = boardRepository.save(boardEntity);
-
-        } else {
-            throw new RuntimeException("수정할 게시글이 존재하지 않습니다.");
-        }
+        // 필요한 필드만 가져와 수정
+        boardEntity.setBTitle(boardUpdateDTO.getBTitle());
+        boardEntity.setBContent(boardUpdateDTO.getBContent());
+        boardEntity.setUpdateDate(dateUtilComponent.getCurrentDate_MICRO());
     }
 
+    @Transactional
     public void boardDeleteOne(Long boardSeq) {
-        Optional<BoardEntity> boardOptional = boardRepository.findById(boardSeq);
+        BoardEntity boardEntity = boardRepository.findById(boardSeq)
+                .orElseThrow(() -> new RuntimeException("삭제할 게시글이 없습니다."));
 
-        if (boardOptional.isPresent()) {
-            BoardEntity boardEntity = boardOptional.get();
-            boardRepository.delete(boardEntity); // 게시글 삭제
-
-        } else {
-            throw new RuntimeException("게시글을 찾을 수 없습니다.");
-        }
+        boardRepository.delete(boardEntity); // 게시글 삭제
     }
 }
