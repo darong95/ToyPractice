@@ -4,8 +4,8 @@ import com.example.kdy.board.dto.BoardFileDTO;
 import com.example.kdy.board.entity.BoardEntity;
 import com.example.kdy.board.entity.BoardFileEntity;
 import com.example.kdy.board.mapper.BoardFileMapper;
-import com.example.kdy.common.component.FileUploadComponent;
 
+import com.example.kdy.common.component.FileUploadComponent;
 import jakarta.persistence.EntityManager;
 
 import lombok.RequiredArgsConstructor;
@@ -13,13 +13,12 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
 import com.example.kdy.board.repository.BoardFileRepository;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @Slf4j
 @Service
