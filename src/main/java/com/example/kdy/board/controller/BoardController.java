@@ -87,6 +87,17 @@ public class BoardController {
         return "redirect:/board/boardList";
     }
 
+    @GetMapping("/boardUpdateForm/{boardSeq}")
+    public String boardUpdateForm(@PathVariable Long boardSeq, Model model) { // 게시판 상세 내용
+        BoardDTO boardDTO = boardService.boardRead(boardSeq);
+        List<BoardFileDTO> boardFileList = boardFileService.boardFileList(boardSeq);
+
+        model.addAttribute("boardPost", boardDTO);
+        model.addAttribute("boardFileList", boardFileList);
+
+        return "board/board-updateForm";
+    }
+
     @PostMapping("/boardUpdate")
     public String boardUpdate(@Valid @ModelAttribute("boardPost") BoardUpdateDTO boardUpdateDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         // 에러가 있을 경우 작성 폼으로 이동 ➡️ 내용을 보여주기 위함
