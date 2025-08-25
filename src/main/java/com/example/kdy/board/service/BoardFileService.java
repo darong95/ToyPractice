@@ -15,10 +15,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.example.kdy.board.repository.BoardFileRepository;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -35,7 +37,7 @@ public class BoardFileService {
     private String fileUploadPath; // 파일 업로드 경로
 
     public List<BoardFileDTO> boardFileList(Long boardSeq) {
-        List<BoardFileEntity> boardFileList= boardFileRepository.findByBoardBoardSeqOrderByBoardFileSeq(boardSeq);
+        List<BoardFileEntity> boardFileList= boardFileRepository.findBoardFileASC(boardSeq);
         return boardFileMapper.convertToReadListDTO(boardFileList);
     }
 
@@ -73,5 +75,10 @@ public class BoardFileService {
             entityManager.clear();
             */
         }
+    }
+
+    @Transactional
+    public void boardFileDeleteBatch(Long boardSeq) {
+        boardFileRepository.deleteByBoardEntityBoardSeq(boardSeq);
     }
 }

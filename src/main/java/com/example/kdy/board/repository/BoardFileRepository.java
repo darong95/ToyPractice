@@ -11,6 +11,8 @@ import org.springframework.data.repository.query.Param;
 
 
 public interface BoardFileRepository extends JpaRepository<BoardFileEntity, Long> {
+    void deleteByBoardEntityBoardSeq(Long boardSeq);
+
     @Query("SELECT bf FROM BoardFileEntity bf WHERE bf.boardEntity.boardSeq = :boardSeq ORDER BY bf.boardFileSeq ASC")
-    List<BoardFileEntity> findByBoardBoardSeqOrderByBoardFileSeq(@Param("boardSeq") Long boardSeq);
+    List<BoardFileEntity> findBoardFileASC(@Param("boardSeq") Long boardSeq);
 }
