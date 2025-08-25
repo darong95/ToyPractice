@@ -20,14 +20,14 @@ public class BoardFileEntity {
     private BoardEntity boardEntity; // FK
 
     @Column(name="BF_FILE_NAME", nullable = false)
-    private String bFileName; // 첨부파일 이름
+    private String bfFileName; // 첨부파일 이름
 
     @Column(name="BF_FILE_UPLOAD_NAME", nullable = false)
-    private String bFileUploadName;
+    private String bfFileUploadName;
 
     @Column(name="BF_FILE_PATH", nullable = false)
-    private String bFilePath; // 첨부파일 경로
+    private String bfFilePath; // 첨부파일 경로
 
     @Column(name="BF_FILE_FULL_PATH", nullable = false)
-    private String bFileFullPath; // 첨부파일 전체 경로 (Http로 시작)
+    private String bfFileFullPath; // 첨부파일 전체 경로 (Http로 시작)
 }

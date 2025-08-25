@@ -7,6 +7,7 @@ import com.example.kdy.board.service.BoardFileService;
 import com.example.kdy.board.service.BoardListMapperService;
 import com.example.kdy.board.service.BoardService;
 
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 
 import lombok.RequiredArgsConstructor;
@@ -118,5 +119,10 @@ public class BoardController {
         redirectAttributes.addFlashAttribute("resultMessage", "게시글 삭제가 완료되었습니다.");
 
         return "redirect:/board/boardList";
+    }
+
+    @GetMapping("/boardFileDownload/{boardFileSeq}")
+    public void boardFileDownload(@PathVariable Long boardFileSeq, HttpServletResponse httpServletResponse) {
+        boardFileService.boardFileDownload(boardFileSeq, httpServletResponse);
     }
 }

@@ -5,9 +5,11 @@ import com.example.kdy.board.entity.BoardEntity;
 import com.example.kdy.board.entity.BoardFileEntity;
 import com.example.kdy.board.mapper.BoardFileMapper;
 
+import com.example.kdy.common.component.FileDownloadComponent;
 import com.example.kdy.common.component.FileUploadComponent;
 import jakarta.persistence.EntityManager;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,6 +34,7 @@ public class BoardFileService {
     private final BoardFileRepository boardFileRepository;
 
     private final FileUploadComponent fileUploadComponent; // 파일 업로드
+    private final FileDownloadComponent fileDownloadComponent; // 파일 다운로드
 
     @Value("${file.upload-path}")
     private String fileUploadPath; // 파일 업로드 경로
@@ -39,6 +42,18 @@ public class BoardFileService {
     public List<BoardFileDTO> boardFileList(Long boardSeq) {
         List<BoardFileEntity> boardFileList= boardFileRepository.findBoardFileASC(boardSeq);
         return boardFileMapper.convertToReadListDTO(boardFileList);
+    }
+
+    @Transactional(readOnly = true)
+    public void boardFileDownload(Long boardFileSeq, HttpServletResponse httpServletResponse) {
+        BoardFileEntity boardFileEntity = boardFileRepository.findById(boardFileSeq)
+                        .orElseThrow(() -> new RuntimeException("파일이 존재하지 않습니다."));
+
+        String filePath = boardFileEntity.getBfFilePath();
+        String fileOriginName = boardFileEntity.getBfFileName();
+        String fileUploadName = boardFileEntity.getBfFileUploadName();
+
+        fileDownloadComponent.fileDownload(httpServletResponse, filePath, fileOriginName, fileUploadName);
     }
 
     public void boardFileWrite(Long boardSeq, List<MultipartFile> boardFileList) {
@@ -54,10 +69,10 @@ public class BoardFileService {
                 BoardEntity boardEntity = entityManager.getReference(BoardEntity.class, boardSeq); // B_SEQ Setting
                 boardFileEntity.setBoardEntity(boardEntity);
 
-                boardFileEntity.setBFileName(fileOriginName);
-                boardFileEntity.setBFileUploadName(fileUploadName);
-                boardFileEntity.setBFilePath(fileUploadPath);
-                boardFileEntity.setBFileFullPath(fileUploadPath + "/" + fileUploadName);
+                boardFileEntity.setBfFileName(fileOriginName);
+                boardFileEntity.setBfFileUploadName(fileUploadName);
+                boardFileEntity.setBfFilePath(fileUploadPath);
+                boardFileEntity.setBfFileFullPath(fileUploadPath + "/" + fileUploadName);
 
                 boardFileRepository.save(boardFileEntity);
 

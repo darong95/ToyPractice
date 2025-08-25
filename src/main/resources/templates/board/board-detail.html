@@ -32,17 +32,14 @@
                                     <!-- Content -->
                                     <div class="card-body" th:text="${boardPost.bContent}"></div>
 
-                                    <!-- File Upload -->
-                                    <th:block th:if="${boardFileList.size() != 0}">
-                                        <div class="card-header" ststyle="display: flex; align-items: center; gap: 8px;">
-                                            <!-- 첨부 파일이 있을 경우에만 출력 -->
-                                            <span class="icon text-gray-600">
+                                    <!-- File Upload : 첨부 파일이 있을 경우에만 출력 (Each, If를 같이 쓸 때는 이름을 다르게)-->
+                                    <th:block th:if="${boardFileList.size() != 0}" th:each="boardFile : ${boardFileList}">
+                                        <div class="card-header d-flex align-items-center">
+                                            <span class="icon text-gray-600 mr-3">
                                                 <i class="fas fa-arrow-right"></i>
                                             </span>
-                                            <a th:href="@{/board/boardFileDownload}">
-                                                <input type="text" class="form-control bg-light border-0 small"
-                                                       style="width: auto;" aria-describedby="basic-addon2"
-                                                       th:value="${bFileName}" readonly/>
+                                            <a class="text-decoration-none" th:href="@{/board/boardFileDownload/{boardFileSeq}(boardFileSeq=${boardFile.boardFileSeq})}">
+                                                <span th:text="${boardFile.bfFileName}"></span>
                                             </a>
                                         </div>
                                     </th:block>

@@ -49,9 +49,11 @@ public class FileUploadComponent {
 
                 // 파일 서버에 업로드
                 multipartFile.transferTo(file);
-                fileNameMap.put(fileOriginName + "." + fileExtension, fileUploadName + "." + fileExtension);
+
                 log.info("[FILE] FILE ORIGINAL NAME : " + fileOriginName + "." + fileExtension);
-                log.info("[FILE] FILE UPLOAD NAME : " + fileUploadName + "." + fileExtension);
+                log.info("[FILE] FILE UPLOAD NAME : " + fileUploadName);
+
+                fileNameMap.put(fileOriginName + "." + fileExtension, fileUploadName);
             }
 
         } catch (IOException e) {
