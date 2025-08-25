@@ -77,8 +77,8 @@ public class BoardController {
         }
 
         // 게시글 등록 & 첨부 파일 등록: 필수 데이터 하드 코딩 (추후 업데이트 예정)
-        boardWriteDTO.setBRegId("admin");
-        boardWriteDTO.setUserSeq(1L);
+        boardWriteDTO.getBoardDTO().setBoardRegId("admin");
+        boardWriteDTO.getBoardDTO().setUserSeq(1L);
 
         Long boardSeq = boardService.boardWrite(boardWriteDTO);
         boardFileService.boardFileWrite(boardSeq, boardWriteDTO.getBoardFileList());
@@ -90,10 +90,10 @@ public class BoardController {
 
     @GetMapping("/boardUpdateForm/{boardSeq}")
     public String boardUpdateForm(@PathVariable Long boardSeq, Model model) { // 게시판 상세 내용
-        BoardDTO boardDTO = boardService.boardRead(boardSeq);
+        BoardUpdateDTO boardUpdateDTO = boardService.boardReadUpdate(boardSeq);
         List<BoardFileDTO> boardFileList = boardFileService.boardFileList(boardSeq);
 
-        model.addAttribute("boardPost", boardDTO);
+        model.addAttribute("boardPost", boardUpdateDTO);
         model.addAttribute("boardFileList", boardFileList);
 
         return "board/board-updateForm";
@@ -103,7 +103,7 @@ public class BoardController {
     public String boardUpdate(@Valid @ModelAttribute("boardPost") BoardUpdateDTO boardUpdateDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         // 에러가 있을 경우 작성 폼으로 이동 ➡️ 내용을 보여주기 위함
         if (bindingResult.hasErrors()) {
-            return "board/board-detail";
+            return "board/board-updateForm";
         }
 
         boardService.boardUpdate(boardUpdateDTO);

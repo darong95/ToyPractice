@@ -23,15 +23,12 @@ public class BoardEntity extends DateEntity {
     private UserEntity userEntity; // 외래키 (FK)
 
     @Column(name = "B_TITLE", nullable = false)
-    private String bTitle; // 게시글 제목
+    private String boardTitle; // 게시글 제목
 
     @Column(name = "B_REG_ID", nullable = false, updatable = false)
-    private String bRegId; // 게시글 등록 아이디
-
-    private String bFilePath; // 첨부 파일 경로
-    private String bFileName; // 첨부 파일 이름
+    private String boardRegId; // 게시글 등록 아이디
 
     @Lob
     @Column(name = "B_CONTENT", nullable = false)
-    private String bContent; // 게시글 내용 : CLOB
+    private String boardContent; // 게시글 내용 : CLOB
 }

@@ -8,11 +8,11 @@ import lombok.Setter;
 public class UserDTO {
     private long userSeq;
 
-    private String uId;
-    private String uName;
-    private String uPassword;
-    private String uEmail;
-    private String uPhoneNumber;
+    private String userId;
+    private String userName;
+    private String userPassword;
+    private String userEmail;
+    private String userPhoneNumber;
 
     // DateEntity
     private String regDate; // 게시글 등록 날짜

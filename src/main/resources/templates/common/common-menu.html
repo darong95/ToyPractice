@@ -20,16 +20,16 @@
         <!-- 부모 별로 메뉴 출력 -->
         <th:block th:each="showMenuList : ${totalParentList.value}">
             <!-- 만약 카테고리 메뉴일 경우 -->
-            <th:block th:if="${showMenuList.mCategory == true}">
-                <div class="sidebar-heading" th:text="${showMenuList.mName}"></div>
+            <th:block th:if="${showMenuList.menuCategory == true}">
+                <div class="sidebar-heading" th:text="${showMenuList.menuName}"></div>
             </th:block>
 
             <!-- else -->
-            <th:block th:if="${showMenuList.mCategory == false}">
+            <th:block th:if="${showMenuList.menuCategory == false}">
                 <li class="nav-item">
-                    <a class="nav-link" th:href="${showMenuList.mLinkUrl}">
+                    <a class="nav-link" th:href="${showMenuList.menuLinkUrl}">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
-                        <span th:text="${showMenuList.mName}"></span>
+                        <span th:text="${showMenuList.menuName}"></span>
                     </a>
                 </li>
             </th:block>

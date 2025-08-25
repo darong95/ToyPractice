@@ -32,12 +32,12 @@ public class UserListMapperService {
             asteriskUtilComponent.asterisk_Name_List(userListDTO, new AccessorNameInterface<UserListDTO>() {
                 @Override
                 public String getAccessName(UserListDTO userListDTO) {
-                    return userListDTO.getUserDTO().getUName();
+                    return userListDTO.getUserDTO().getUserName();
                 }
 
                 @Override
                 public void setAccessName(UserListDTO userListDTO, String settingName) {
-                    userListDTO.getUserDTO().setUName(settingName);
+                    userListDTO.getUserDTO().setUserName(settingName);
                 }
             });
 

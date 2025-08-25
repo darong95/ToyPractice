@@ -58,11 +58,11 @@
 
                                                         <td>
                                                             <a th:href="@{/board/boardDetail/{boardSeq}(boardSeq=${boardList.boardDTO.boardSeq})}"
-                                                               th:text="${boardList.boardDTO.bTitle}">
+                                                               th:text="${boardList.boardDTO.boardTitle}">
                                                             </a>
                                                         </td>
 
-                                                        <td th:text="${boardList.boardDTO.bRegId}"></td>
+                                                        <td th:text="${boardList.boardDTO.boardRegId}"></td>
                                                         <td th:text="${boardList.boardDTO.regDate}"></td>
                                                     </tr>
                                                 </th:block>

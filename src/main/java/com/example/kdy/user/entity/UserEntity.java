@@ -18,17 +18,17 @@ public class UserEntity extends DateEntity {
     private Long userSeq;
 
     @Column(name = "U_ID", nullable = false, length = 50)
-    private String uId;
+    private String userId;
 
     @Column(name = "U_NAME", nullable = false, length = 50)
-    private String uName;
+    private String userName;
 
     @Column(name = "U_PASSWORD", nullable = false)
-    private String uPassword;
+    private String userPassword;
 
     @Column(name = "U_EMAIL", nullable = false)
-    private String uEmail;
+    private String userEmail;
 
     @Column(name = "U_PHONENUMBER", nullable = false)
-    private String uPhoneNumber;
+    private String userPhoneNumber;
 }

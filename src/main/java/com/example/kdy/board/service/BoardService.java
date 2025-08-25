@@ -49,7 +49,7 @@ public class BoardService {
         // 상세 검색 조건 설정
         Specification<BoardEntity> boardSpecification = Specification.where(null);
 
-        String searchTitle = boardSearchDTO.getBTitle();
+        String searchTitle = boardSearchDTO.getBoardTitle();
 
         if (searchTitle != null && !searchTitle.isEmpty()) {
             boardSpecification = boardSpecification.and(BoardSpecification.titleContains(searchTitle));
@@ -66,15 +66,18 @@ public class BoardService {
 
     @Transactional(readOnly = true)
     public BoardDTO boardRead(Long boardSeq) {
-        Optional<BoardEntity> boardOptional = boardRepository.findById(boardSeq);
+        BoardEntity boardEntity = boardRepository.findById(boardSeq)
+                .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다."));
 
-        if (boardOptional.isPresent()) { // 조회 값이 있어야 True
-            BoardEntity boardEntity = boardOptional.get();
-            return boardMapper.convertToDTO(boardEntity);
+        return boardMapper.convertToDTO(boardEntity);
+    }
 
-        } else {
-            throw new RuntimeException("게시글을 찾을 수 없습니다.");
-        }
+    @Transactional(readOnly = true)
+    public BoardUpdateDTO boardReadUpdate(Long boardSeq) {
+        BoardEntity boardEntity = boardRepository.findById(boardSeq)
+                .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다."));
+
+        return boardMapper.convertToUpdateDTO(boardEntity);
     }
 
     @Transactional
@@ -87,12 +90,12 @@ public class BoardService {
 
     @Transactional
     public void boardUpdate(BoardUpdateDTO boardUpdateDTO) {
-        BoardEntity boardEntity = boardRepository.findById(boardUpdateDTO.getBoardSeq())
+        BoardEntity boardEntity = boardRepository.findById(boardUpdateDTO.getBoardDTO().getBoardSeq())
                 .orElseThrow(() -> new RuntimeException("수정할 게시글이 없습니다."));
 
         // 필요한 필드만 가져와 수정
-        boardEntity.setBTitle(boardUpdateDTO.getBTitle());
-        boardEntity.setBContent(boardUpdateDTO.getBContent());
+        boardEntity.setBoardTitle(boardUpdateDTO.getBoardDTO().getBoardTitle());
+        boardEntity.setBoardContent(boardUpdateDTO.getBoardDTO().getBoardContent());
         boardEntity.setUpdateDate(dateUtilComponent.getCurrentDate_MICRO());
     }
 

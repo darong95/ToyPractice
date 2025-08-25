@@ -23,17 +23,30 @@ public interface BoardMapper {
     @Mapping(target = "boardDTO", expression = "java(convertToDTO(boardEntity))")
     BoardListDTO convertToListDTO(BoardEntity boardEntity);
 
-    List<BoardDTO> convertToReadDTO(List<BoardEntity> boardList);
+    @Mapping(target = "boardFileUpdateList", ignore = true)
+    @Mapping(target = "boardFileDeleteList", ignore = true)
+    @Mapping(target = "boardDTO", expression = "java(convertToDTO(boardEntity))")
+    BoardUpdateDTO convertToUpdateDTO(BoardEntity boardEntity);
+
     List<BoardListDTO> convertToLReadListDTO(List<BoardEntity> boardList);
 
     // DTO ➡️ Entity
     @Mapping(source = "userSeq", target = "userEntity.userSeq")
     BoardEntity convertToEntity(BoardDTO boardDTO);
 
-    @Mapping(source = "userSeq", target = "userEntity.userSeq")
+    @Mapping(target = "regDate", ignore = true)
+    @Mapping(source = "boardDTO", target = ".") // BoardDTO 매칭해서 Mapper
+    @Mapping(source = "boardDTO.userSeq", target = "userEntity.userSeq")
+    @Mapping(target = "userEntity.userId", ignore = true)
+    @Mapping(target = "userEntity.userName", ignore = true)
+    @Mapping(target = "userEntity.userPassword", ignore = true)
+    @Mapping(target = "userEntity.userEmail", ignore = true)
+    @Mapping(target = "userEntity.userPhoneNumber", ignore = true)
     BoardEntity convertToWriteEntity(BoardWriteDTO boardWriteDTO);
 
+    /*
     @Mapping(target = "regDate", ignore = true)
     @Mapping(target = "userEntity", ignore = true)
     BoardEntity convertToUpdateEntity(BoardUpdateDTO boardDUpdateTO);
+    */
 }

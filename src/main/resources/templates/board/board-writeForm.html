@@ -31,20 +31,20 @@
                                         <div class="card-header">
                                             <input type="text" class="form-control bg-light border-0 small"
                                                    placeholder="Please enter a title here :)" aria-describedby="basic-addon2"
-                                                   id="bTitle" th:field="*{bTitle}"/>
+                                                   id="bTitle" th:field="*{boardDTO.boardTitle}"/>
 
                                             <!-- Validation Check Result -->
-                                            <div th:if="${#fields.hasErrors('bTitle')}" th:errors="*{bTitle}" class="alert alert-danger mt-2"></div>
+                                            <div th:if="${#fields.hasErrors('boardDTO.boardTitle')}" th:errors="*{boardDTO.boardTitle}" class="alert alert-danger mt-2"></div>
                                         </div>
 
                                         <!-- Content -->
                                         <div class="card-body">
                                             <textarea class ="form-control bg-light border-0 small" id="bContent"
-                                                      th:field="*{bContent}" rows="10" cols="20"
+                                                      th:field="*{boardDTO.boardContent}" rows="10" cols="20"
                                                       placeholder="Please enter a Content here :)"></textarea>
 
                                             <!-- Validation Check Result -->
-                                            <div th:if="${#fields.hasErrors('bContent')}" th:errors="*{bContent}" class="alert alert-danger mt-2"></div>
+                                            <div th:if="${#fields.hasErrors('boardDTO.boardContent')}" th:errors="*{boardDTO.boardContent}" class="alert alert-danger mt-2"></div>
                                         </div>
 
                                         <!-- File Upload -->

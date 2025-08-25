@@ -21,7 +21,7 @@ public class MenuService {
     private final MenuRepository menuRepository;
 
     public List<MenuDTO> menuList() { // 메뉴 리스트
-        Sort sort = Sort.by(Sort.Order.asc("mParentSeq"), Sort.Order.asc("mDepthOrder")); // 정렬 조건 설정
+        Sort sort = Sort.by(Sort.Order.asc("menuParentSeq"), Sort.Order.asc("menuDepthOrder")); // 정렬 조건 설정
         List<MenuEntity> menuList = menuRepository.findAll(sort); // 메뉴 리스트 가져오기
 
         return menuMapper.convertToListDTO(menuList); // Entity를 DTO에 변환 시키며 리턴

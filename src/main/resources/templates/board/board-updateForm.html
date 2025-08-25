@@ -23,9 +23,9 @@
                         <p class="mb-4">This category is where announcements are displayed 😀</p>
 
                         <!-- Write Form Start -->
-                        <form th:action="@{/board/boardUpdate}" th:object="${boardPost}" method="post">
+                        <form th:action="@{/board/boardUpdate}" th:object="${boardPost}" method="post" enctype="multipart/form-data">
                             <!-- Update Parameter -->
-                            <input type="hidden" th:field="*{boardSeq}"/>
+                            <input type="hidden" th:field="*{boardDTO.boardSeq}"/>
 
                             <div class="row">
                                 <div class="col-lg-12">
@@ -34,35 +34,44 @@
                                         <div class="card-header">
                                             <input type="text" class="form-control bg-light border-0 small"
                                                    placeholder="Please enter a title here :)" aria-describedby="basic-addon2"
-                                                   id="bTitle" th:field="*{bTitle}"/>
+                                                   id="bTitle" th:field="*{boardDTO.boardTitle}"/>
 
                                             <!-- Validation Check Result -->
-                                            <div th:if="${#fields.hasErrors('bTitle')}" th:errors="*{bTitle}" class="alert alert-danger mt-2"></div>
+                                            <div th:if="${#fields.hasErrors('boardDTO.boardTitle')}" th:errors="*{boardDTO.boardTitle}" class="alert alert-danger mt-2"></div>
                                         </div>
 
                                         <!-- Content -->
                                         <div class="card-body">
-                                            <textarea class ="form-control bg-light border-0 small" id="bContent"
-                                                      th:field="*{bContent}" rows="10" cols="20"
+                                            <textarea class ="form-control bg-light border-0 small" id="boardContent"
+                                                      th:field="*{boardDTO.boardContent}" rows="10" cols="20"
                                                       placeholder="Please enter a Content here :)"></textarea>
 
                                             <!-- Validation Check Result -->
-                                            <div th:if="${#fields.hasErrors('bContent')}" th:errors="*{bContent}" class="alert alert-danger mt-2"></div>
+                                            <div th:if="${#fields.hasErrors('boardDTO.boardContent')}" th:errors="*{boardDTO.boardContent}" class="alert alert-danger mt-2"></div>
                                         </div>
 
-                                        <!-- File Upload -->
-                                        <div class="card-header" ststyle="display: flex; align-items: center; gap: 8px;">
-                                            <!-- 첨부 파일이 있을 경우에만 출력 -->
-                                            <th:block th:if="${boardFileList.size() != 0}">
-                                                <span class="icon text-gray-600">
-                                                    <i class="fas fa-arrow-right"></i>
-                                                </span>
-                                                <a th:href="@{/board/boardFileDownload}">
-                                                    <input type="text" class="form-control bg-light border-0 small"
-                                                           style="width: auto;" aria-describedby="basic-addon2"
-                                                           th:value="${bFileName}" readonly/>
+                                        <!-- File Upload : 기존 파일 출력 -->
+                                        <th:block th:if="${boardFileList.size() != 0}" th:each="boardFile : ${boardFileList}">
+                                            <div class="card-header d-flex align-items-center">
+                                                <a href="#" class="btn btn-danger btn-circle btn-sm mr-3">
+                                                    <i class="fas fa-trash"></i>
                                                 </a>
-                                            </th:block>
+                                                <span th:text="${boardFile.boardFileName}"></span>
+                                            </div>
+                                        </th:block>
+
+                                        <!-- File Upload : 파일 업로드 -->
+                                        <div class="card-header" style="display: flex; align-items: center; gap: 8px;">
+                                            <span class="icon text-gray-600">
+                                                <i class="fas fa-arrow-right"></i>
+                                            </span>
+
+                                            <!-- 태그 사이즈 조절을 위한 div -->
+                                            <div class="input-group">
+                                                <input type="file" class="form-control bg-light border-0 small" style="width: auto;"
+                                                       aria-label="FileUpload" aria-describedby="basic-addon2"
+                                                       id="bFile" th:field="*{boardFileUpdateList}" />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

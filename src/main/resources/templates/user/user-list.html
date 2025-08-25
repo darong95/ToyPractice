@@ -51,8 +51,8 @@
                                                 <th:block th:each="userList, userIndex : ${userList}">
                                                     <tr style="text-align: center;">
                                                         <td th:text="${userIndex.size - userIndex.index}"></td>
-                                                        <td th:text="${userList.userDTO.uId}"></td>
-                                                        <td th:text="${userList.userDTO.uName}"></td>
+                                                        <td th:text="${userList.userDTO.userId}"></td>
+                                                        <td th:text="${userList.userDTO.userName}"></td>
                                                         <td th:text="${userList.userDTO.regDate}"></td>
                                                     </tr>
                                                 </th:block>

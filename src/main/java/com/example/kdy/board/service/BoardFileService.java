@@ -22,7 +22,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -49,9 +48,9 @@ public class BoardFileService {
         BoardFileEntity boardFileEntity = boardFileRepository.findById(boardFileSeq)
                         .orElseThrow(() -> new RuntimeException("파일이 존재하지 않습니다."));
 
-        String filePath = boardFileEntity.getBfFilePath();
-        String fileOriginName = boardFileEntity.getBfFileName();
-        String fileUploadName = boardFileEntity.getBfFileUploadName();
+        String filePath = boardFileEntity.getBoardFilePath();
+        String fileOriginName = boardFileEntity.getBoardFileName();
+        String fileUploadName = boardFileEntity.getBoardFileUploadName();
 
         fileDownloadComponent.fileDownload(httpServletResponse, filePath, fileOriginName, fileUploadName);
     }
@@ -69,10 +68,10 @@ public class BoardFileService {
                 BoardEntity boardEntity = entityManager.getReference(BoardEntity.class, boardSeq); // B_SEQ Setting
                 boardFileEntity.setBoardEntity(boardEntity);
 
-                boardFileEntity.setBfFileName(fileOriginName);
-                boardFileEntity.setBfFileUploadName(fileUploadName);
-                boardFileEntity.setBfFilePath(fileUploadPath);
-                boardFileEntity.setBfFileFullPath(fileUploadPath + "/" + fileUploadName);
+                boardFileEntity.setBoardFileName(fileOriginName);
+                boardFileEntity.setBoardFileUploadName(fileUploadName);
+                boardFileEntity.setBoardFilePath(fileUploadPath);
+                boardFileEntity.setBoardFileFullPath(fileUploadPath + "/" + fileUploadName);
 
                 boardFileRepository.save(boardFileEntity);
 
