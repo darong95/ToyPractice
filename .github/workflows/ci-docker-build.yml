@@ -46,6 +46,8 @@ jobs:
         SPRING_DATASOURCE_MARIADB_USERNAME: ${{ secrets.SPRING_DATASOURCE_MARIADB_USERNAME }}
         SPRING_DATASOURCE_MARIADB_PASSWORD: ${{ secrets.SPRING_DATASOURCE_MARIADB_PASSWORD }}
 
+        FILE_UPLOAD_PATH: ${{ secrets.FILE_UPLOAD_PATH }}
+
     # Step06 : Upload Jar (GitHub Action Artifact)
     - name: Upload JAR
       uses: actions/upload-artifact@v4
