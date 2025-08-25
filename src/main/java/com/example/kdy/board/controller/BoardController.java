@@ -1,11 +1,9 @@
 package com.example.kdy.board.controller;
 
-import com.example.kdy.board.dto.BoardDTO;
-import com.example.kdy.board.dto.BoardListDTO;
-import com.example.kdy.board.dto.BoardSearchDTO;
+import com.example.kdy.board.dto.*;
 
-import com.example.kdy.board.dto.BoardUpdateDTO;
 import com.example.kdy.board.entity.BoardEntity;
+import com.example.kdy.board.service.BoardFileService;
 import com.example.kdy.board.service.BoardListMapperService;
 import com.example.kdy.board.service.BoardService;
 
@@ -23,7 +21,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.swing.text.html.parser.Entity;
 import java.util.List;
 
 @Slf4j
@@ -32,6 +29,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BoardController {
     private final BoardService boardService; // Board Domain Service
+    private final BoardFileService boardFileService; // Board File Service
     private final BoardListMapperService boardListMapperService; // Board List Mapper Service
 
     @GetMapping("/boardList")
@@ -53,32 +51,38 @@ public class BoardController {
         return "board/boardList";
     }
 
-    @GetMapping("/boardDetail/{bSeq}")
-    public String boardDetail(@PathVariable Long bSeq, Model model) { // 게시판 상세 내용
-        BoardDTO boardDTO = boardService.boardRead(bSeq);
+    @GetMapping("/boardDetail/{boardSeq}")
+    public String boardDetail(@PathVariable Long boardSeq, Model model) { // 게시판 상세 내용
+        BoardDTO boardDTO = boardService.boardRead(boardSeq);
+        List<BoardFileDTO> boardFileList = boardFileService.boardFileList(boardSeq);
+
         model.addAttribute("boardPost", boardDTO);
+        model.addAttribute("boardFileList", boardFileList);
 
         return "board/board-detail";
     }
 
     @GetMapping("/boardWriteForm")
     public String boardWriteForm(Model model) { // 게시판 신규 작성 화면
-        model.addAttribute("boardPost", new BoardDTO());
+        model.addAttribute("boardPost", new BoardWriteDTO());
         return "board/board-writeForm";
     }
 
     @PostMapping("/boardWrite")
-    public String boardWrite(@Valid @ModelAttribute("boardPost") BoardDTO boardDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) { // 게시판 신규 작성 (저장)
+    public String boardWrite(@Valid @ModelAttribute("boardPost") BoardWriteDTO boardWriteDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        // 게시판 신규 작성 (저장)
         // 에러가 있을 경우 작성 폼으로 이동 ➡️ 내용을 보여주기 위함
         if (bindingResult.hasErrors()) {
             return "board/board-writeForm";
         }
 
-        // 게시글 등록 : 필수 데이터 하드 코딩 (추후 업데이트 예정)
-        boardDTO.setBRegId("admin");
-        boardDTO.setUSeq(1L);
+        // 게시글 등록 & 첨부 파일 등록: 필수 데이터 하드 코딩 (추후 업데이트 예정)
+        boardWriteDTO.setBRegId("admin");
+        boardWriteDTO.setUserSeq(1L);
 
-        boardService.boardWrite(boardDTO);
+        Long boardSeq = boardService.boardWrite(boardWriteDTO);
+        boardFileService.boardFileWrite(boardSeq, boardWriteDTO.getBoardFileList());
+
         redirectAttributes.addFlashAttribute("resultMessage", "게시글 등록이 완료되었습니다.");
 
         return "redirect:/board/boardList";
@@ -97,9 +101,9 @@ public class BoardController {
         return "redirect:/board/boardList";
     }
 
-    @GetMapping("/boardDeleteOne/{bSeq}")
-    public String boardUpdate(@PathVariable Long bSeq, RedirectAttributes redirectAttributes) { // 게시글 삭제 (단일)
-        boardService.boardDeleteOne(bSeq);
+    @GetMapping("/boardDeleteOne/{boardSeq}")
+    public String boardUpdate(@PathVariable Long boardSeq, RedirectAttributes redirectAttributes) { // 게시글 삭제 (단일)
+        boardService.boardDeleteOne(boardSeq);
         redirectAttributes.addFlashAttribute("resultMessage", "게시글 삭제가 완료되었습니다.");
 
         return "redirect:/board/boardList";

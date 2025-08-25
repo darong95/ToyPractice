@@ -44,3 +44,7 @@ logging:
             sql: TRACE  # 파라미터까지 출력 (매우 유용)
 
       # thymeleaf: DEBUG
+
+# File Upload & Download Setting
+file:
+  upload-path: ${FILE_UPLOAD_PATH}

@@ -23,8 +23,8 @@ public class BoardMapperTest extends DynamicPropertiesSource {
         BoardMapperManual boardMapperManual = new BoardMapperManual();
 
         // 필수 값 Setting
-        boardDTO.setBSeq(1L);
-        boardDTO.setUSeq(1L);
+        boardDTO.setBoardSeq(1L);
+        boardDTO.setUserSeq(1L);
         boardDTO.setBRegId("admin");
         boardDTO.setBTitle("JUnit5 TEST");
         boardDTO.setBContent("DTO Convert To Entity");
@@ -35,9 +35,9 @@ public class BoardMapperTest extends DynamicPropertiesSource {
         
         // 변환 결과 확인
         Assertions.assertThat(boardEntity).isNotNull();
-        Assertions.assertThat(boardEntity.getBSeq()).isEqualTo(1L);
+        Assertions.assertThat(boardEntity.getBoardSeq()).isEqualTo(1L);
 
         Assertions.assertThat(boardEntity.getUserEntity()).isNotNull();
-        Assertions.assertThat(boardEntity.getUserEntity().getUSeq()).isEqualTo(1L);
+        Assertions.assertThat(boardEntity.getUserEntity().getUserSeq()).isEqualTo(1L);
     }
 }

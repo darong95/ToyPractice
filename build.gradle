@@ -26,23 +26,32 @@ repositories {
 }
 
 dependencies {
+	// Basic
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // JPA
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf' // Thymeleaf
 	implementation 'org.springframework.boot:spring-boot-starter-validation' // JUnit5 + Validation
 	implementation 'org.springframework.boot:spring-boot-starter-web' // Web Application
-	implementation 'org.mapstruct:mapstruct:1.5.5.Final' // Entity & DTO Mapper (Library)
-	// implementation 'org.springframework.boot:spring-boot-starter-security' // Spring Security
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0' // Swagger Open API
 
-	compileOnly 'org.projectlombok:lombok' // Lombok (Annotation File Compile)
+	// DevOps
 	developmentOnly 'org.springframework.boot:spring-boot-devtools' // DevTools
 
+	// Database
 	runtimeOnly 'com.h2database:h2' // H2
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client' // MariaDB Driver
 
-	annotationProcessor 'org.projectlombok:lombok' // Lombok (Getter & Setter, Annotation Code Transfer)
-	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final' // Entity & DTO Mapper Processer)
+	// Lombok
+	compileOnly 'org.projectlombok:lombok:1.18.28'
+	annotationProcessor 'org.projectlombok:lombok:1.18.28'
 
+	// Lombok-MapStruct
+	annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+
+	// MapStruct
+	implementation 'org.mapstruct:mapstruct:1.5.5.Final'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+
+	// JUnit
 	testImplementation 'org.springframework.boot:spring-boot-starter-test' // JUnit5
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher' // JUnit Luncher
 }

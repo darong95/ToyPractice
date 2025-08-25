@@ -57,7 +57,7 @@
                                                         <td th:text="${paging.totalElements - (paging.number * paging.size + boardIndex.index)}"></td>
 
                                                         <td>
-                                                            <a th:href="@{/board/boardDetail/{bSeq}(bSeq=${boardList.boardDTO.bSeq})}"
+                                                            <a th:href="@{/board/boardDetail/{boardSeq}(boardSeq=${boardList.boardDTO.boardSeq})}"
                                                                th:text="${boardList.boardDTO.bTitle}">
                                                             </a>
                                                         </td>

@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BoardUpdateDTO extends BoardValidationDTO {
-    private Long bSeq;
+    private Long boardSeq;
 
     private String bRegId;
     private String updateDate;

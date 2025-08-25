@@ -8,8 +8,8 @@ import lombok.Setter;
 @Setter
 @Getter
 public class BoardDTO extends BoardValidationDTO {
-    private Long bSeq; // 게시판 아이디 (PK)
-    private Long USeq; // 외래키 (FK)
+    private Long boardSeq; // 게시판 아이디 (PK)
+    private Long userSeq; // 외래키 (FK)
 
     private String bRegId; // 게시글 등록 아이디
     private String bFilePath; // 첨부 파일 경로

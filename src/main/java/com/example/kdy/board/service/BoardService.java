@@ -1,9 +1,6 @@
 package com.example.kdy.board.service;
 
-import com.example.kdy.board.dto.BoardDTO;
-import com.example.kdy.board.dto.BoardListDTO;
-import com.example.kdy.board.dto.BoardSearchDTO;
-import com.example.kdy.board.dto.BoardUpdateDTO;
+import com.example.kdy.board.dto.*;
 
 import com.example.kdy.board.entity.BoardEntity;
 import com.example.kdy.board.mapper.BoardMapper;
@@ -41,7 +38,7 @@ public class BoardService {
         int pagingSize = boardListDTO.getPagingSize();
         log.info("[CURRENT PAGE] :: " + currentPage + ", [PAGING SIZE] :: " + pagingSize);
 
-        Pageable pageable = PageRequest.of(currentPage, pagingSize, Sort.by("bSeq").descending()); // DESC
+        Pageable pageable = PageRequest.of(currentPage, pagingSize, Sort.by("boardSeq").descending()); // DESC
 
         return boardRepository.findAll(pageable);
     }
@@ -57,7 +54,7 @@ public class BoardService {
         }
 
         // 정렬 조건 설정
-        Sort sort = Sort.by(Sort.Order.asc("bSeq"));
+        Sort sort = Sort.by(Sort.Order.asc("boardSeq"));
 
         // 리스트 가져오기
         List<BoardEntity> boardSearchList = boardRepository.findAll(boardSpecification, sort);
@@ -65,8 +62,8 @@ public class BoardService {
         return boardMapper.convertToLReadListDTO(boardSearchList);
     }
 
-    public BoardDTO boardRead(Long bSeq) {
-        Optional<BoardEntity> boardOptional = boardRepository.findById(bSeq);
+    public BoardDTO boardRead(Long boardSeq) {
+        Optional<BoardEntity> boardOptional = boardRepository.findById(boardSeq);
 
         if (boardOptional.isPresent()) { // 조회 값이 있어야 True
             BoardEntity boardEntity = boardOptional.get();
@@ -77,13 +74,15 @@ public class BoardService {
         }
     }
 
-    public void boardWrite(BoardDTO boardDTO) {
-        BoardEntity boardEntity = boardMapper.convertToEntity(boardDTO);
+    public Long boardWrite(BoardWriteDTO boardWriteDTO) {
+        BoardEntity boardEntity = boardMapper.convertToWriteEntity(boardWriteDTO);
         BoardEntity saveBoardEntity = boardRepository.save(boardEntity); // 게시글 저장
+
+        return saveBoardEntity.getBoardSeq();
     }
 
     public void boardUpdate(BoardUpdateDTO boardUpdateDTO) {
-        Optional<BoardEntity> boardOptional = boardRepository.findById(boardUpdateDTO.getBSeq());
+        Optional<BoardEntity> boardOptional = boardRepository.findById(boardUpdateDTO.getBoardSeq());
 
         if (boardOptional.isPresent()) {
             BoardEntity boardEntity = boardOptional.get();
@@ -101,8 +100,8 @@ public class BoardService {
         }
     }
 
-    public void boardDeleteOne(Long bSeq) {
-        Optional<BoardEntity> boardOptional = boardRepository.findById(bSeq);
+    public void boardDeleteOne(Long boardSeq) {
+        Optional<BoardEntity> boardOptional = boardRepository.findById(boardSeq);
 
         if (boardOptional.isPresent()) {
             BoardEntity boardEntity = boardOptional.get();

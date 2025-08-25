@@ -11,10 +11,11 @@ import lombok.Setter;
 @Setter
 @Table(name = "TP_USER")
 public class UserEntity extends DateEntity {
+    // 반드시 이렇게 명시적 getter 작성하거나
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "U_SEQ", nullable = false)
-    private Long USeq;
+    private Long userSeq;
 
     @Column(name = "U_ID", nullable = false, length = 50)
     private String uId;

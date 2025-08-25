@@ -23,7 +23,7 @@
                         <p class="mb-4">This category is where announcements are displayed 😀</p>
 
                         <!-- Write Form Start -->
-                        <form th:action="@{/board/boardWrite}" th:object="${boardPost}" method="post">
+                        <form th:action="@{/board/boardWrite}" th:object="${boardPost}" method="post" enctype="multipart/form-data">
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="card mb-4">
@@ -48,13 +48,15 @@
                                         </div>
 
                                         <!-- File Upload -->
-                                        <!--
-                                        <div class="card-header">
-                                            <input type="file" class="form-control bg-light border-0 small"
-                                                   placeholder="Choice Upload File :)" aria-label="FileUpload"
-                                                   aria-describedby="basic-addon2" id="bFile"/>
+                                        <div class="card-header" style="display: flex; align-items: center; gap: 8px;">
+                                            <span class="icon text-gray-600">
+                                                <i class="fas fa-arrow-right"></i>
+                                            </span>
+
+                                            <input type="file" class="form-control bg-light border-0 small" style="width: auto;"
+                                                   aria-label="FileUpload" aria-describedby="basic-addon2"
+                                                   id="bFile" th:field="*{boardFileList}" />
                                         </div>
-                                        -->
                                     </div>
                                 </div>
                             </div>

@@ -11,11 +11,11 @@ public class BoardMapperManual {
         }
 
         BoardEntity boardEntity = new BoardEntity();
-        boardEntity.setBSeq(boardDTO.getBSeq());
+        boardEntity.setBoardSeq(boardDTO.getBoardSeq());
 
-        if (boardDTO.getUSeq() != null) {
+        if (boardDTO.getUserSeq() != null) {
             UserEntity userEntity = new UserEntity();
-            userEntity.setUSeq(boardDTO.getUSeq());
+            userEntity.setUserSeq(boardDTO.getUserSeq());
 
             boardEntity.setUserEntity(userEntity);
         }
