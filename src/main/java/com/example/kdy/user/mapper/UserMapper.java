@@ -14,6 +14,8 @@ public interface UserMapper {
     // Entity ➡️ DTO
     UserDTO convertToDTO(UserEntity userEntity);
 
+    @Mapping(target = "currentPage", ignore = true)
+    @Mapping(target = "pagingSize", ignore = true)
     @Mapping(target = "userDTO", expression = "java(convertToDTO(userEntity))")
     UserListDTO convertToListDTO(UserEntity userEntity);
 
