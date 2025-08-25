@@ -30,7 +30,8 @@
                                     <div class="card-header" th:text="${boardPost.bTitle}"></div>
 
                                     <!-- Content -->
-                                    <div class="card-body" th:text="${boardPost.bContent}"></div>
+                                    <div class="card-body" th:text="${boardPost.bContent}" style="white-space: pre-line;"></div>
+
 
                                     <!-- File Upload : 첨부 파일이 있을 경우에만 출력 (Each, If를 같이 쓸 때는 이름을 다르게)-->
                                     <th:block th:if="${boardFileList.size() != 0}" th:each="boardFile : ${boardFileList}">

@@ -66,15 +66,10 @@ public class BoardService {
 
     @Transactional(readOnly = true)
     public BoardDTO boardRead(Long boardSeq) {
-        Optional<BoardEntity> boardOptional = boardRepository.findById(boardSeq);
+        BoardEntity boardEntity = boardRepository.findById(boardSeq)
+                .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다."));
 
-        if (boardOptional.isPresent()) { // 조회 값이 있어야 True
-            BoardEntity boardEntity = boardOptional.get();
-            return boardMapper.convertToDTO(boardEntity);
-
-        } else {
-            throw new RuntimeException("게시글을 찾을 수 없습니다.");
-        }
+        return boardMapper.convertToDTO(boardEntity);
     }
 
     @Transactional
