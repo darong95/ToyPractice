@@ -25,9 +25,9 @@ public class BoardMapperTest extends DynamicPropertiesSource {
         // 필수 값 Setting
         boardDTO.setBoardSeq(1L);
         boardDTO.setUserSeq(1L);
-        boardDTO.setBRegId("admin");
-        boardDTO.setBTitle("JUnit5 TEST");
-        boardDTO.setBContent("DTO Convert To Entity");
+        boardDTO.setBoardRegId("admin");
+        boardDTO.setBoardTitle("JUnit5 TEST");
+        boardDTO.setBoardContent("DTO Convert To Entity");
 
         // Entity로 Convert
         BoardEntity boardEntity = boardMapper.convertToEntity(boardDTO);

@@ -2,6 +2,13 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head th:replace="~{common/common-header}"></head>
 
+    <!-- Board Delete -->
+    <script th:inline="javascript">
+        async function boardDeleteOne(boardSeq) {
+            if (!confirm("Security 적용 후 RESTful API 방식으로 대체될 예정입니다.")) return;
+        }
+    </script>
+
     <body id="page-top">
         <div id="wrapper">
             <ul th:replace="~{common/common-menu :: common-menu}"></ul>
@@ -47,16 +54,26 @@
                             </div>
                         </div>
 
-                        <!-- Submit -->
+                        <!-- Update -->
                         <a th:href="@{/board/boardUpdateForm/{boardSeq}(boardSeq=${boardPost.boardSeq})}" class="btn btn-success btn-icon-split">
                             <span class="icon text-white-50"><i class="fas fa-check"></i></span>
                             <span class="text">Go To Update</span>
                         </a>
 
+                        <!-- Delete -->
                         <a th:href="@{/board/boardDeleteOne/{boardSeq}(boardSeq=${boardSeq})}" class="btn btn-danger btn-icon-split">
                             <span class="icon text-white-50"><i class="fas fa-trash"></i></span>
                             <span class="text">Delete</span>
                         </a>
+
+                        <!--
+                        <button type="button" class="btn btn-danger btn-icon-split"
+                                th:data-seq="${boardPost.boardSeq}"
+                                onclick="boardDeleteOne(this.dataset.seq)">
+                            <span class="icon text-white-50"><i class="fas fa-trash"></i></span>
+                            <span class="text">Delete</span>
+                        </button>
+                        -->
                     </div>
                 </div>
             </div>
