@@ -107,6 +107,9 @@ public class BoardController {
         }
 
         boardService.boardUpdate(boardUpdateDTO);
+        boardFileService.boardFileDeleteIn(boardUpdateDTO.getBoardFileDeleteList());
+        boardFileService.boardFileWrite(boardUpdateDTO.getBoardDTO().getBoardSeq(), boardUpdateDTO.getBoardFileUpdateList());
+
         redirectAttributes.addFlashAttribute("resultMessage", "게시글 수정이 완료되었습니다.");
 
         return "redirect:/board/boardList";

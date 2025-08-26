@@ -31,7 +31,7 @@
                                         <div class="card-header">
                                             <input type="text" class="form-control bg-light border-0 small"
                                                    placeholder="Please enter a title here :)" aria-describedby="basic-addon2"
-                                                   id="bTitle" th:field="*{boardDTO.boardTitle}"/>
+                                                   id="boardTitle" th:field="*{boardDTO.boardTitle}"/>
 
                                             <!-- Validation Check Result -->
                                             <div th:if="${#fields.hasErrors('boardDTO.boardTitle')}" th:errors="*{boardDTO.boardTitle}" class="alert alert-danger mt-2"></div>
@@ -39,7 +39,7 @@
 
                                         <!-- Content -->
                                         <div class="card-body">
-                                            <textarea class ="form-control bg-light border-0 small" id="bContent"
+                                            <textarea class ="form-control bg-light border-0 small" id="boardContent"
                                                       th:field="*{boardDTO.boardContent}" rows="10" cols="20"
                                                       placeholder="Please enter a Content here :)"></textarea>
 
@@ -53,9 +53,12 @@
                                                 <i class="fas fa-arrow-right"></i>
                                             </span>
 
-                                            <input type="file" class="form-control bg-light border-0 small" style="width: auto;"
-                                                   aria-label="FileUpload" aria-describedby="basic-addon2"
-                                                   id="bFile" th:field="*{boardFileList}" />
+                                            <!-- 태그 사이즈 조절을 위한 div -->
+                                            <div class="input-group">
+                                                <input type="file" class="form-control bg-light border-0 small" style="width: auto;"
+                                                       aria-label="FileUpload" aria-describedby="basic-addon2"
+                                                       id="boardFile" th:field="*{boardFileList}" multiple />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -73,5 +76,6 @@
         </div>
 
         <th:block th:replace="~{common/common-bottom :: common-bottom}"></th:block>
+        <th:block th:replace="~{common/common-file-upload :: common-file-upload}"></th:block>
     </body>
 </html>

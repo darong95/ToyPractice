@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class MenuService {
     private final MenuMapper menuMapper;
     private final MenuRepository menuRepository;
 
+    @Transactional(readOnly = true)
     public List<MenuDTO> menuList() { // 메뉴 리스트
         Sort sort = Sort.by(Sort.Order.asc("menuParentSeq"), Sort.Order.asc("menuDepthOrder")); // 정렬 조건 설정
         List<MenuEntity> menuList = menuRepository.findAll(sort); // 메뉴 리스트 가져오기

@@ -1,5 +1,19 @@
 <th:block th:fragment="common-file-upload">
     <!-- File Upload Check -->
     <script th:inline="javascript">
+        // 파일 Input Tag, 기존 파일 목록 가져오기
+        const fileInput = document.getElementById('boardFile');
+
+        // 파일 선택 시 3개로 제한
+        // () => 이 구문은 function(event)를 축약함, ES6 버전부터 사용
+        boardFile.addEventListener('change', () => {
+            const preFileListDiv = document.querySelectorAll(".card-header[data-seq]").length;
+            const totalFileCount = fileInput.files.length + preFileListDiv;
+
+            if (totalFileCount > 3) {
+                boardFile.value = "";
+                alert("파일은 최대 3개까지만 선택 가능합니다.");
+            }
+        });
     </script>
 </th:block>

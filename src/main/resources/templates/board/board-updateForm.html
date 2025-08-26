@@ -2,6 +2,24 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head th:replace="~{common/common-header}"></head>
 
+    <script th:inline="javascript">
+        function tempDeleteFile(deleteFileButton) { // 삭제할 파일 정보 Temp
+            // 부모 div 태그 및 파일 시퀀스 값 가져오기
+            const fileDiv = deleteFileButton.parentElement;
+            const fileSeq = fileDiv.getAttribute("data-seq");
+
+            // Controller에 List로 넘겨주기 위한 Input 생성 (Name은 동일)
+            const deleteFile = document.createElement("input");
+
+            deleteFile.type = "hidden";
+            deleteFile.name = "boardFileDeleteList";
+            deleteFile.value = fileSeq;
+
+            fileDiv.remove();
+            document.getElementById("deleteFileList").appendChild(deleteFile);
+        }
+    </script>
+
     <body id="page-top">
         <div id="wrapper">
             <ul th:replace="~{common/common-menu :: common-menu}"></ul>
@@ -25,6 +43,7 @@
                         <!-- Write Form Start -->
                         <form th:action="@{/board/boardUpdate}" th:object="${boardPost}" method="post" enctype="multipart/form-data">
                             <!-- Update Parameter -->
+                            <div id="deleteFileList"></div>
                             <input type="hidden" th:field="*{boardDTO.boardSeq}"/>
 
                             <div class="row">
@@ -34,7 +53,7 @@
                                         <div class="card-header">
                                             <input type="text" class="form-control bg-light border-0 small"
                                                    placeholder="Please enter a title here :)" aria-describedby="basic-addon2"
-                                                   id="bTitle" th:field="*{boardDTO.boardTitle}"/>
+                                                   id="boardTitle" th:field="*{boardDTO.boardTitle}"/>
 
                                             <!-- Validation Check Result -->
                                             <div th:if="${#fields.hasErrors('boardDTO.boardTitle')}" th:errors="*{boardDTO.boardTitle}" class="alert alert-danger mt-2"></div>
@@ -52,10 +71,10 @@
 
                                         <!-- File Upload : 기존 파일 출력 -->
                                         <th:block th:if="${boardFileList.size() != 0}" th:each="boardFile : ${boardFileList}">
-                                            <div class="card-header d-flex align-items-center">
-                                                <a href="#" class="btn btn-danger btn-circle btn-sm mr-3">
+                                            <div class="card-header d-flex align-items-center" th:attr="data-seq=${boardFile.boardFileSeq}">
+                                                <button type="button" class="btn btn-danger btn-circle btn-sm mr-3" onclick="tempDeleteFile(this)">
                                                     <i class="fas fa-trash"></i>
-                                                </a>
+                                                </button>
                                                 <span th:text="${boardFile.boardFileName}"></span>
                                             </div>
                                         </th:block>
@@ -70,7 +89,7 @@
                                             <div class="input-group">
                                                 <input type="file" class="form-control bg-light border-0 small" style="width: auto;"
                                                        aria-label="FileUpload" aria-describedby="basic-addon2"
-                                                       id="bFile" th:field="*{boardFileUpdateList}" />
+                                                       id="boardFile" th:field="*{boardFileUpdateList}" multiple />
                                             </div>
                                         </div>
                                     </div>

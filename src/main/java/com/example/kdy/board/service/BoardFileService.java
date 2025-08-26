@@ -7,6 +7,7 @@ import com.example.kdy.board.mapper.BoardFileMapper;
 
 import com.example.kdy.common.component.FileDownloadComponent;
 import com.example.kdy.common.component.FileUploadComponent;
+
 import jakarta.persistence.EntityManager;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,9 +18,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.example.kdy.board.repository.BoardFileRepository;
+
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -55,10 +58,13 @@ public class BoardFileService {
         fileDownloadComponent.fileDownload(httpServletResponse, filePath, fileOriginName, fileUploadName);
     }
 
+    @Transactional
     public void boardFileWrite(Long boardSeq, List<MultipartFile> boardFileList) {
         Map<String, String> fileNameMap = fileUploadComponent.uploadFile(boardFileList);
 
         if (!fileNameMap.isEmpty()) {
+            List<BoardFileEntity> boardFileEntityList = new ArrayList<>();
+
             for (int i = 0; i < fileNameMap.size(); i++) {
                 BoardFileEntity boardFileEntity = new BoardFileEntity();
 
@@ -73,26 +79,22 @@ public class BoardFileService {
                 boardFileEntity.setBoardFilePath(fileUploadPath);
                 boardFileEntity.setBoardFileFullPath(fileUploadPath + "/" + fileUploadName);
 
-                boardFileRepository.save(boardFileEntity);
-
-                /*
-                entityManager.persist(boardFileEntity);
-
-                if (i % 10 == 0 && i > 0) { // 10개 단위로 INSERT
-                    entityManager.flush();
-                    entityManager.clear();
-                }
-                */
+                boardFileEntityList.add(boardFileEntity);
             }
-            /*
-            entityManager.flush();
-            entityManager.clear();
-            */
+
+            boardFileRepository.saveAll(boardFileEntityList);
         }
     }
 
     @Transactional
     public void boardFileDeleteBatch(Long boardSeq) {
         boardFileRepository.deleteByBoardEntityBoardSeq(boardSeq);
+    }
+
+    @Transactional
+    public void boardFileDeleteIn(List<Long> boardFileDeleteList) { // 첨부파일 일괄 삭제
+        if (!boardFileDeleteList.isEmpty()) {
+            boardFileRepository.deleteByBoardFileSeqIn(boardFileDeleteList);
+        }
     }
 }
