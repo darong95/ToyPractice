@@ -3,15 +3,19 @@ package com.example.kdy.user.entity;
 import com.example.kdy.common.entity.DateEntity;
 import jakarta.persistence.*;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
+@Builder // 회원 가입 구현할 때 필요
+@AllArgsConstructor // Builder와 함께 쓰기 위해 필요함
+@NoArgsConstructor // 기본 생성자를 사용하기 위해 필요 (Builder를 사용하면 기본 생성자를 자동으로 안 만들어줌)
 @Table(name = "TP_USER")
 public class UserEntity extends DateEntity {
-    // 반드시 이렇게 명시적 getter 작성하거나
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "U_SEQ", nullable = false)
@@ -31,4 +35,8 @@ public class UserEntity extends DateEntity {
 
     @Column(name = "U_PHONENUMBER", nullable = false)
     private String userPhoneNumber;
+
+    @Builder.Default
+    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<UserRoleEntity> userRoles = new ArrayList<>();
 }

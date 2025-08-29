@@ -31,10 +31,20 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf' // Thymeleaf
 	implementation 'org.springframework.boot:spring-boot-starter-validation' // JUnit5 + Validation
 	implementation 'org.springframework.boot:spring-boot-starter-web' // Web Application
-	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0' // Swagger Open API
+
+	// Security
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+
+	// JWT
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+	implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
+	implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5' // JSON 직렬화, 역직렬화
 
 	// DevOps
 	developmentOnly 'org.springframework.boot:spring-boot-devtools' // DevTools
+
+	// Swagger Open API
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0'
 
 	// Database
 	runtimeOnly 'com.h2database:h2' // H2

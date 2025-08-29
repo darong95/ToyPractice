@@ -1,4 +1,4 @@
-package com.example.kdy.common.config.db;
+package com.example.kdy.common.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;

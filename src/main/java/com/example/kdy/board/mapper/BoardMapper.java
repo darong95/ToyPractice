@@ -42,6 +42,7 @@ public interface BoardMapper {
     @Mapping(target = "userEntity.userPassword", ignore = true)
     @Mapping(target = "userEntity.userEmail", ignore = true)
     @Mapping(target = "userEntity.userPhoneNumber", ignore = true)
+    @Mapping(target = "userEntity.userRoles", ignore = true)
     BoardEntity convertToWriteEntity(BoardWriteDTO boardWriteDTO);
 
     /*

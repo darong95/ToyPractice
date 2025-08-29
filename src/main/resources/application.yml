@@ -48,3 +48,8 @@ logging:
 # File Upload & Download Setting
 file:
   upload-path: ${FILE_UPLOAD_PATH}
+
+# JWT
+jwt:
+  secret-key: ${JWT_SECRET_KEY}
+  expiration-time: ${JWT_EXPIRATION_TIME}

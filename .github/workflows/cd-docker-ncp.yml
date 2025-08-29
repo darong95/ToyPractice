@@ -36,6 +36,8 @@ jobs:
           -e SPRING_DATASOURCE_MARIADB_USERNAME="${{ secrets.SPRING_DATASOURCE_MARIADB_USERNAME }}" \\
           -e SPRING_DATASOURCE_MARIADB_PASSWORD="${{ secrets.SPRING_DATASOURCE_MARIADB_PASSWORD }}" \\
           -e FILE_UPLOAD_PATH="${{ secrets.FILE_UPLOAD_PATH }}" \\
+          -e JWT_SECRET_KEY="${{ secrets.JWT_SECRET_KEY }}" \\
+          -e JWT_EXPIRATION_TIME="${{ secrets.JWT_EXPIRATION_TIME }}" \\
           ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}:latest
       
           echo "Deployment completed successfully"
