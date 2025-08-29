@@ -41,25 +41,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .csrf(AbstractHttpConfigurer::disable) // CSRF 비활성화 (Session / Form 기반이 아님)
-
-                // 로그인 설정
-                // .formLogin(AbstractHttpConfigurer::disable) // 자체 로그인 페이지 미사용 (React 같은 환경)
-                .formLogin(formLogin -> formLogin
-                        .loginPage("/auth/login-form")
-                        .loginProcessingUrl("/api/auth/login") // 로그인 프로세스
-                        .defaultSuccessUrl("/home", true) // 로그인 성공 시 이동
-                        .failureUrl("/auth/login?error=true") // 로그인 실패 시 이동
-                        .permitAll()
-                )
-
-                // 로그아웃 설정
-                .logout(logout -> logout
-                        .logoutUrl("/auth/logout")
-                        .logoutSuccessUrl("/auth/login?logout=true")
-                        .invalidateHttpSession(true)
-                        .deleteCookies("JSESSIONID")
-                )
-
+                .formLogin(AbstractHttpConfigurer::disable) // 자체 로그인 페이지 미사용 (React 같은 환경) ➡️ Session 기반 로그인 아님
                 .httpBasic(AbstractHttpConfigurer::disable) // Header로 Token만 사용
                 .cors(cors -> cors.configurationSource(corsConfigurationSource())) // CORS 전역 Filter 설정
 
@@ -72,7 +54,7 @@ public class SecurityConfig {
                 // 예외 처리 (Exception)
                 .exceptionHandling(exceptionHandler -> exceptionHandler
                         .accessDeniedHandler(jwtAccessDeniedHandler) // 403 (인가 로직)
-                        // .authenticationEntryPoint(jwtAuthenticationEntryPoint) // 401 (인증 로직)
+                        .authenticationEntryPoint(jwtAuthenticationEntryPoint) // 401 (인증 로직)
                 )
 
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class); // 인증 Filter
