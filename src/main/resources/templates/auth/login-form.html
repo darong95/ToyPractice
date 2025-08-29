@@ -20,19 +20,17 @@
                                         </div>
 
                                         <!-- Content -->
-                                        <form class="user" th:action="@{/auth/login}" method="post">
+                                        <form class="user" id="loginForm">
                                             <!-- ID -->
                                             <div class="form-group">
                                                 <input type="text" class="form-control form-control-user"
-                                                       id="exampleInputEmail" aria-describedby="emailHelp"
-                                                       name="userId" placeholder="Enter your ID">
+                                                       id="userId" aria-describedby="emailHelp" placeholder="Enter your ID">
                                             </div>
 
                                             <!-- Password -->
                                             <div class="form-group">
                                                 <input type="password" class="form-control form-control-user"
-                                                       id="exampleInputPassword" name="usePassword"
-                                                       placeholder="Enter your Password">
+                                                       id="userPassword" placeholder="Enter your Password">
                                             </div>
 
                                             <!-- Submit-->
@@ -46,5 +44,39 @@
                 </div>
             </div>
         </div>
+
+        <th:block th:replace="~{common/common-bottom :: common-bottom}"></th:block>
+
+        <!-- Script 실행문 -->
+        <script>
+            $("#loginForm").on("submit", function(e) {
+                e.preventDefault();
+
+                $.ajax({
+                    type: "POST",
+                    url: "/api/auth/login",
+                    contentType: "application/json",
+
+                    data: JSON.stringify({
+                        userId: $("#userId").val(),
+                        userPassword: $("#userPassword").val()
+                    }),
+
+                    success: function(response) {
+                        // 토큰 저장 (로컬스토리지 or 쿠키)
+                        localStorage.setItem("accessToken", response.token);
+
+                        // 알림창 안내 + 페이지 이동
+                        // alert("로그인에 성공하였습니다.");
+                        alert("JWT 구현 중입니다.");
+                        window.location.href = "/home";
+                    },
+
+                    error: function() {
+                        alert("로그인에 실패하였습니다.");
+                    }
+                });
+            });
+        </script>
     </body>
 </html>
