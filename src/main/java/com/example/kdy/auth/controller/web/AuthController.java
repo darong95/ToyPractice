@@ -1,4 +1,4 @@
-package com.example.kdy.auth.controller;
+package com.example.kdy.auth.controller.web;
 
 import com.example.kdy.auth.service.AuthService;
 

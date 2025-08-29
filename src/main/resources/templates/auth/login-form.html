@@ -63,17 +63,13 @@
                     }),
 
                     success: function(response) {
-                        // 토큰 저장 (로컬스토리지 or 쿠키)
-                        localStorage.setItem("accessToken", response.token);
-
-                        // 알림창 안내 + 페이지 이동
-                        // alert("로그인에 성공하였습니다.");
-                        alert("JWT 구현 중입니다.");
+                        alert("로그인에 성공하였습니다.");
                         window.location.href = "/home";
                     },
 
-                    error: function() {
-                        alert("로그인에 실패하였습니다.");
+                    error: function(xhr) {
+                        console.log("[오류코드] :: " + xhr.status);
+                        alert("로그인에 실패하였습니다.\n" + xhr.responseText);
                     }
                 });
             });

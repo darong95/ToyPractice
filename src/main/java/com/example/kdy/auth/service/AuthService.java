@@ -12,11 +12,13 @@ import com.example.kdy.user.repository.RoleRepository;
 import com.example.kdy.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -66,9 +68,9 @@ public class AuthService {
 
         // 비밀번호 조회
         String password_Encode = userEntity.getUserPassword();
-        String password_Request = passwordEncoder.encode(loginRequest.getUserPassword());
+        String password_Request = loginRequest.getUserPassword();
 
-        if (!password_Encode.equals(password_Request)) {
+        if (!passwordEncoder.matches(password_Request, password_Encode)) {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
 

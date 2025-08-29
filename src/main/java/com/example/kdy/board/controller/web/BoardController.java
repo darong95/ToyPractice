@@ -1,4 +1,4 @@
-package com.example.kdy.board.controller;
+package com.example.kdy.board.controller.web;
 
 import com.example.kdy.board.dto.*;
 
