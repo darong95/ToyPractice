@@ -129,14 +129,22 @@
             async function boardUpdate() {
                 if (!confirm("게시글을 수정하시겠습니까?")) return;
 
-                const dto = {
+                // 삭제 첨부파일 설정
+                const boardFileDeleteList = [];
+
+                $("#deleteFileList input[name='boardFileDeleteList']").each(function() {
+                    boardFileDeleteList.push($(this).val());
+                });
+
+                // UpdateDTO 설정
+                const updateDTO = {
                     boardDTO: {
                         boardSeq: $("#boardSeq").val(),
                         boardTitle: $("#boardTitle").val(),
                         boardContent: $("#boardContent").val()
                     },
 
-                    boardFileDeleteList: $("#deleteFileList").val()?.split(",") || []
+                    boardFileDeleteList: boardFileDeleteList
                 };
 
                 // FormData 설정 (Multipart 전송은 FormData를 사용해야 함)
@@ -144,7 +152,7 @@
 
                 formData.append (
                     "boardUpdateDTO"
-                    , new Blob([JSON.stringify(dto)]
+                    , new Blob([JSON.stringify(updateDTO)]
                     , { type: "application/json" })
                 );
 

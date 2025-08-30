@@ -19,7 +19,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -36,7 +38,16 @@ public class BoardApiController {
     }
 
     @PostMapping(value = "/boardUpdate", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<String> boardUpdate(@Valid @RequestPart("boardUpdateDTO") BoardUpdateDTO boardUpdateDTO, BindingResult bindingResult) {
+    public ResponseEntity<String> boardUpdate(
+            @Valid @RequestPart("boardUpdateDTO") BoardUpdateDTO boardUpdateDTO
+            , @RequestPart(value = "boardFileUpdateList", required = false) List<MultipartFile> boardFileUpdateList
+            , BindingResult bindingResult) {
+
+        // 첨부파일 설정 ➡️ JSON과 MultipartFile은 같은 DTO에 넣을 수 없음
+        if (boardFileUpdateList != null) {
+            boardUpdateDTO.setBoardFileUpdateList(boardFileUpdateList);
+        }
+
         // 에러가 있을 경우 메시지 반환 ➡️ 내용을 보여주기 위함
         if (bindingResult.hasErrors()) {
             String validMessage = bindingResult.getAllErrors().stream()
