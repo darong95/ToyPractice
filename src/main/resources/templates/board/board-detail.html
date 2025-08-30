@@ -2,13 +2,6 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head th:replace="~{common/common-header}"></head>
 
-    <!-- Board Delete -->
-    <script th:inline="javascript">
-        async function boardDeleteOne(boardSeq) {
-            if (!confirm("Security 적용 후 RESTful API 방식으로 대체될 예정입니다.")) return;
-        }
-    </script>
-
     <body id="page-top">
         <div id="wrapper">
             <ul th:replace="~{common/common-menu :: common-menu}"></ul>
@@ -61,24 +54,49 @@
                         </a>
 
                         <!-- Delete -->
+                        <!--
                         <a th:href="@{/board/boardDeleteOne/{boardSeq}(boardSeq=${boardSeq})}" class="btn btn-danger btn-icon-split">
                             <span class="icon text-white-50"><i class="fas fa-trash"></i></span>
                             <span class="text">Delete</span>
                         </a>
+                        -->
 
-                        <!--
                         <button type="button" class="btn btn-danger btn-icon-split"
                                 th:data-seq="${boardPost.boardSeq}"
                                 onclick="boardDeleteOne(this.dataset.seq)">
                             <span class="icon text-white-50"><i class="fas fa-trash"></i></span>
                             <span class="text">Delete</span>
                         </button>
-                        -->
                     </div>
                 </div>
             </div>
         </div>
 
         <th:block th:replace="~{common/common-bottom :: common-bottom}"></th:block>
+
+        <!-- Board Delete -->
+        <script th:inline="javascript">
+            async function boardDeleteOne(boardSeq) {
+                if (!confirm("게시글을 삭제하시겠습니까?")) return;
+
+                try {
+                    const response = await fetch(`/api/board/boardDeleteOne/${boardSeq}`, {
+                        method: 'DELETE'
+                    });
+
+                    if (response.ok) {
+                        alert("게시글 삭제가 완료되었습니다.");
+                        window.location.href = "/board/boardList";
+
+                    } else {
+                        alert("게시글 삭제에 실패하였습니다.");
+                    }
+
+                } catch (error) {
+                    console.error("Error:", error);
+                    alert("게시글 삭제 도중 문제가 발생했습니다.");
+                }
+            }
+        </script>
     </body>
 </html>
