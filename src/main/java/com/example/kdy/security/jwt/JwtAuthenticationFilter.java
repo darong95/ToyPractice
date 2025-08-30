@@ -4,6 +4,7 @@ import com.example.kdy.security.service.CustomUserDetailsService;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -29,29 +30,41 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain)
             throws ServletException, IOException {
 
+        String jwtToken = null;
+
+        // JWT Token ➡️ Authorization 방식
         String authHeader = httpServletRequest.getHeader("Authorization");
 
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            String jwtToken = authHeader.substring(7); // JWT Token
-            
-            // Token 유효성 검사
-            if (jwtTokenProvider.validateToken(jwtToken)) {
-                Long userSeq = jwtTokenProvider.extractUserSeq(jwtToken);
+            jwtToken = authHeader.substring(7); // JWT Token
+        }
 
-                UserDetails userDetails = customUserDetailsService.loadUserByUsername(String.valueOf(userSeq));
-
-                // Spring Security 인증 객체 생성
-                UsernamePasswordAuthenticationToken authenticationToken =
-                        new UsernamePasswordAuthenticationToken(
-                                userDetails, null, userDetails.getAuthorities()
-                        ); // JWT 인증이므로 가운데 값은 Null
-
-                // 요청 정보 (HttpRequest)를 Authentication에 저장
-                authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
-
-                // SecurityContextHolder에 인증 객체 저장 ➡️ JWT 인증 완료
-                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+        // JWT Token ➡️ HttpOnly 방식 (Cookie)
+        if (jwtToken == null && httpServletRequest.getCookies() != null) {
+            for (Cookie cookie : httpServletRequest.getCookies()) {
+                if ("JWT_TOKEN".equals(cookie.getName())) { // 쿠키 이름은 네가 지정한 값
+                    jwtToken = cookie.getValue();
+                    break;
+                }
             }
+        }
+
+        // JWT Token 유효성 검사
+        if (jwtToken != null && jwtTokenProvider.validateToken(jwtToken)) {
+            Long userSeq = jwtTokenProvider.extractUserSeq(jwtToken);
+            UserDetails userDetails = customUserDetailsService.loadUserByUsername(String.valueOf(userSeq));
+
+            // Spring Security 인증 객체 생성
+            UsernamePasswordAuthenticationToken authenticationToken =
+                    new UsernamePasswordAuthenticationToken(
+                            userDetails, null, userDetails.getAuthorities()
+                    ); // JWT 인증이므로 가운데 값은 Null
+
+            // 요청 정보 (HttpRequest)를 Authentication에 저장
+            authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
+
+            // SecurityContextHolder에 인증 객체 저장 ➡️ JWT 인증 완료
+            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         }
 
         // 다음 Filter로 Request, Response 전달

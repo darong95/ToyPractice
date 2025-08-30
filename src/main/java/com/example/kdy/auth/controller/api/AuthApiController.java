@@ -31,7 +31,7 @@ public class AuthApiController {
         String jwtToken = authService.login(loginRequest);
 
         // HttpOnly Cookie 저장 ➡️ 브라우저에 'accessToken' 이름으로 Token을 저장하겠다는 말
-        ResponseCookie responseCookie = ResponseCookie.from("accessToken", jwtToken)
+        ResponseCookie responseCookie = ResponseCookie.from("JWT_TOKEN", jwtToken)
                 .httpOnly(true) // XSS (JavaScript 접근 방지)
                 .secure(true) // HTTPS 전용
                 .sameSite("Strict") // CSRF 보호
