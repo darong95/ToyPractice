@@ -34,7 +34,8 @@ public class AuthApiController {
         ResponseCookie responseCookie = ResponseCookie.from("JWT_TOKEN", jwtToken)
                 .httpOnly(true) // XSS (JavaScript 접근 방지)
                 .secure(true) // HTTPS 전용
-                .sameSite("Strict") // CSRF 보호
+                // .sameSite("Strict") // CSRF 보호
+                .sameSite("None")
                 .path("/")
                 .maxAge(60 * 60) // 1시간
                 .build();
