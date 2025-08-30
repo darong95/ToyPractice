@@ -26,19 +26,25 @@
                         <form th:action="@{/board/boardUpdate}" th:object="${boardPost}" method="post" enctype="multipart/form-data">
                             <!-- Update Parameter -->
                             <div id="deleteFileList"></div>
-                            <input type="hidden" th:field="*{boardDTO.boardSeq}"/>
+                            <input type="hidden" id="boardSeq" th:field="*{boardDTO.boardSeq}"/>
 
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="card mb-4">
+                                        <!-- Validation Check Result (API) -->
+                                        <div class="card-header" style="display: none;">
+                                            <div id="valid-Message" class="alert alert-danger mt-2"></div>
+                                        </div>
+
                                         <!-- Title -->
                                         <div class="card-header">
                                             <input type="text" class="form-control bg-light border-0 small"
                                                    placeholder="Please enter a title here :)" aria-describedby="basic-addon2"
                                                    id="boardTitle" th:field="*{boardDTO.boardTitle}"/>
 
-                                            <!-- Validation Check Result -->
-                                            <div th:if="${#fields.hasErrors('boardDTO.boardTitle')}" th:errors="*{boardDTO.boardTitle}" class="alert alert-danger mt-2"></div>
+                                            <!-- Validation Check Result (Web) -->
+                                            <div th:if="${#fields.hasErrors('boardDTO.boardTitle')}" th:errors="*{boardDTO.boardTitle}"
+                                                 id="valid-boardTitle" class="alert alert-danger mt-2"></div>
                                         </div>
 
                                         <!-- Content -->
@@ -47,8 +53,9 @@
                                                       th:field="*{boardDTO.boardContent}" rows="10" cols="20"
                                                       placeholder="Please enter a Content here :)"></textarea>
 
-                                            <!-- Validation Check Result -->
-                                            <div th:if="${#fields.hasErrors('boardDTO.boardContent')}" th:errors="*{boardDTO.boardContent}" class="alert alert-danger mt-2"></div>
+                                            <!-- Validation Check Result (Web) -->
+                                            <div th:if="${#fields.hasErrors('boardDTO.boardContent')}" th:errors="*{boardDTO.boardContent}"
+                                                 id="valid-boardContent" class="alert alert-danger mt-2"></div>
                                         </div>
 
                                         <!-- File Upload : 기존 파일 출력 -->
@@ -79,11 +86,17 @@
                             </div>
 
                             <!-- Update -->
-                            <!--<button type="button" class="btn btn-success btn-icon-split" onclick="boardFileUpdate()">-->
+                            <button type="button" class="btn btn-success btn-icon-split" onclick="boardUpdate()">
+                                <span class="icon text-white-50"><i class="fas fa-check"></i></span>
+                                <span class="text">Update</span>
+                            </button>
+
+                            <!--
                             <button type="submit" class="btn btn-success btn-icon-split">
                                 <span class="icon text-white-50"><i class="fas fa-check"></i></span>
                                 <span class="text">Update</span>
                             </button>
+                            -->
                         </form>
                     </div>
                 </div>
@@ -93,8 +106,10 @@
         <th:block th:replace="~{common/common-bottom :: common-bottom}"></th:block>
         <th:block th:replace="~{common/common-file-upload :: common-file-upload}"></th:block>
 
+        <!-- Board Update -->
         <script th:inline="javascript">
-            function tempDeleteFile(deleteFileButton) { // 삭제할 파일 정보 Temp
+            // 삭제할 파일 정보 Temp
+            function tempDeleteFile(deleteFileButton) {
                 // 부모 div 태그 및 파일 시퀀스 값 가져오기
                 const fileDiv = deleteFileButton.parentElement;
                 const fileSeq = fileDiv.getAttribute("data-seq");
@@ -108,6 +123,58 @@
 
                 fileDiv.remove();
                 document.getElementById("deleteFileList").appendChild(deleteFile);
+            }
+
+            // 게시글 수정
+            async function boardUpdate() {
+                if (!confirm("게시글을 수정하시겠습니까?")) return;
+
+                const dto = {
+                    boardDTO: {
+                        boardSeq: $("#boardSeq").val(),
+                        boardTitle: $("#boardTitle").val(),
+                        boardContent: $("#boardContent").val()
+                    },
+
+                    boardFileDeleteList: $("#deleteFileList").val()?.split(",") || []
+                };
+
+                // FormData 설정 (Multipart 전송은 FormData를 사용해야 함)
+                const formData = new FormData();
+
+                formData.append (
+                    "boardUpdateDTO"
+                    , new Blob([JSON.stringify(dto)]
+                    , { type: "application/json" })
+                );
+
+                // 신규 첨부파일 설정
+                const files = $("#boardFile")[0].files;
+
+                for (let file of files) {
+                    formData.append("boardFileUpdateList", file);
+                }
+
+                // Controller에 전송
+                try {
+                    const response = await fetch("/api/board/boardUpdate", {
+                        method: "POST", // Multipart 전송 시, PUT은 불안정하거나 지원 안 됨
+                        body: formData
+                    });
+
+                    if (response.ok) {
+                        alert(await response.text());
+                        window.location.href = "/board/boardList";
+
+                    // Validation 체크 (화면에 보여주기)
+                    } else {
+                        $("#valid-Message").text(await response.text()).show();
+                    }
+
+                } catch (err) {
+                    console.error(err);
+                    alert("업데이트 중 오류 발생");
+                }
             }
         </script>
     </body>
