@@ -2,24 +2,6 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head th:replace="~{common/common-header}"></head>
 
-    <script th:inline="javascript">
-        function tempDeleteFile(deleteFileButton) { // 삭제할 파일 정보 Temp
-            // 부모 div 태그 및 파일 시퀀스 값 가져오기
-            const fileDiv = deleteFileButton.parentElement;
-            const fileSeq = fileDiv.getAttribute("data-seq");
-
-            // Controller에 List로 넘겨주기 위한 Input 생성 (Name은 동일)
-            const deleteFile = document.createElement("input");
-
-            deleteFile.type = "hidden";
-            deleteFile.name = "boardFileDeleteList";
-            deleteFile.value = fileSeq;
-
-            fileDiv.remove();
-            document.getElementById("deleteFileList").appendChild(deleteFile);
-        }
-    </script>
-
     <body id="page-top">
         <div id="wrapper">
             <ul th:replace="~{common/common-menu :: common-menu}"></ul>
@@ -110,5 +92,23 @@
 
         <th:block th:replace="~{common/common-bottom :: common-bottom}"></th:block>
         <th:block th:replace="~{common/common-file-upload :: common-file-upload}"></th:block>
+
+        <script th:inline="javascript">
+            function tempDeleteFile(deleteFileButton) { // 삭제할 파일 정보 Temp
+                // 부모 div 태그 및 파일 시퀀스 값 가져오기
+                const fileDiv = deleteFileButton.parentElement;
+                const fileSeq = fileDiv.getAttribute("data-seq");
+
+                // Controller에 List로 넘겨주기 위한 Input 생성 (Name은 동일)
+                const deleteFile = document.createElement("input");
+
+                deleteFile.type = "hidden";
+                deleteFile.name = "boardFileDeleteList";
+                deleteFile.value = fileSeq;
+
+                fileDiv.remove();
+                document.getElementById("deleteFileList").appendChild(deleteFile);
+            }
+        </script>
     </body>
 </html>
