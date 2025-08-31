@@ -5,20 +5,22 @@
     </a>
 
     <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">로그아웃 하시겠습니까?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+
+                <div class="modal-body">로그아웃 하실 경우 현재 쿠키 정보가 삭제됩니다.</div>
+
+                <!-- Logout -->
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <button class="btn btn-primary" id="logoutButton">Logout</button>
                 </div>
             </div>
         </div>
@@ -43,8 +45,32 @@
 
     <!-- 공통 Alert -->
     <div id="alert-util">
+        <!-- Web -->
         <script th:inline="javascript" th:if="${resultMessage != null}">
             alert([[${resultMessage}]]);
+        </script>
+
+        <!-- Logout -->
+        <script th:inline="javascript">
+            document.querySelector("#logoutButton").addEventListener("click", async () => {
+                try {
+                    const response = await fetch("/api/auth/logout", {
+                        method: "POST"
+                    });
+
+                    if (response.ok) {
+                        alert("로그아웃 되었습니다.");
+                        window.location.href = "/auth/login"; // 로그인 페이지로 이동
+
+                    } else {
+                        alert("로그아웃 도중 문제가 발생하였습니다.");
+                    }
+
+                } catch (err) {
+                    console.error(err);
+                    alert("서버 오류로 로그아웃에 실패하였습니다.");
+                }
+            });
         </script>
     </div>
 </th:block>

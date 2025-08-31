@@ -46,4 +46,20 @@ public class AuthApiController {
 
         return ResponseEntity.ok(new TokenResponse("The login process is success", jwtToken));
     }
+
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(HttpServletResponse httpServletResponse) {
+        // JWT 쿠키 삭제 (maxAge=0)
+        ResponseCookie responseCookie = ResponseCookie.from("JWT_TOKEN", "")
+                .httpOnly(true)
+                .secure(false)
+                .sameSite("Strict")
+                .path("/")
+                .maxAge(0) // 즉시 만료
+                .build();
+
+        httpServletResponse.addHeader(HttpHeaders.SET_COOKIE, responseCookie.toString());
+
+        return ResponseEntity.ok("The logout process is success");
+    }
 }
