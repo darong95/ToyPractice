@@ -82,7 +82,9 @@ public class BoardApiController {
 
     @DeleteMapping("/boardDeleteOne/{boardSeq}")
     public ResponseEntity<Void> boardDeleteOne(@PathVariable Long boardSeq) { // 단일 삭제
+        boardFileService.boardFileDeleteBatch(boardSeq);
         boardService.boardDeleteOne(boardSeq);
+
         return ResponseEntity.noContent().build();
     }
 }
