@@ -20,23 +20,42 @@
                                 <form class="user">
                                     <!-- ID -->
                                     <div class="form-group">
-                                        <input type="text" class="form-control form-control-user" id="exampleInputEmail"
+                                        <input type="text" class="form-control form-control-user" id="userId"
                                                placeholder="Enter register ID">
+                                    </div>
+
+                                    <!-- Name -->
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-user" id="userName"
+                                               placeholder="Enter your name">
                                     </div>
 
                                     <!-- Password -->
                                     <div class="form-group row">
                                         <div class="col-sm-6 mb-3 mb-sm-0">
                                             <input type="password" class="form-control form-control-user"
-                                                   id="exampleInputPassword" placeholder="Password">
+                                                   id="userPassword" placeholder="Password">
                                         </div>
 
                                         <div class="col-sm-6">
                                             <input type="password" class="form-control form-control-user"
-                                                   id="exampleRepeatPassword" placeholder="Repeat Password">
+                                                   id="userRepeatPassword" placeholder="Repeat Password">
                                         </div>
                                     </div>
 
+                                    <!-- Email -->
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-user" id="userEmail"
+                                               placeholder="Enter your email address">
+                                    </div>
+
+                                    <!-- PhoneNumber -->
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-user" id="userPhoneNumber"
+                                               placeholder="Enter your phoneNumber">
+                                    </div>
+
+                                    <!-- Submit -->
                                     <button type="button" id="signUpButton" class="btn btn-primary btn-user btn-block">
                                         Register Account
                                     </button>
@@ -53,7 +72,44 @@
         <!-- Register -->
         <script>
             document.querySelector("#signUpButton").addEventListener("click", async () => {
-                alert("회원 가입 구현 중입니다.");
+                const userId = document.querySelector("#userId").value;
+                const userName = document.querySelector("#userName").value;
+                const userPassword = document.querySelector("#userPassword").value;
+                const userRepeatPassword = document.querySelector("#userRepeatPassword").value;
+                const userEmail = document.querySelector("#userEmail").value;
+                const userPhoneNumber = document.querySelector("#userPhoneNumber").value;
+
+                try {
+                    const response = await fetch("/api/auth/signup", {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            userId
+                            , userPassword
+                            , userRepeatPassword
+                            , userName
+                            , userEmail
+                            , userPhoneNumber
+                        })
+                    });
+
+                    if (response.ok) {
+                        alert(await response.text());
+                        window.location.href = "/auth-loginForm"; // 로그인 페이지로 이동
+
+                    } else {
+                        const errorMessage = await response.text();
+                        const errorMessage_Arr = errorMessage.split(",");
+                        alert(errorMessage_Arr[0]);
+                    }
+
+                } catch (error) {
+                    alert("서버 오류로 회원가입이 실패하였습니다.");
+                }
             });
         </script>
     </body>

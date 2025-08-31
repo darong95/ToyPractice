@@ -32,9 +32,14 @@ public class AuthService {
     public void signUp(SignupRequest signupRequest) { // 회원 가입
         // 가입 여부 확인
         if (userRepository.findByUserId(signupRequest.getUserId()).isPresent()) {
-            throw new IllegalArgumentException("이미 존재하는 사용자입니다.");
+            throw new IllegalArgumentException("이미 사용 중인 아이디입니다.");
         }
 
+        // 비밀번호, 재확인 검사
+        if (!signupRequest.getUserPassword().equals(signupRequest.getUserRepeatPassword())) {
+            throw new IllegalArgumentException("비밀번호와 비밀번호 재확인이 일치하지 않습니다.");
+        }
+        
         // 가입 된 사용자가 아닐 경우 신규 가입 처리
         UserEntity userEntity = UserEntity.builder()
                 .userId(signupRequest.getUserId())

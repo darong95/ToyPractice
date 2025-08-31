@@ -26,9 +26,9 @@ public class AuthApiController {
     private String jwtCookieName;
 
     @PostMapping("/signup")
-    public ResponseEntity<TokenResponse> signUp(@RequestBody SignupRequest signUpRequest) { // 회원 가입
+    public ResponseEntity<String> signUp(@Valid@RequestBody SignupRequest signUpRequest) { // 회원 가입
         authService.signUp(signUpRequest);
-        return ResponseEntity.ok(new TokenResponse("The join process is success", null));
+        return ResponseEntity.ok("The register process is success");
     }
 
     @PostMapping("/login")
