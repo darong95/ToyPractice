@@ -51,6 +51,7 @@ jobs:
 
         # GitHub SecretKey : Security JWT
         JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
+        JWT_COOKIE_NAME: ${{ secrets.JWT_COOKIE_NAME }}
         JWT_EXPIRATION_TIME: ${{ secrets.JWT_EXPIRATION_TIME }}
 
     # Step06 : Upload Jar (GitHub Action Artifact)

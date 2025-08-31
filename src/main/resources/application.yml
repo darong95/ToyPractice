@@ -52,4 +52,5 @@ file:
 # JWT
 jwt:
   secret-key: ${JWT_SECRET_KEY}
+  cookie-name: ${JWT_COOKIE_NAME}
   expiration-time: ${JWT_EXPIRATION_TIME}

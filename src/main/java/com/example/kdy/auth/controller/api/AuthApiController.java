@@ -10,6 +10,7 @@ import jakarta.validation.Valid;
 
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,9 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class AuthApiController {
     private final AuthService authService;
+
+    @Value("${jwt.cookie-name}")
+    private String jwtCookieName;
 
     @PostMapping("/signup")
     public ResponseEntity<TokenResponse> signUp(@RequestBody SignupRequest signUpRequest) { // 회원 가입
@@ -32,8 +36,8 @@ public class AuthApiController {
         // 토큰 발급
         String jwtToken = authService.login(loginRequest);
 
-        // HttpOnly Cookie 저장 ➡️ 브라우저에 'accessToken' 이름으로 Token을 저장하겠다는 말
-        ResponseCookie responseCookie = ResponseCookie.from("JWT_TOKEN", jwtToken)
+        // HttpOnly Cookie 저장 ➡️ 브라우저에 jwtCookieName 이름으로 Token을 저장하겠다는 말
+        ResponseCookie responseCookie = ResponseCookie.from(jwtCookieName, jwtToken)
                 .httpOnly(true) // XSS (JavaScript 접근 방지)
                 .secure(false) // HTTPS 전용
                 .sameSite("Strict") // CSRF 보호
@@ -50,7 +54,7 @@ public class AuthApiController {
     @PostMapping("/logout")
     public ResponseEntity<String> logout(HttpServletResponse httpServletResponse) {
         // JWT 쿠키 삭제 (maxAge=0)
-        ResponseCookie responseCookie = ResponseCookie.from("JWT_TOKEN", "")
+        ResponseCookie responseCookie = ResponseCookie.from(jwtCookieName, "")
                 .httpOnly(true)
                 .secure(false)
                 .sameSite("Strict")

@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,6 +26,9 @@ import java.io.IOException;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtTokenProvider jwtTokenProvider;
     private final CustomUserDetailsService customUserDetailsService;
+
+    @Value("${jwt.cookie-name}")
+    private String jwtCookieName;
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain)
@@ -42,7 +46,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         // JWT Token ➡️ HttpOnly 방식 (Cookie)
         if (jwtToken == null && httpServletRequest.getCookies() != null) {
             for (Cookie cookie : httpServletRequest.getCookies()) {
-                if ("JWT_TOKEN".equals(cookie.getName())) { // 쿠키 이름은 네가 지정한 값
+                if (jwtCookieName.equals(cookie.getName())) { // 쿠키 이름은 네가 지정한 값
                     jwtToken = cookie.getValue();
                     break;
                 }
