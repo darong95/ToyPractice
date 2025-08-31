@@ -25,7 +25,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
             
         // 브라우저 요청일 경우 ➡️ 뷰가 Thymeleaf, SPA 구조에서는 불필요
         } else {
-            httpServletResponse.sendRedirect("/auth/login-form"); // 로그인 화면으로
+            httpServletResponse.sendRedirect("/auth/loginForm"); // 로그인 화면으로
         }
     }
 }

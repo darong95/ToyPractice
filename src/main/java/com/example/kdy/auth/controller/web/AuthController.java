@@ -13,8 +13,13 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
     private final AuthService authService;
 
-    @GetMapping("/login-form")
+    @GetMapping("/loginForm")
     public String loginForm() {
-        return "auth/login-form";
+        return "auth/auth-loginForm";
+    }
+
+    @GetMapping("/signUpForm")
+    public String signUpForm() {
+        return "auth/auth-signUpForm";
     }
 }
