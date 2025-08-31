@@ -31,7 +31,7 @@ public class GlobalExceptionApiAdvice {
                 .getAllErrors()
                 .stream()
                 .map(ObjectError::getDefaultMessage)
-                .collect(Collectors.joining(", "));
+                .collect(Collectors.joining(" ➕ "));
 
         return ResponseEntity.badRequest().body(validMessage);
     }

@@ -6,6 +6,8 @@ import com.example.kdy.auth.dto.SignupRequest;
 import com.example.kdy.auth.service.AuthService;
 
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
+
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpHeaders;
@@ -26,7 +28,7 @@ public class AuthApiController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<TokenResponse> login(@RequestBody LoginRequest loginRequest, HttpServletResponse httpServletResponse) { // 로그인
+    public ResponseEntity<TokenResponse> login(@Valid @RequestBody LoginRequest loginRequest, HttpServletResponse httpServletResponse) { // 로그인
         // 토큰 발급
         String jwtToken = authService.login(loginRequest);
 
