@@ -9,6 +9,7 @@ import com.example.kdy.board.entity.BoardEntity;
 import com.example.kdy.board.service.BoardFileService;
 import com.example.kdy.board.service.BoardService;
 
+import com.example.kdy.common.dto.ApiResponse;
 import com.example.kdy.security.service.UserPrincipal;
 import jakarta.validation.Valid;
 
@@ -35,13 +36,13 @@ public class BoardApiController {
     private final BoardService boardService; // Board Domain Service
     private final BoardFileService boardFileService; // Board File Service
 
-    @GetMapping("/boardList")
-    public Page<BoardEntity> boardList(BoardListDTO boardListDTO, Model model) { // 게시판 리스트
-        return boardService.boardList(boardListDTO);
+    public ResponseEntity<ApiResponse<Page<BoardEntity>>> boardList(BoardListDTO boardListDTO, Model model) {
+        Page<BoardEntity> boardList = boardService.boardList(boardListDTO);
+        return ResponseEntity.ok(ApiResponse.success("게시글 리스트를 성공적으로 가져왔습니다.", boardList));
     }
 
     @PostMapping(value = "/boardWrite", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<String> boardWrite(
+    public ResponseEntity<ApiResponse<Void>> boardWrite(
             @Valid @RequestPart("boardWriteDTO") BoardWriteDTO boardWriteDTO
             , @RequestPart(value = "boardFileList", required = false) List<MultipartFile> boardFileList
             , @AuthenticationPrincipal UserPrincipal userPrincipal) {
@@ -59,11 +60,11 @@ public class BoardApiController {
         Long boardSeq = boardService.boardWrite(boardWriteDTO);
         boardFileService.boardFileWrite(boardSeq, boardWriteDTO.getBoardFileList());
 
-        return ResponseEntity.ok("게시글 등록이 완료되었습니다.");
+        return ResponseEntity.ok(ApiResponse.success("게시글 작성이 완료되었습니다.", null));
     }
 
     @PostMapping(value = "/boardUpdate", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<String> boardUpdate(
+    public ResponseEntity<ApiResponse<Void>> boardUpdate(
             @Valid @RequestPart("boardUpdateDTO") BoardUpdateDTO boardUpdateDTO
             , @RequestPart(value = "boardFileUpdateList", required = false) List<MultipartFile> boardFileUpdateList) {
 
@@ -77,14 +78,14 @@ public class BoardApiController {
         boardFileService.boardFileDeleteIn(boardUpdateDTO.getBoardFileDeleteList());
         boardFileService.boardFileWrite(boardUpdateDTO.getBoardDTO().getBoardSeq(), boardUpdateDTO.getBoardFileUpdateList());
 
-        return ResponseEntity.ok("게시글 수정이 완료되었습니다.");
+        return ResponseEntity.ok(ApiResponse.success("게시글 수정이 완료되었습니다.", null));
     }
 
     @DeleteMapping("/boardDeleteOne/{boardSeq}")
-    public ResponseEntity<Void> boardDeleteOne(@PathVariable Long boardSeq) { // 단일 삭제
+    public ResponseEntity<ApiResponse<Void>> boardDeleteOne(@PathVariable Long boardSeq) { // 단일 삭제
         boardFileService.boardFileDeleteBatch(boardSeq);
         boardService.boardDeleteOne(boardSeq);
 
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("게시글이 삭제가 완료되었습니다.", null));
     }
 }

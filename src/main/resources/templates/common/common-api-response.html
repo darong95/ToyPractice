@@ -1,0 +1,36 @@
+<th:block th:fragment="common-api-response">
+    <!-- Validation Check -->
+    <script th:inline="javascript">
+        function apiResponse(responseData, movePath) {
+            // Validation Check 초기화
+            document.querySelectorAll("[id^='valid-']").forEach(el => {
+                el.style.display = "none";
+                el.textContent = "";
+            });
+
+            // 결과에 따른 데이터 처리
+            if (responseData.success) {
+                alert(responseData.message);
+                console.log("JWT Token:", responseData.data?.jwtToken); // 토큰 접근
+
+                window.location.href = movePath;
+
+            } else {
+                alert(responseData.message || "로그인에 실패하였습니다.");
+
+                // Validation Check
+                if (responseData.data) {
+                    for (const [field, msg] of Object.entries(responseData.data)) {
+                        const safeField = field.replace(/\./g, "_");
+                        const errorDiv = document.querySelector(`#valid-${safeField}`);
+
+                        if (errorDiv) {
+                            errorDiv.textContent = msg;
+                            errorDiv.style.display = "block"; // 보이게
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</th:block>

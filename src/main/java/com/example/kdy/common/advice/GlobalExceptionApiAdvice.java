@@ -1,5 +1,6 @@
 package com.example.kdy.common.advice;
 
+import com.example.kdy.common.dto.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -20,19 +23,18 @@ import java.util.stream.Collectors;
 })
 public class GlobalExceptionApiAdvice {
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException illegalArgumentException) {
-        log.info("[API ERROR] IllegalArgumentException 발생!");
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(illegalArgumentException.getMessage());
+    public ResponseEntity<ApiResponse<Void>> handleIllegalArgumentException(IllegalArgumentException illegalArgumentException) {
+        return ResponseEntity.badRequest().body(ApiResponse.fail(illegalArgumentException.getMessage()));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<String> handleValidationException(MethodArgumentNotValidException ex) { // 유효성 검사
-        String validMessage = ex.getBindingResult()
-                .getAllErrors()
-                .stream()
-                .map(ObjectError::getDefaultMessage)
-                .collect(Collectors.joining(","));
+    public ResponseEntity<ApiResponse<Map<String, String>>> handleValidationException(MethodArgumentNotValidException methodArgumentNotValidException) { // 유효성 검사
+        Map<String, String> errorMap = new LinkedHashMap<>();
 
-        return ResponseEntity.badRequest().body(validMessage);
+        methodArgumentNotValidException.getBindingResult().getFieldErrors().forEach(fieldError ->
+                errorMap.put(fieldError.getField(), fieldError.getDefaultMessage())
+        );
+
+        return ResponseEntity.badRequest().body(ApiResponse.fail("필수 항목을 확인해 주세요.", errorMap));
     }
 }

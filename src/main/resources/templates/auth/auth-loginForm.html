@@ -25,12 +25,18 @@
                                             <div class="form-group">
                                                 <input type="text" class="form-control form-control-user"
                                                        id="userId" aria-describedby="emailHelp" placeholder="Enter your ID">
+
+                                                <!-- Validation Check Result -->
+                                                <div id="valid-userId" class="alert alert-danger mt-2" style="display:none"></div><!-- Validation Check Result -->
                                             </div>
 
                                             <!-- Password -->
                                             <div class="form-group">
                                                 <input type="password" class="form-control form-control-user"
                                                        id="userPassword" placeholder="Enter your Password">
+
+                                                <!-- Validation Check Result -->
+                                                <div id="valid-userPassword" class="alert alert-danger mt-2" style="display:none"></div>
                                             </div>
 
                                             <!-- Submit-->
@@ -52,6 +58,7 @@
         </div>
 
         <th:block th:replace="~{common/common-bottom :: common-bottom}"></th:block>
+        <th:block th:replace="~{common/common-api-response :: common-api-response}"></th:block>
 
         <!-- Login -->
         <script>
@@ -68,13 +75,9 @@
                         body: JSON.stringify({ userId, userPassword })
                     });
 
-                    if (response.ok) {
-                        alert("로그인에 성공하였습니다!");
-                        window.location.href = "/home";
-
-                    } else {
-                        alert(await response.text() || "로그인에 실패하였습니다.");
-                    }
+                    // 결과 값 가져오기
+                    const result = await response.json();
+                    apiResponse(result, "/home");
 
                 } catch (err) {
                     console.error(err);

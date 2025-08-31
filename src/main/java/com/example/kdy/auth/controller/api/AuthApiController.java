@@ -5,6 +5,7 @@ import com.example.kdy.auth.dto.TokenResponse;
 import com.example.kdy.auth.dto.SignupRequest;
 import com.example.kdy.auth.service.AuthService;
 
+import com.example.kdy.common.dto.ApiResponse;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 
@@ -26,13 +27,13 @@ public class AuthApiController {
     private String jwtCookieName;
 
     @PostMapping("/signup")
-    public ResponseEntity<String> signUp(@Valid@RequestBody SignupRequest signUpRequest) { // 회원 가입
+    public ResponseEntity<ApiResponse<Void>> signUp(@Valid@RequestBody SignupRequest signUpRequest) { // 회원 가입
         authService.signUp(signUpRequest);
-        return ResponseEntity.ok("The register process is success");
+        return ResponseEntity.ok(ApiResponse.success("회원가입이 완료되었습니다.", null));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<TokenResponse> login(@Valid @RequestBody LoginRequest loginRequest, HttpServletResponse httpServletResponse) { // 로그인
+    public ResponseEntity<ApiResponse<String>> login(@Valid @RequestBody LoginRequest loginRequest, HttpServletResponse httpServletResponse) { // 로그인
         // 토큰 발급
         String jwtToken = authService.login(loginRequest);
 
@@ -48,11 +49,11 @@ public class AuthApiController {
         // Cookie Header에 Set-Cookie ➡️ 브라우저에 쿠키 저장
         httpServletResponse.addHeader(HttpHeaders.SET_COOKIE, responseCookie.toString());
 
-        return ResponseEntity.ok(new TokenResponse("The login process is success", jwtToken));
+        return ResponseEntity.ok(ApiResponse.success("로그인에 성공하였습니다.", jwtToken));
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<String> logout(HttpServletResponse httpServletResponse) {
+    public ResponseEntity<ApiResponse<Void>> logout(HttpServletResponse httpServletResponse) {
         // JWT 쿠키 삭제 (maxAge=0)
         ResponseCookie responseCookie = ResponseCookie.from(jwtCookieName, "")
                 .httpOnly(true)
@@ -64,6 +65,6 @@ public class AuthApiController {
 
         httpServletResponse.addHeader(HttpHeaders.SET_COOKIE, responseCookie.toString());
 
-        return ResponseEntity.ok("The logout process is success");
+        return ResponseEntity.ok(ApiResponse.success("로그아웃이 완료되었습니다.", null));
     }
 }

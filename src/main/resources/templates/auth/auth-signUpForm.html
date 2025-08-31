@@ -5,7 +5,7 @@
     <!-- Login Form Background Color -->
     <body class="bg-gradient-primary">
         <div class="container">
-            <div class="card o-hidden border-0 shadow-lg my-5 mx-auto" style="max-width: 600px;">
+            <div class="card o-hidden border-0 shadow-lg my-5 mx-auto" style="max-width: 800px;">
                 <!-- Body Start -->
                 <div class="card-body p-0">
                     <div class="row justify-content-center">
@@ -22,12 +22,18 @@
                                     <div class="form-group">
                                         <input type="text" class="form-control form-control-user" id="userId"
                                                placeholder="Enter register ID">
+
+                                        <!-- Validation Check (API) -->
+                                        <div id="valid-userId" class="alert alert-danger mt-2" style="display:none"></div>
                                     </div>
 
                                     <!-- Name -->
                                     <div class="form-group">
                                         <input type="text" class="form-control form-control-user" id="userName"
                                                placeholder="Enter your name">
+
+                                        <!-- Validation Check (API) -->
+                                        <div id="valid-userName" class="alert alert-danger mt-2" style="display:none"></div>
                                     </div>
 
                                     <!-- Password -->
@@ -35,11 +41,17 @@
                                         <div class="col-sm-6 mb-3 mb-sm-0">
                                             <input type="password" class="form-control form-control-user"
                                                    id="userPassword" placeholder="Password">
+
+                                            <!-- Validation Check (API) -->
+                                            <div id="valid-userPassword" class="alert alert-danger mt-2" style="display:none"></div>
                                         </div>
 
                                         <div class="col-sm-6">
                                             <input type="password" class="form-control form-control-user"
                                                    id="userRepeatPassword" placeholder="Repeat Password">
+
+                                            <!-- Validation Check (API) -->
+                                            <div id="valid-userRepeatPassword" class="alert alert-danger mt-2" style="display:none"></div>
                                         </div>
                                     </div>
 
@@ -47,12 +59,18 @@
                                     <div class="form-group">
                                         <input type="text" class="form-control form-control-user" id="userEmail"
                                                placeholder="Enter your email address">
+
+                                        <!-- Validation Check (API) -->
+                                        <div id="valid-userEmail" class="alert alert-danger mt-2" style="display:none"></div>
                                     </div>
 
                                     <!-- PhoneNumber -->
                                     <div class="form-group">
                                         <input type="number" class="form-control form-control-user" id="userPhoneNumber"
                                                placeholder="Enter your phoneNumber">
+
+                                        <!-- Validation Check (API) -->
+                                        <div id="valid-userPhoneNumber" class="alert alert-danger mt-2" style="display:none"></div>
                                     </div>
 
                                     <!-- Submit -->
@@ -68,6 +86,7 @@
         </div>
 
         <th:block th:replace="~{common/common-bottom :: common-bottom}"></th:block>
+        <th:block th:replace="~{common/common-api-response :: common-api-response}"></th:block>
 
         <!-- Register -->
         <script>
@@ -97,15 +116,9 @@
                         })
                     });
 
-                    if (response.ok) {
-                        alert(await response.text());
-                        window.location.href = "/auth-loginForm"; // 로그인 페이지로 이동
-
-                    } else {
-                        const errorMessage = await response.text();
-                        const errorMessage_Arr = errorMessage.split(",");
-                        alert(errorMessage_Arr[0]);
-                    }
+                    // 결과 값 가져오기
+                    const result = await response.json();
+                    apiResponse(result, "/board/boardList");
 
                 } catch (error) {
                     alert("서버 오류로 회원가입이 실패하였습니다.");
