@@ -26,6 +26,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         UserEntity userEntity = userRepository.findWithRolesByUserSeq(_userSeq)
                 .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다 : " + _userSeq));
 
+        /*
         // DB에 담긴 Role 정보를 Security 객체로 변환
         List<SimpleGrantedAuthority> userRoleList = userEntity.getUserRoles().stream()
                 .map(userRoleEntity -> new SimpleGrantedAuthority(userRoleEntity.getRoleEntity().getRoleName()))
@@ -37,5 +38,8 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .password(userEntity.getUserPassword()) // 실제로는 잘 사용 안 함, UserDetails 구약 대문에 필요함
                 .authorities(userRoleList)
                 .build();
+        */
+
+        return new UserPrincipal(userEntity);
     }
 }

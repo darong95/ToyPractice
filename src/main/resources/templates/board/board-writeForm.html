@@ -27,25 +27,8 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="card mb-4">
-                                        <!-- Title -->
-                                        <div class="card-header">
-                                            <input type="text" class="form-control bg-light border-0 small"
-                                                   placeholder="Please enter a title here :)" aria-describedby="basic-addon2"
-                                                   id="boardTitle" th:field="*{boardDTO.boardTitle}"/>
-
-                                            <!-- Validation Check Result -->
-                                            <div th:if="${#fields.hasErrors('boardDTO.boardTitle')}" th:errors="*{boardDTO.boardTitle}" class="alert alert-danger mt-2"></div>
-                                        </div>
-
-                                        <!-- Content -->
-                                        <div class="card-body">
-                                            <textarea class ="form-control bg-light border-0 small" id="boardContent"
-                                                      th:field="*{boardDTO.boardContent}" rows="10" cols="20"
-                                                      placeholder="Please enter a Content here :)"></textarea>
-
-                                            <!-- Validation Check Result -->
-                                            <div th:if="${#fields.hasErrors('boardDTO.boardContent')}" th:errors="*{boardDTO.boardContent}" class="alert alert-danger mt-2"></div>
-                                        </div>
+                                        <!-- 공통 입력 -->
+                                        <th:block th:replace="~{common/common-enter :: common-enter}"></th:block>
 
                                         <!-- File Upload -->
                                         <div class="card-header" style="display: flex; align-items: center; gap: 8px;">
@@ -64,11 +47,18 @@
                                 </div>
                             </div>
 
-                            <!-- Submit -->
+                            <!-- Write -->
+                            <button type="button" class="btn btn-success btn-icon-split" onclick="boardWrite()">
+                                <span class="icon text-white-50"><i class="fas fa-check"></i></span>
+                                <span class="text">Update</span>
+                            </button>
+
+                            <!--
                             <button type="submit" class="btn btn-success btn-icon-split">
                                 <span class="icon text-white-50"><i class="fas fa-check"></i></span>
                                 <span class="text">Submit</span>
                             </button>
+                            -->
                         </form>
                     </div>
                 </div>
@@ -77,5 +67,56 @@
 
         <th:block th:replace="~{common/common-bottom :: common-bottom}"></th:block>
         <th:block th:replace="~{common/common-file-upload :: common-file-upload}"></th:block>
+
+        <!-- Board Write -->
+        <script th:inline="javascript">
+            // 게시글 수정
+            async function boardWrite() {
+                // WriteDTO 설정
+                const writeDTO = {
+                    boardDTO: {
+                        boardTitle: $("#boardTitle").val(),
+                        boardContent: $("#boardContent").val()
+                    }
+                };
+
+                // FormData 설정 (Multipart 전송은 FormData를 사용해야 함)
+                const formData = new FormData();
+
+                formData.append (
+                    "boardWriteDTO"
+                    , new Blob([JSON.stringify(writeDTO)]
+                    , { type: "application/json" })
+                );
+
+                // 신규 첨부파일 설정
+                const files = $("#boardFile")[0].files;
+
+                for (let file of files) {
+                    formData.append("boardFileList", file);
+                }
+
+                // Controller에 전송
+                try {
+                    const response = await fetch("/api/board/boardWrite", {
+                        method: "POST", // Multipart 전송 시, PUT은 불안정하거나 지원 안 됨
+                        body: formData
+                    });
+
+                    if (response.ok) {
+                        alert(await response.text());
+                        window.location.href = "/board/boardList";
+
+                    // Validation 체크 (화면에 보여주기)
+                    } else {
+                        $("#valid-Message").text(await response.text()).show();
+                    }
+
+                } catch (err) {
+                    console.error(err);
+                    alert("등록 중 오류 발생");
+                }
+            }
+        </script>
     </body>
 </html>

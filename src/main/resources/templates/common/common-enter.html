@@ -1,0 +1,26 @@
+<th:block th:fragment="common-enter">
+    <!-- Title -->
+    <div class="card-header">
+        <!-- Validation Check Result (API) -->
+        <div id="valid-Message" class="alert alert-danger mt-2" style="display:none"></div>
+
+        <input type="text" class="form-control bg-light border-0 small"
+               placeholder="Please enter a title here :)" aria-describedby="basic-addon2"
+               id="boardTitle" th:field="*{boardDTO.boardTitle}"/>
+
+        <!-- Validation Check Result (Web) -->
+        <div th:if="${#fields.hasErrors('boardDTO.boardTitle')}" th:errors="*{boardDTO.boardTitle}"
+             id="valid-boardTitle" class="alert alert-danger mt-2"></div>
+    </div>
+
+    <!-- Content -->
+    <div class="card-body">
+        <textarea class ="form-control bg-light border-0 small" id="boardContent"
+                  th:field="*{boardDTO.boardContent}" rows="10" cols="20"
+                  placeholder="Please enter a Content here :)"></textarea>
+
+        <!-- Validation Check Result (Web) -->
+        <div th:if="${#fields.hasErrors('boardDTO.boardContent')}" th:errors="*{boardDTO.boardContent}"
+             id="valid-boardContent" class="alert alert-danger mt-2"></div>
+    </div>
+</th:block>

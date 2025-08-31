@@ -2,21 +2,26 @@ package com.example.kdy.board.controller.api;
 
 import com.example.kdy.board.dto.BoardListDTO;
 import com.example.kdy.board.dto.BoardUpdateDTO;
+import com.example.kdy.board.dto.BoardWriteDTO;
+
 import com.example.kdy.board.entity.BoardEntity;
+
 import com.example.kdy.board.service.BoardFileService;
 import com.example.kdy.board.service.BoardService;
 
+import com.example.kdy.security.service.UserPrincipal;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.ui.Model;
 import org.springframework.data.domain.Page;
+
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -35,11 +40,32 @@ public class BoardApiController {
         return boardService.boardList(boardListDTO);
     }
 
+    @PostMapping(value = "/boardWrite", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<String> boardWrite(
+            @Valid @RequestPart("boardWriteDTO") BoardWriteDTO boardWriteDTO
+            , @RequestPart(value = "boardFileList", required = false) List<MultipartFile> boardFileList
+            , @AuthenticationPrincipal UserPrincipal userPrincipal) {
+
+        // 첨부파일 설정 ➡️ JSON과 MultipartFile은 같은 DTO에 넣을 수 없음
+        if (boardFileList != null) {
+            boardWriteDTO.setBoardFileList(boardFileList);
+        }
+
+        // 게시글 정보 입력
+        boardWriteDTO.getBoardDTO().setBoardRegId(userPrincipal.getUsername());
+        boardWriteDTO.getBoardDTO().setUserSeq(userPrincipal.getUserSeq());
+
+        // 게시글 & 첨부파일 등록
+        Long boardSeq = boardService.boardWrite(boardWriteDTO);
+        boardFileService.boardFileWrite(boardSeq, boardWriteDTO.getBoardFileList());
+
+        return ResponseEntity.ok("게시글 등록이 완료되었습니다.");
+    }
+
     @PostMapping(value = "/boardUpdate", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> boardUpdate(
             @Valid @RequestPart("boardUpdateDTO") BoardUpdateDTO boardUpdateDTO
-            , @RequestPart(value = "boardFileUpdateList", required = false) List<MultipartFile> boardFileUpdateList
-            , BindingResult bindingResult) {
+            , @RequestPart(value = "boardFileUpdateList", required = false) List<MultipartFile> boardFileUpdateList) {
 
         // 첨부파일 설정 ➡️ JSON과 MultipartFile은 같은 DTO에 넣을 수 없음
         if (boardFileUpdateList != null) {
