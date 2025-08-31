@@ -31,13 +31,11 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="card mb-4">
-                                        <!-- Validation Check Result (API) -->
-                                        <div class="card-header" style="display: none;">
-                                            <div id="valid-Message" class="alert alert-danger mt-2"></div>
-                                        </div>
-
                                         <!-- Title -->
                                         <div class="card-header">
+                                            <!-- Validation Check Result (API) -->
+                                            <div id="valid-Message" class="alert alert-danger mt-2" style="display:none"></div>
+
                                             <input type="text" class="form-control bg-light border-0 small"
                                                    placeholder="Please enter a title here :)" aria-describedby="basic-addon2"
                                                    id="boardTitle" th:field="*{boardDTO.boardTitle}"/>
@@ -171,7 +169,6 @@
                     });
 
                     if (response.ok) {
-                        alert(await response.text());
                         window.location.href = "/board/boardList";
 
                     // Validation 체크 (화면에 보여주기)
