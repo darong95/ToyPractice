@@ -38,12 +38,20 @@ logging:
   level:
     org:
       hibernate:
-        SQL: DEBUG      # 로그 레벨을 DEBUG로
+        SQL: debug      # 로그 레벨을 DEBUG로
         type:
           descriptor:
-            sql: TRACE  # 파라미터까지 출력 (매우 유용)
+            sql: trace  # 파라미터까지 출력 (컬럼 타입 + 값, 매우 유용)
+        orm:
+          jdbc:
+            bind: trace # 바인딩 된 파라미터 값까지 출력
+          lazy: trace # Lazy 로딩이 언제 트리거 됐는지 확인
 
-      # thymeleaf: DEBUG
+# p6spy
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: true
 
 # File Upload & Download Setting
 file:

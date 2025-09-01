@@ -35,6 +35,22 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         String jwtToken = null;
+        String whiteURI = httpServletRequest.getRequestURI();
+
+        // SecurityConfig PermitAll ➡️ White URI
+        if (whiteURI.startsWith("/api/")
+                || whiteURI.startsWith("/auth/")
+                || whiteURI.startsWith("/css/")
+                || whiteURI.startsWith("/js/")
+                || whiteURI.startsWith("/img/")
+                || whiteURI.startsWith("/vendor/")
+                || whiteURI.startsWith("/scss/")
+                || whiteURI.startsWith("/favicon.ico")) {
+
+            filterChain.doFilter(httpServletRequest, httpServletResponse);
+
+            return;
+        }
 
         // JWT Token ➡️ Authorization 방식
         String authHeader = httpServletRequest.getHeader("Authorization");

@@ -61,6 +61,9 @@ dependencies {
 	implementation 'org.mapstruct:mapstruct:1.5.5.Final'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
 
+	// p6spy
+	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.1'
+
 	// JUnit
 	testImplementation 'org.springframework.boot:spring-boot-starter-test' // JUnit5
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher' // JUnit Luncher
