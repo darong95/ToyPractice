@@ -1,7 +1,6 @@
 package com.example.kdy.auth.controller.api;
 
 import com.example.kdy.auth.dto.LoginRequest;
-import com.example.kdy.auth.dto.TokenResponse;
 import com.example.kdy.auth.dto.SignupRequest;
 import com.example.kdy.auth.service.AuthService;
 

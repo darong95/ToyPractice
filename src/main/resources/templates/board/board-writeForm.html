@@ -48,7 +48,7 @@
                             </div>
 
                             <!-- Write -->
-                            <button type="button" class="btn btn-success btn-icon-split" onclick="boardWrite()">
+                            <button type="button" class="btn btn-success btn-icon-split mb-5" onclick="boardWrite()">
                                 <span class="icon text-white-50"><i class="fas fa-check"></i></span>
                                 <span class="text">Write</span>
                             </button>
@@ -71,7 +71,7 @@
 
         <!-- Board Write -->
         <script th:inline="javascript">
-            // 게시글 수정
+            // 게시글 작성
             async function boardWrite() {
                 // WriteDTO 설정
                 const writeDTO = {
