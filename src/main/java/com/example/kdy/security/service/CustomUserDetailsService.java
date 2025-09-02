@@ -4,6 +4,7 @@ import com.example.kdy.user.entity.UserEntity;
 import com.example.kdy.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
@@ -25,6 +27,11 @@ public class CustomUserDetailsService implements UserDetailsService {
         // 사용자 조회
         UserEntity userEntity = userRepository.findWithRolesByUserSeq(_userSeq)
                 .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다 : " + _userSeq));
+
+        log.info("[LOG] CustomUserDetailsService :: UserSeq :: " + userEntity.getUserSeq());
+        log.info("[LOG] CustomUserDetailsService :: UserId :: " + userEntity.getUserId());
+        log.info("[LOG] CustomUserDetailsService :: UserName :: " + userEntity.getUserName());
+        log.info("[LOG] CustomUserDetailsService :: UserPassword :: " + userEntity.getUserPassword());
 
         /*
         // DB에 담긴 Role 정보를 Security 객체로 변환

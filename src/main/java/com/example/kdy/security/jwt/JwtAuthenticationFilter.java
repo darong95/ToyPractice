@@ -38,7 +38,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String whiteURI = httpServletRequest.getRequestURI();
 
         // SecurityConfig PermitAll ➡️ White URI
-        if (whiteURI.startsWith("/api/")
+        if (whiteURI.startsWith("/api/auth/")
                 || whiteURI.startsWith("/auth/")
                 || whiteURI.startsWith("/css/")
                 || whiteURI.startsWith("/js/")
