@@ -4,6 +4,7 @@ import com.example.kdy.security.service.CustomUserDetailsService;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -40,6 +41,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         // SecurityConfig PermitAll ➡️ White URI
         if (whiteURI.startsWith("/api/auth/")
                 || whiteURI.startsWith("/auth/")
+                || whiteURI.startsWith("/swagger-ui/")
+                || whiteURI.startsWith("/v3/api-docs/")
                 || whiteURI.startsWith("/css/")
                 || whiteURI.startsWith("/js/")
                 || whiteURI.startsWith("/img/")

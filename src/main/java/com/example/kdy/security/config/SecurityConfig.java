@@ -47,7 +47,8 @@ public class SecurityConfig {
 
                 // 접근 권한 설정
                 .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
-                        .requestMatchers("/auth/**", "/api/auth/**", "/css/**", "/js/**", "/img/**", "/vendor/**", "/scss/**", "/favicon.ico").permitAll() // 인증 없이 접근 허용
+                        .requestMatchers("/auth/**", "/api/auth/**", "/swagger-ui/**", "/v3/api-docs/**"
+                                , "/css/**", "/js/**", "/img/**", "/vendor/**", "/scss/**", "/favicon.ico").permitAll() // 인증 없이 접근 허용
                         .anyRequest().authenticated() // 그 외의 모든 요청은 인증 필요
                 )
 
