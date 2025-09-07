@@ -18,5 +18,4 @@ import org.springframework.context.annotation.Configuration;
         in = SecuritySchemeIn.HEADER, // Schema 위치 ➡️ Http Header
         description = "JWT 토큰을 여기에 입력하세요. (ex. Bearer <token>)" // 사용자에게 보여줄 설명
 )
-public class SwaggerApiConfig {
-}
+public class SwaggerApiConfig { }
