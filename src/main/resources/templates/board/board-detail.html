@@ -80,7 +80,7 @@
                 if (!confirm("게시글을 삭제하시겠습니까?")) return;
 
                 try {
-                    const response = await fetch(`/api/board/boardDeleteOne/${boardSeq}`, {
+                    const response = await fetch(`/api/board/delete/${boardSeq}`, {
                         method: 'DELETE'
                     });
 

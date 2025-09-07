@@ -99,7 +99,7 @@
 
                 // Controller에 전송
                 try {
-                    const response = await fetch("/api/board/boardWrite", {
+                    const response = await fetch("/api/board/write", {
                         method: "POST", // Multipart 전송 시, PUT은 불안정하거나 지원 안 됨
                         body: formData
                     });

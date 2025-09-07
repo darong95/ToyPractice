@@ -16,6 +16,8 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Duration;
+
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
@@ -25,14 +27,18 @@ public class AuthApiController {
     @Value("${jwt.cookie-name}")
     private String jwtCookieName;
 
+    @Value("${jwt.expiration-time}")
+    private int jwtExpirationTime;
+
     @PostMapping("/signup")
-    public ResponseEntity<ApiResponse<Void>> signUp(@Valid@RequestBody SignupRequest signUpRequest) { // 회원 가입
+    public ResponseEntity<ApiResponse<Void>> signUp(@Valid @RequestBody SignupRequest signUpRequest) { // 회원 가입
         authService.signUp(signUpRequest);
         return ResponseEntity.ok(ApiResponse.success("회원가입이 완료되었습니다.", null));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<ApiResponse<String>> login(@Valid @RequestBody LoginRequest loginRequest, HttpServletResponse httpServletResponse) { // 로그인
+    public ResponseEntity<ApiResponse<String>> login(@Valid @RequestBody LoginRequest loginRequest
+            , HttpServletResponse httpServletResponse) { // 로그인
         // 토큰 발급
         String jwtToken = authService.login(loginRequest);
 
@@ -42,7 +48,7 @@ public class AuthApiController {
                 .secure(false) // HTTPS 전용
                 .sameSite("Strict") // CSRF 보호
                 .path("/")
-                .maxAge(60 * 60) // 1시간
+                .maxAge(jwtExpirationTime) // 설정한 유효 시간
                 .build();
 
         // Cookie Header에 Set-Cookie ➡️ 브라우저에 쿠키 저장
