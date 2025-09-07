@@ -84,11 +84,8 @@
                 // FormData 설정 (Multipart 전송은 FormData를 사용해야 함)
                 const formData = new FormData();
 
-                formData.append (
-                    "boardWriteDTO"
-                    , new Blob([JSON.stringify(writeDTO)]
-                    , { type: "application/json" })
-                );
+                // JSON을 문자열로 바로 추가 (Blob 대신 그냥 문자열 넣기)
+                formData.append("boardWriteDTO", JSON.stringify(writeDTO));
 
                 // 신규 첨부파일 설정
                 const files = $("#boardFile")[0].files;

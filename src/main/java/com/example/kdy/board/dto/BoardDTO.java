@@ -16,6 +16,7 @@ public class BoardDTO {
 
     @NotBlank(message = "내용을 입력해 주세요.")
     private String boardContent; // 게시글 내용 : CLOB
+
     private String boardRegId; // 게시글 등록 아이디
 
     // DateEntity

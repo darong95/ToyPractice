@@ -9,8 +9,12 @@ import com.example.kdy.board.entity.BoardEntity;
 import com.example.kdy.board.service.BoardFileService;
 import com.example.kdy.board.service.BoardService;
 
+import com.example.kdy.common.component.ValidationComponent;
 import com.example.kdy.common.dto.ApiResponse;
 import com.example.kdy.security.service.UserPrincipal;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
@@ -39,6 +43,8 @@ public class BoardApiController {
     private final BoardService boardService; // Board Domain Service
     private final BoardFileService boardFileService; // Board File Service
 
+    private final ValidationComponent validationComponent; // Validation Check
+
     public ResponseEntity<ApiResponse<Page<BoardEntity>>> boardList(BoardListDTO boardListDTO, Model model) {
         Page<BoardEntity> boardList = boardService.boardList(boardListDTO);
         return ResponseEntity.ok(ApiResponse.success("게시글 리스트를 성공적으로 가져왔습니다.", boardList));
@@ -46,9 +52,16 @@ public class BoardApiController {
 
     @PostMapping(value = "/write", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ApiResponse<Void>> boardWrite(
-            @Valid @RequestPart("boardWriteDTO") BoardWriteDTO boardWriteDTO
+            @RequestParam("boardWriteDTO") String json_boardWriteDTO
             , @RequestPart(value = "boardFileList", required = false) List<MultipartFile> boardFileList
-            , @AuthenticationPrincipal UserPrincipal userPrincipal) {
+            , @AuthenticationPrincipal UserPrincipal userPrincipal) throws JsonProcessingException {
+
+        // JSON 문자열을 DTO로 변환
+        ObjectMapper objectMapper = new ObjectMapper();
+        BoardWriteDTO boardWriteDTO = objectMapper.readValue(json_boardWriteDTO, BoardWriteDTO.class);
+
+        // Validation Check
+        validationComponent.validation_Check(boardWriteDTO);
 
         // 첨부파일 설정 ➡️ JSON과 MultipartFile은 같은 DTO에 넣을 수 없음
         if (boardFileList != null) {
