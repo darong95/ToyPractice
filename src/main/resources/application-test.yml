@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: kdy-test
+
+  # Database Setting
+  datasource:
+    url: ${SPRING_DATASOURCE_H2_URL}
+    username: ${SPRING_DATASOURCE_H2_USERNAME}
+    password: ${SPRING_DATASOURCE_H2_PASSWORD}
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      # ddl-auto: none # Application이 재실행 돼도 테이블 유지
+      ddl-auto: create # Application이 재실행 될 때마다 테이블 Drop + Create
+
+    properties:
+      hibernate:
+        show-sql: true # Hibernate SQL을 Console에 출력
+        format-sql: true # Hibernate가 생성하는 SQL을 가독성 좋게 표현
+        dialect: org.hibernate.dialect.H2Dialect # SQL을 H2 문법에 맞춤
+
+# 데이터 베이스 실행 시, SQL 확인을 위한 설정 (Hibernate)
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: debug # 로그 레벨 DEBUG
+        type:
+          descriptor:
+            sql: trace  # 파라미터까지 출력 (컬럼 타입 + 값, 매우 유용)
+        orm:
+          jdbc:
+            bind: trace # 바인딩 된 파라미터 값까지 출력
+          lazy: trace # Lazy 로딩이 언제 트리거 됐는지 확인

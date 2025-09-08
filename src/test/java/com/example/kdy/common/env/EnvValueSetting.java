@@ -1,6 +1,6 @@
 package com.example.kdy.common.env;
 
-public class EnvValueSetting {
+public class EnvValueSetting { // Env 값 가져오기
     // H2
     private static String dataSourceURL_H2;
     private static String dataSourceUserName_H2;
