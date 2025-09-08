@@ -81,8 +81,15 @@ public class BoardApiController {
 
     @PostMapping(value = "/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ApiResponse<Void>> boardUpdate(
-            @Valid @RequestPart("boardUpdateDTO") BoardUpdateDTO boardUpdateDTO
-            , @RequestPart(value = "boardFileUpdateList", required = false) List<MultipartFile> boardFileUpdateList) {
+            @RequestParam("boardUpdateDTO") String json_boardUpdateDTO
+            , @RequestPart(value = "boardFileUpdateList", required = false) List<MultipartFile> boardFileUpdateList) throws JsonProcessingException {
+
+        // JSON 문자열을 DTO로 변환
+        ObjectMapper objectMapper = new ObjectMapper();
+        BoardUpdateDTO boardUpdateDTO = objectMapper.readValue(json_boardUpdateDTO, BoardUpdateDTO.class);
+
+        // Validation Check
+        validationComponent.validation_Check(boardUpdateDTO);
 
         // 첨부파일 설정 ➡️ JSON과 MultipartFile은 같은 DTO에 넣을 수 없음
         if (boardFileUpdateList != null) {

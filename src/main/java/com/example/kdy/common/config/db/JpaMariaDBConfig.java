@@ -1,4 +1,4 @@
-package com.example.kdy.common.config;
+package com.example.kdy.common.config.db;
 
 import jakarta.persistence.EntityManagerFactory;
 
