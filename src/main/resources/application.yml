@@ -38,7 +38,7 @@ logging:
   level:
     org:
       hibernate:
-        SQL: debug      # 로그 레벨을 DEBUG로
+        SQL: debug # 로그 레벨 DEBUG
         type:
           descriptor:
             sql: trace  # 파라미터까지 출력 (컬럼 타입 + 값, 매우 유용)

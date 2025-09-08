@@ -1,6 +1,5 @@
 package com.example.kdy.common.db;
 
-import com.example.kdy.common.config.DynamicPropertiesSource;
 import com.example.kdy.common.db.entity.ExampleEntity;
 import com.example.kdy.common.db.repository.ExampleRepository;
 
@@ -8,17 +7,17 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Rollback;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.ActiveProfiles;
 
-@Transactional
-@Rollback(value = false)
-public class ExampleDBRunTest extends DynamicPropertiesSource {
+@DataJpaTest
+@ActiveProfiles("test") // application-test.yml
+public class ExampleDBRunTest { // DB 생성 + 테스트 데이터 Create
     @Autowired
     private ExampleRepository exampleRepository;
 
     @Test
-    public void dbConnection_MariaDB() {
+    public void dbConnection_H2() {
         ExampleEntity exampleEntity = new ExampleEntity();
 
         exampleEntity.setUserName("DaYoung");

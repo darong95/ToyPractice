@@ -1,12 +1,9 @@
-package com.example.kdy.board;
+package com.example.kdy.board.mapper;
 
 
 import com.example.kdy.common.config.DynamicPropertiesSource;
 import com.example.kdy.board.dto.BoardDTO;
 import com.example.kdy.board.entity.BoardEntity;
-
-import com.example.kdy.board.mapper.BoardMapperManual;
-import com.example.kdy.board.mapper.BoardMapper;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
