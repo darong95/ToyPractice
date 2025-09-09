@@ -23,7 +23,7 @@ public class BoardRepositoryTest {
     private BoardRepository boardRepository;
 
     @Test
-    void boardCreateAndRead() { // Create & Read
+    void boardCreateAndRead() {
         // User Setting
         UserEntity userEntity = new UserEntity();
 

@@ -15,7 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class GlobalExceptionAdvice {
     @ExceptionHandler(RuntimeException.class)
     public String handleRuntimeException(RuntimeException runtimeException, RedirectAttributes redirectAttributes) {
-        log.info("[WEB ERROR] IllegalArgumentException 발생!");
+        log.info("[WEB ERROR] RuntimeException 발생!");
         redirectAttributes.addFlashAttribute("resultMessage", runtimeException.getMessage());
 
         return "redirect:/home";  // 실패해도 지정한 페이지로 이동
