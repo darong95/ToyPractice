@@ -6,16 +6,15 @@ import com.example.kdy.user.entity.UserEntity;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.ReportingPolicy;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface UserMapper {
     // Entity ➡️ DTO
     UserDTO convertToDTO(UserEntity userEntity);
 
-    @Mapping(target = "currentPage", ignore = true)
-    @Mapping(target = "pagingSize", ignore = true)
     @Mapping(target = "userDTO", expression = "java(convertToDTO(userEntity))")
     UserListDTO convertToListDTO(UserEntity userEntity);
 

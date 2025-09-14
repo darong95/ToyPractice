@@ -22,7 +22,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -105,5 +104,15 @@ public class BoardService {
                 .orElseThrow(() -> new RuntimeException("삭제할 게시글이 없습니다."));
 
         boardRepository.delete(boardEntity); // 게시글 삭제
+    }
+
+    @Transactional
+    public void boardDeleteIn(List<Long> boardDeleteList) { // 게시글 일괄 삭제
+        if (!boardDeleteList.isEmpty()) {
+            boardRepository.deleteByBoardSeqIn(boardDeleteList);
+
+        } else {
+            throw new IllegalArgumentException("삭제할 게시글을 선택해 주세요.");
+        }
     }
 }

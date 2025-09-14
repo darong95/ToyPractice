@@ -17,7 +17,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import jakarta.validation.Valid;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -106,8 +105,14 @@ public class BoardApiController {
 
     @DeleteMapping("/delete/{boardSeq}")
     public ResponseEntity<ApiResponse<Void>> boardDeleteOne(@PathVariable Long boardSeq) { // 단일 삭제
-        boardFileService.boardFileDeleteBatch(boardSeq);
         boardService.boardDeleteOne(boardSeq);
+        return ResponseEntity.ok(ApiResponse.success("게시글이 삭제가 완료되었습니다.", null));
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<ApiResponse<Void>> boardDeleteIn(@RequestBody List<Long> boardDeleteList) {// 일괄 삭제
+        boardFileService.boardFileDeleteBatch(boardDeleteList); // 첨부파일 일괄 삭제
+        boardService.boardDeleteIn(boardDeleteList); // 게시글 삭제
 
         return ResponseEntity.ok(ApiResponse.success("게시글이 삭제가 완료되었습니다.", null));
     }

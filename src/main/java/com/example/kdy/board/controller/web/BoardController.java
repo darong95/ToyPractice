@@ -122,7 +122,6 @@ public class BoardController {
 
     @GetMapping("/boardDeleteOne/{boardSeq}")
     public String boardUpdate(@PathVariable Long boardSeq, RedirectAttributes redirectAttributes) { // 게시글 삭제 (단일)
-        boardFileService.boardFileDeleteBatch(boardSeq);
         boardService.boardDeleteOne(boardSeq);
         redirectAttributes.addFlashAttribute("resultMessage", "게시글 삭제가 완료되었습니다.");
 

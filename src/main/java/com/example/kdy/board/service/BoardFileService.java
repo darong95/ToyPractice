@@ -87,8 +87,8 @@ public class BoardFileService {
     }
 
     @Transactional
-    public void boardFileDeleteBatch(Long boardSeq) {
-        boardFileRepository.deleteByBoardEntityBoardSeq(boardSeq);
+    public void boardFileDeleteBatch(List<Long> boardDeleteList) { // 게시글 일괄 삭제
+        boardFileRepository.deleteByBoardSeqIn(boardDeleteList);
     }
 
     @Transactional

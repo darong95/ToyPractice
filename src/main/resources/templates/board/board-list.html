@@ -14,10 +14,21 @@
                     <div class="container-fluid">
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
                             <h1 class="h3 mb-2 text-gray-800">Notice</h1>
-                            <a th:href="@{/board/boardWriteForm}" class="btn btn-primary btn-icon-split">
-                                <span class="icon text-white-50"><i class="fas fa-flag"></i></span>
-                                <span class="text">Go To Write</span>
-                            </a>
+
+                            <div class="d-flex align-items-center gap-2">
+                                <!-- Write -->
+                                <a th:href="@{/board/boardWriteForm}" class="btn btn-primary btn-icon-split mr-2">
+                                    <span class="icon text-white-50"><i class="fas fa-flag"></i></span>
+                                    <span class="text">Go To Write</span>
+                                </a>
+
+                                <!-- Delete -->
+                                <button type="button" class="btn btn-danger btn-icon-split"
+                                        onclick="delete_Check('/api/board/delete')">
+                                    <span class="icon text-white-50"><i class="fas fa-trash"></i></span>
+                                    <span class="text">Delete</span>
+                                </button>
+                            </div>
                         </div>
 
                         <p class="mb-4">This category is where announcements are displayed 😀</p>
@@ -26,7 +37,14 @@
                         <div class="card shadow mb-4">
                             <!-- Table Title -->
                             <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">Here is a list of announcements in administrator mode</h6>
+                                <div class="row align-items-center">
+                                    <div class="col-md-6 col-12 mb-2 mb-md-0">
+                                        <h6 class="m-0 font-weight-bold text-primary">Here is a list of announcements in administrator mode</h6>
+                                    </div>
+
+                                    <!-- Search -->
+                                    <!--<th:block th:replace="~{common/common-search :: common-search}"></th:block>-->
+                                </div>
                             </div>
 
                             <!-- Table Content -->
@@ -35,6 +53,13 @@
                                     <table class="table table-bordered" id="dataTable" style="border-spacing: 0; width: 100%;">
                                         <thead style="text-align: center;">
                                             <tr>
+                                                <th>
+                                                    <div class="custom-control custom-checkbox small">
+                                                        <input type="checkbox" class="custom-control-input" id="checkAll">
+                                                        <label class="custom-control-label" for="checkAll"></label>
+                                                    </div>
+                                                </th>
+
                                                 <th>No</th>
                                                 <th>Title</th>
                                                 <th>RegId</th>
@@ -54,6 +79,14 @@
                                             <th:block th:if="${boardListSize} != 0">
                                                 <th:block th:each="boardList, boardIndex : ${boardList}">
                                                     <tr style="text-align: center;">
+                                                        <td>
+                                                            <div class="custom-control custom-checkbox small">
+                                                                <input type="checkbox" class="custom-control-input" name="selected"
+                                                                       th:id="${'check' + boardIndex.index}" th:value="${boardList.boardDTO.boardSeq}">
+                                                                <label class="custom-control-label" th:for="${'check' + boardIndex.index}"></label>
+                                                            </div>
+                                                        </td>
+
                                                         <td th:text="${paging.totalElements - (paging.number * paging.size + boardIndex.index)}"></td>
 
                                                         <td>
@@ -81,5 +114,6 @@
         </div>
 
         <th:block th:replace="~{common/common-bottom :: common-bottom}"></th:block>
+        <th:block th:replace="~{common/common-check-delete :: common-check-delete}"></th:block>
     </body>
 </html>

@@ -8,6 +8,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -31,4 +34,7 @@ public class BoardEntity extends DateEntity {
     @Lob
     @Column(name = "B_CONTENT", nullable = false)
     private String boardContent; // 게시글 내용 : CLOB
+
+    @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<BoardFileEntity> boardFileList = new ArrayList<>();
 }
