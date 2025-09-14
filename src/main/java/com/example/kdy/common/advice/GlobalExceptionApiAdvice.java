@@ -6,6 +6,8 @@ import com.example.kdy.common.exception.CustomValidException;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.http.ResponseEntity;
+
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -19,6 +21,12 @@ import java.util.Map;
         "com.example.kdy.board.controller.api"
 })
 public class GlobalExceptionApiAdvice {
+    // 권한 오류
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ApiResponse<Void>> handleAccessDeniedException(AccessDeniedException accessDeniedException) {
+        return ResponseEntity.badRequest().body(ApiResponse.fail(accessDeniedException.getMessage()));
+    }
+
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<ApiResponse<Void>> handleIllegalArgumentException(IllegalArgumentException illegalArgumentException) {
         return ResponseEntity.badRequest().body(ApiResponse.fail(illegalArgumentException.getMessage()));
@@ -41,5 +49,11 @@ public class GlobalExceptionApiAdvice {
     public ResponseEntity<ApiResponse<Map<String, String>>> handleCustomValidationException(CustomValidException ex) {
         // 실패 응답을 담아 400 Bad Request 반환
         return ResponseEntity.badRequest().body(ApiResponse.fail(ex.getMessage(), ex.getErrorMap()));
+    }
+
+    // 최상위 오류
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<ApiResponse<Void>> handleRuntimeException(RuntimeException runtimeException) {
+        return ResponseEntity.badRequest().body(ApiResponse.fail(runtimeException.getMessage()));
     }
 }

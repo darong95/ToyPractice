@@ -7,7 +7,7 @@ import com.example.kdy.board.service.BoardFileService;
 import com.example.kdy.board.service.BoardListMapperService;
 import com.example.kdy.board.service.BoardService;
 
-import com.example.kdy.security.service.UserPrincipal;
+import com.example.kdy.security.SecurityUtil;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 
@@ -15,7 +15,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.data.domain.Page;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
@@ -73,7 +72,6 @@ public class BoardController {
 
     @PostMapping("/boardWrite")
     public String boardWrite(@Valid @ModelAttribute("boardPost") BoardWriteDTO boardWriteDTO
-            , @AuthenticationPrincipal UserPrincipal userPrincipal
             , BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         // 에러가 있을 경우 작성 폼으로 이동 ➡️ 내용을 보여주기 위함
         if (bindingResult.hasErrors()) {
@@ -81,8 +79,8 @@ public class BoardController {
         }
 
         // 게시글 정보 입력
-        boardWriteDTO.getBoardDTO().setBoardRegId(userPrincipal.getUsername());
-        boardWriteDTO.getBoardDTO().setUserSeq(userPrincipal.getUserSeq());
+        boardWriteDTO.getBoardDTO().setBoardRegId(SecurityUtil.getLoginUserId());
+        boardWriteDTO.getBoardDTO().setUserSeq(SecurityUtil.getLoginUserSeq());
 
         // 게시글 & 첨부파일 등록
         Long boardSeq = boardService.boardWrite(boardWriteDTO);

@@ -1,5 +1,6 @@
 package com.example.kdy.board.service;
 
+import com.example.kdy.board.component.BoardAuthCheckComponent;
 import com.example.kdy.board.dto.*;
 
 import com.example.kdy.board.entity.BoardEntity;
@@ -18,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,6 +33,7 @@ public class BoardService {
 
     private final BoardMapper boardMapper;
     private final DateUtilComponent dateUtilComponent;
+    private final BoardAuthCheckComponent boardAuthCheckComponent; // 권한 체크
 
 
     @Transactional(readOnly = true)
@@ -100,9 +103,16 @@ public class BoardService {
 
     @Transactional
     public void boardDeleteOne(Long boardSeq) {
+        // 게시글 존재 여부 확인
         BoardEntity boardEntity = boardRepository.findById(boardSeq)
                 .orElseThrow(() -> new RuntimeException("삭제할 게시글이 없습니다."));
 
+        // 게시글 권한 확인
+        if (!boardAuthCheckComponent.compare_One(boardEntity.getUserEntity().getUserSeq())) {
+            throw new AccessDeniedException("본인이 작성한 글만 삭제할 수 있습니다.");
+        }
+
+        // 게시글 삭제
         boardRepository.delete(boardEntity); // 게시글 삭제
     }
 

@@ -33,15 +33,9 @@
                     body: JSON.stringify(checkbox_Choice)
                 });
 
-                const data = await response.json();
-
-                if (response.ok) {
-                    alert(data.message);
-                    location.reload();
-
-                } else {
-                    alert(data.message || '삭제에 실패했습니다.');
-                }
+                // 결과 값 가져오기
+                const result = await response.json();
+                apiResponse(result, "/board/boardList");
 
             } catch (error) {
                 console.error('Error:', error);
