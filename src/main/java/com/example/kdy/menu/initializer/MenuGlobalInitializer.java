@@ -1,5 +1,6 @@
-package com.example.kdy.menu.service.initializer;
+package com.example.kdy.menu.initializer;
 
+import com.example.kdy.menu.component.MenuSettingComponent;
 import com.example.kdy.menu.dto.MenuDTO;
 
 import lombok.AllArgsConstructor;
@@ -14,11 +15,11 @@ import java.util.Map;
 @Slf4j
 @ControllerAdvice // 모든 컨트롤러에 적용
 @AllArgsConstructor
-public class MenuGlobalInitializerService {
-    private final MenuSettingService menuSettingService;
+public class MenuGlobalInitializer {
+    private final MenuSettingComponent menuSettingComponent;
 
     @ModelAttribute("menuList")
     public Map<String, List<MenuDTO>> menuGlobalInitializer() {
-        return menuSettingService.getMenu();
+        return menuSettingComponent.getMenu();
     }
 }

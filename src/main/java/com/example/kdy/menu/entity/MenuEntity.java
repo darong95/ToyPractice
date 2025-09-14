@@ -34,9 +34,12 @@ public class MenuEntity {
     @Column(name = "M_LINK_URL")
     private String menuLinkUrl = ""; // 메뉴 URL
 
-    @Column(name = "M_CATEGORY", nullable = true, length = 50)
+    @Column(name = "M_CATEGORY", length = 50)
     private boolean menuCategory = false; // 일반 메뉴가 아닌 카테고리 여부
 
     @Column(name = "M_USE_ACTIVE", nullable = false)
-    private boolean menuUseActive = true; // 메뉴 URL
+    private boolean menuUseActive = true; // 메뉴 사용 여부
+
+    @Column(name = "M_ROLE", nullable = false, length = 20)
+    private String menuRole = "ROLE_USER"; // 메뉴 사용 여부
 }

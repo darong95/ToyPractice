@@ -15,7 +15,8 @@ public class MenuDTO {
     private String menuName = ""; // 메뉴명
     private String menuComment; // 메뉴 설명
     private String menuLinkUrl = ""; // 메뉴 URL
+    private String menuRole = "USER"; // 메뉴 사용 여부
 
     private boolean menuCategory = false; // 일반 메뉴가 아닌 카테고리 여부
-    private boolean menuUseActive = true; // 메뉴 URL
+    private boolean menuUseActive = true; // 메뉴 사용 여부
 }

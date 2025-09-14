@@ -28,4 +28,10 @@ public class MenuService {
 
         return menuMapper.convertToListDTO(menuList); // Entity를 DTO에 변환 시키며 리턴
     }
+
+    @Transactional(readOnly = true)
+    public List<MenuDTO> menuRolesList(List<String> userRoles) { // 메뉴 리스트
+        List<MenuEntity> menuList = menuRepository.findByMenuRole(userRoles); // 메뉴 리스트 가져오기
+        return menuMapper.convertToListDTO(menuList); // Entity를 DTO에 변환 시키며 리턴
+    }
 }
