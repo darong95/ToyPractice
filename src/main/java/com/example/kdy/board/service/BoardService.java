@@ -75,9 +75,14 @@ public class BoardService {
     }
 
     @Transactional(readOnly = true)
-    public BoardUpdateDTO boardReadUpdate(Long boardSeq) {
+    public BoardUpdateDTO boardReadUpdate(Long boardSeq) { // 게시글 수정 페이지
         BoardEntity boardEntity = boardRepository.findById(boardSeq)
                 .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다."));
+
+        // 게시글 권한 확인
+        if (!boardAuthCheckComponent.compare_One(boardEntity.getUserEntity().getUserSeq())) {
+            throw new AccessDeniedException("본인이 작성한 글만 수정할 수 있습니다.");
+        }
 
         return boardMapper.convertToUpdateDTO(boardEntity);
     }

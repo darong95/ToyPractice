@@ -9,7 +9,7 @@ public class BoardAuthCheckComponent {
         Long loginUserSeq = SecurityUtil.getLoginUserSeq();
 
         if (loginUserSeq.equals(1L)) {
-            return true; // 최고 관리자는 삭제가 가능함
+            return true; // 최고 관리자는 가능함
 
         } else {
             return compareSeq.equals(loginUserSeq);

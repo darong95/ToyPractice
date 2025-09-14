@@ -1,7 +1,6 @@
-package com.example.kdy.menu.service.initializer;
+package com.example.kdy.menu.component;
 
 import com.example.kdy.menu.dto.MenuDTO;
-import com.example.kdy.menu.service.MenuSeparateService;
 import com.example.kdy.menu.service.MenuService;
 
 import jakarta.annotation.PostConstruct;
@@ -18,9 +17,9 @@ import java.util.Map;
 @Slf4j
 @Service
 @AllArgsConstructor
-public class MenuSettingService {
+public class MenuSettingComponent {
     private final MenuService menuService; // Menu Domain Service
-    private final MenuSeparateService menuSeparateService; // Menu List를 분리하여 DTO로 반환
+    private final MenuSeparateComponent menuSeparateComponent; // Menu List를 분리하여 DTO로 반환
 
     private Map<String, List<MenuDTO>> separateMenuList; // 메뉴를 담기 위한 Map
 
@@ -33,7 +32,7 @@ public class MenuSettingService {
 
             // 가져온 메뉴를 Depth에 맞게 정리
             if (!menuList.isEmpty()) {
-                separateMenuList = menuSeparateService.service(menuList);
+                separateMenuList = menuSeparateComponent.service(menuList);
             }
 
         } catch (Exception e) {

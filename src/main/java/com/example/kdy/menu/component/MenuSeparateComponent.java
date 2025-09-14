@@ -1,4 +1,4 @@
-package com.example.kdy.menu.service;
+package com.example.kdy.menu.component;
 
 import com.example.kdy.menu.dto.MenuDTO;
 
@@ -10,7 +10,7 @@ import java.util.List;
 
 @Slf4j
 @Service
-public class MenuSeparateService {
+public class MenuSeparateComponent {
     public Map<String, List<MenuDTO>> service(List<MenuDTO> menuList) {
         log.info("[LOG] 메뉴 분류를 시작합니다!");
 
